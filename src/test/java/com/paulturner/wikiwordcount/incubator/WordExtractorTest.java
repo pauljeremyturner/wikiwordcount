@@ -72,6 +72,48 @@ public class WordExtractorTest {
     }
 
 
+    @Test
+    public void shouldProcessProblemPage2Ok() throws Exception {
+
+        ByteBuffer byteBuffer = classpathFileToByteBuffer("/problem-page-2.txt");
+
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+
+        ChunkDigest chunkDigest = wordExtractor.call();
+    }
+
+
+    @Test
+    public void shouldProcessProblemPage1Ok() throws Exception {
+
+        ByteBuffer byteBuffer = classpathFileToByteBuffer("/problem-page-1.txt");
+
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+
+        ChunkDigest chunkDigest = wordExtractor.call();
+    }
+
+    @Test
+    public void shouldProcessProblemPage3Ok() throws Exception {
+
+        ByteBuffer byteBuffer = classpathFileToByteBuffer("/problem-page-3.txt");
+
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+
+        ChunkDigest chunkDigest = wordExtractor.call();
+    }
+
+    @Test
+    public void shouldProcessProblemPage4Ok() throws Exception {
+
+        ByteBuffer byteBuffer = classpathFileToByteBuffer("/problem-page-4.txt");
+
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+
+        ChunkDigest chunkDigest = wordExtractor.call();
+    }
+
+
 
     private ByteBuffer classpathFileToByteBuffer(String filename) throws Exception {
         File file = new File(getClass().getResource(filename).getFile());

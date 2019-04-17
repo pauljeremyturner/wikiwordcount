@@ -1,0 +1,12 @@
+u2019-04-17 03:26:58.122 [Test worker] INFO  c.p.wikiwordcount.text.Dictionary - Dictionary Loaded [wordcount=370091]
+e2019-04-17 03:26:58.350 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+e2019-04-17 03:26:58.367 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+	e2019-04-17 03:26:58.410 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+
+e2019-04-17 03:26:58.418 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+e2019-04-17 03:26:58.428 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+e2019-04-17 03:26:58.432 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+e2019-04-17 03:26:58.441 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+e2019-04-17 03:26:58.442 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+e2019-04-17 03:26:58.443 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page
+e2019-04-17 03:26:58.456 [Test worker] INFO  c.p.wikiwordcount.text.WordExtractor - Processing a page

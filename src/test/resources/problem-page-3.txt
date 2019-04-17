@@ -1,0 +1,161 @@
+  <page>
+    <title>Claustrophobia</title>
+    <ns>0</ns>
+    <id>292376</id>
+    <revision>
+      <id>875600711</id>
+      <parentid>874907391</parentid>
+      <timestamp>2018-12-27T18:57:40Z</timestamp>
+      <contributor>
+        <ip>109.234.101.175</ip>
+      </contributor>
+      <comment>/* Symptoms */</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text xml:space="preserve">{{other uses}}
+ {{Infobox medical condition
+| Name = Claustrophobia
+| Image =  Do ashkaft cave 2.jpg
+| Caption = Getting caught in a small hole, due to cave-ins or suddenly encountering a dangerous animal's den and being unable to defend oneself or retreat, could have caused claustrophobia to become a [[Claustrophobia#Prepared phobia|prepared phobia]].
+| Field = [[Psychiatry]]
+| DiseasesDB=
+| ICD10 = {{ICD10|F|40.2}}
+| ICD9 = {{ICD9|300.29}}
+}}
+'''Claustrophobia''' is the fear of being enclosed in a small space or room and unable to escape or get out.&lt;ref&gt;{{cite web | url=http://www.merriam-webster.com/dictionary/claustrophobia | title=Claustrophobia | publisher=Merriam Webster | accessdate=2013-05-19}}&lt;/ref&gt; It can be triggered by many situations or [[Stimulus (psychology)|stimuli]], including [[elevator]]s crowded to capacity, windowless rooms, hotel rooms with closed doors and sealed windows, small cars and even tight-necked clothing.&lt;ref name=&quot;Scale&quot;/&gt; It is typically classified as an [[anxiety disorder]], which often results in [[panic attack]]s. The onset of claustrophobia has been attributed to many factors, including a reduction in the size of the [[amygdala]], [[classical conditioning]], or a [[genetic predisposition]] to fear small spaces.
+
+One study indicates that anywhere from 5–7% of the world population is affected by severe claustrophobia, but only a small percentage of these people receive some kind of treatment for the disorder.&lt;ref name=&quot;Phobias&quot;&gt;''Phobias: A Handbook of Theory, Research, and Treatment''. Chichester ;New York: Wiley, 1997.&lt;/ref&gt;
+
+The term ''claustrophobia'' comes  from [[Latin language|Latin]] ''claustrum'' &quot;a shut in place&quot; and Greek ''{{lang|el|φόβος}}'', ''[[phobia|phóbos]]'', &quot;fear&quot;.
+
+==Symptoms==
+Claustrophobia is typically thought to have two key symptoms: fear of restriction and fear of suffocation. A typical claustrophobic will fear restriction in at least one, if not several, of the following areas: small rooms, locked rooms, MRI or CAT scan apparatus, cars, buses, airplanes, trains, tunnels, underwater caves, cellars, [[elevator]]s and [[caves]]. Additionally, the fear of restriction can cause some claustrophobia to fear trivial matters such as sitting in a barber's chair or waiting in a queue at a shop simply out of a fear of confinement to a single space. Another possible site for claustrophobic attacks is a dentist's chair, particularly during dental surgery; in that scenario, the fear is not of pain, but of being confined.
+
+Often, when confined to an area. claustrophobics begin to fear suffocation, believing that there may be a lack of air in the area to which they are confined.
+
+==Diagnosis==
+Claustrophobia is the fear of having no escape, and being closed into a small space. It is typically classified as an anxiety disorder and often times results in a rather severe panic attack. It is also confused sometimes with [[Cleithrophobia]] (the fear of being trapped).&lt;ref&gt;[http://phobias.about.com/od/phobiasatoh/a/Cleithrophobia.htm Cleithrophobia] ''about.com''&lt;/ref&gt;
+
+===Scale===
+This method was developed in 1979 by interpreting the files of patients diagnosed with claustrophobia and by reading various scientific articles about the diagnosis of the disorder. Once an initial scale was developed, it was tested and sharpened by several experts in the field. Today, it consists of 20 questions that determine [[anxiety]] levels and desire to avoid certain situations. Several studies have proved this scale to be effective in claustrophobia diagnosis.&lt;ref name=&quot;Scale&quot;&gt;Öst, &quot;The Claustrophobia Scale&quot;&lt;/ref&gt;
+
+===Questionnaire===
+This method was developed by Rachman and Taylor, two experts in the field, in 1993. This method is effective in distinguishing symptoms stemming from fear of [[Asphyxia|suffocation]] and fear of restriction. In 2001, it was modified from 36 to 24 items by another group of field experts. This study has also been proven very effective by various studies.&lt;ref name=&quot;Scale&quot; /&gt;
+
+==Prevalence==
+One study conducted by University of Wisconsin-Madison's neurology department revealed that anywhere from 5-7% of the world population is affected by severe claustrophobia, but only a small percentage of these people receive some kind of treatment for the disorder.{{citation needed|date=March 2013}}
+
+==Causes==
+The fears of enclosed spaces is an [[Phobia|irrational fear]]. Most claustrophobic people who find themselves in a room without windows consciously know that they aren't in danger, yet these same people will be afraid, possibly terrified to the point of incapacitation, and many do not know why.
+
+===Amygdala===
+{{Disputed section|date=September 2017}}
+[[File:Amygdala.gif|thumb|alt=Amygdala|The red structure is the amygdala.]]
+
+The [[amygdala]] is one of the smallest structures in the [[brain]], but also one of the most powerful. The amygdala is needed for the conditioning of [[fear]], or the creation of a [[fight-or-flight response]]. A fight-or-flight response is created when a stimulus is associated with a grievous situation. Cheng believes that a [[phobia]]'s roots are in this fight-or-flight response.
+
+In generating a fight-or-flight response, the amygdala acts in the following way:
+The amygdala's anterior [[Nucleus (neuroanatomy)|nuclei]] associated with fear each other. Nuclei send out impulses to other nuclei, which influence respiratory rate, physical arousal, the release of [[adrenaline]], blood pressure, heart rate, behavioral fear response, and defensive responses, which may include freezing up. These reactions constitute an 'autonomic failure' in a panic attack.
+[[File:Neuron upclose.jpg|thumb|alt=Neuron upclose|Brain [[synapse]]]]
+
+A study done by Fumi Hayano found that the right amygdala was smaller in patients who suffered from panic disorders. The reduction of size occurred in a structure known as the corticomedial nuclear group which the CE nucleus belongs to. This causes interference, which in turn causes abnormal reactions to aversive stimuli in those with panic disorders. In claustrophobic people, this translates as panicking or overreacting to a situation in which the person finds themselves physically confined.
+
+===Classical conditioning===
+Claustrophobia results as the mind comes to connect confinement with danger. It often comes as a consequence of a traumatic childhood experience,&lt;ref name=&quot;Fritscher&quot;&gt;Fritscher&lt;/ref&gt; although the onset can come at any point in an individual's life. Such an experience can occur multiple times, or only once, to make a permanent impression on the mind.&lt;ref name=&quot;Walding&quot;&gt;Walding&lt;/ref&gt; The majority of claustrophobic participants in an experiment done by Lars-Göran Öst reported that their phobia had been &quot;acquired as a result of a conditioning experience.&lt;ref name=&quot;Rachman Claustrophobia 168&quot;&gt;Rachman, &quot;Claustrophobia&quot;, in ''Phobias: A Handbook of Theory, Research, and Treatment.'' 168&lt;/ref&gt;&quot; In most cases, claustrophobia seems to be the result of past experiences.
+
+===Conditioning experiences===
+A few examples of common experiences that could result in the onset of claustrophobia in children (or adults) are as follows:
+*A child (or, less commonly, an adult) is shut into a pitch-black room and cannot find the door or the light-switch.
+*A child gets shut into a box.
+*A child is locked in a closet.
+*A child falls into a deep pool and cannot swim.
+*A child gets separated from their parents in a large crowd and gets lost.
+*A child sticks their head between the bars of a fence and then cannot get back out.
+*A child crawls into a hole and gets stuck, or cannot find their way back.
+*A child is left in their parent's car, truck, or van.
+*A child is in a crowded area with no windows (a classroom, basement, etc.) and has run-ins with other people, or is put there as a means of [[punishment]].
+
+The term 'past experiences', according to one author, can extend to the moment of birth. In John A. Speyrer's &quot;Claustrophobia and the Fear of Death and Dying&quot;, the reader is brought to the conclusion that claustrophobia's high frequency is due to birth trauma, about which he says is &quot;one of the most horrendous experiences we can have during our lifetime,&quot; and it is in this helpless moment that the infant develops claustrophobia.&lt;ref&gt;Speyrer&lt;/ref&gt;
+[[File:GE Signa MRI.JPG|thumb|alt=GE Signa MRI|In an MRI, the patient is inserted into the tube.]]
+
+[[Magnetic resonance imaging]] (MRI) can trigger claustrophobia. An MRI scan entails lying still for some time in a narrow tube. In a study involving claustrophobia and MRI, it was reported that 13% of patients experienced a panic attack during the procedure. The procedure has been linked not only to the triggering of 'preexisting' claustrophobia, but also to the onset of the condition in some people.&lt;ref&gt;Thorpe 1081&lt;/ref&gt; Panic attacks experienced during the procedure can stop the person from adjusting to the situation, thereby perpetuating the fear.&lt;ref&gt;Thorpe 1082&lt;/ref&gt;
+[[File:Miners in small spaces.jpg|thumb|alt=Miners in small spaces|The conditions inside a mine]]
+
+S.J. Rachman tells of an extreme example, citing the experience of 21 miners. These miners were trapped underground for 14 days, during which six of the miners died of suffocation. After their rescue, ten of the miners were studied for ten years. All but one were greatly affected by the experience, and six  developed phobias to &quot;confining or limiting situations.&quot; The only miner who did not develop any noticeable symptoms was the one who acted as leader.&lt;ref&gt;Rachman, &quot;Claustrophobia&quot;, 169&lt;/ref&gt;
+
+Another factor that could cause the onset of claustrophobia is &quot;information received.&lt;ref name=&quot;Rachman Claustrophobia 168&quot;/&gt;&quot; As Aureau Walding states in &quot;Causes of Claustrophobia&quot;, many people, especially children, learn who and what to fear by watching parents or peers. This method does not only apply to observing a teacher, but also observing victims. Vicarious classical conditioning also includes when a person sees another person exposed directly to an especially unpleasant situation.&lt;ref name=&quot;Carlson 511&quot;&gt;Carlson 511&lt;/ref&gt; This would be analogous to observing someone getting stuck in a tight space, suffocated, or any of the other examples that were listed above.
+
+===Prepared phobia===
+
+There is research that suggests that claustrophobia isn't entirely a classically conditioned or learned phobia. It is not necessarily an inborn fear, but it is very likely what is called a ''prepared phobia''. As Erin Gersley says in &quot;Phobias: Causes and Treatments,&quot; humans are genetically predisposed to become afraid of things that are dangerous to them. Claustrophobia may fall under this category because of its &quot;wide distribution… early onset and seeming easy acquisition, and its non-cognitive features.&lt;ref&gt;Rachman, &quot;Claustrophobia,&quot; 170&lt;/ref&gt;&quot; The acquisition of claustrophobia may be part of a [[vestigial]] evolutionary survival mechanism,&lt;ref name=&quot;Fritscher&quot;/&gt; a dormant fear of entrapment and/or suffocation that was once important for the survival of humanity and could be easily awakened at any time.&lt;ref&gt;Gersley&lt;/ref&gt; Hostile environments in the past would have made this kind of pre-programmed fear necessary, and so the human mind developed the capacity for &quot;efficient fear conditioning to certain classes of dangerous stimuli&quot;.&lt;ref name=&quot;Carlson 511&quot;/&gt;
+
+Rachman provides an argument for this theory in his article: &quot;Phobias&quot;. He agrees with the statement that phobias generally concern objects that constitute a direct threat to human survival, and that many of these phobias are quickly acquired because of an &quot;inherited biological preparedness&quot;.&lt;ref&gt;Rachman, &quot;Phobias&quot;&lt;/ref&gt; This brings about a prepared phobia, which is not quite innate, but is widely and easily learned. As Rachman explains in the article: &quot;The main features of prepared phobias are that they are very easily acquired, [[:wikt:selective|selective]], stable, biologically significant, and probably [non-cognitive].&quot; 'Selective' and 'biologically significant' mean that they only relate to things that directly threaten the health, safety, or survival of an individual. 'Non-cognitive' suggests that these fears are acquired unconsciously. Both factors point to the theory that claustrophobia is a prepared phobia that is already pre-programmed into the mind of a human being.
+
+== Treatment ==
+
+===Cognitive therapy===
+[[Cognitive therapy]] is a widely accepted form of treatment for most [[anxiety disorders]].&lt;ref name=&quot;Treatment&quot;&gt;Choy, Yujuan, Abby J. Fyer, and Josh D. Lipsitz. &quot;Treatment of Specific Phobia in Adults.&quot; ''Clinical Psychology Review'' 27.3 (2007): 266–86.&lt;/ref&gt; It is also thought to be particularly effective in combating disorders where the patient doesn't actually fear a situation but, rather, fears what could result from being in such a situation.&lt;ref name=&quot;Treatment&quot; /&gt; The ultimate goal of cognitive therapy is to modify distorted thoughts or misconceptions associated with whatever is being feared; the theory is that modifying these thoughts will decrease [[anxiety]] and avoidance of certain situations.&lt;ref name=&quot;Treatment&quot; /&gt; For example, cognitive therapy would attempt to convince a claustrophobic patient that elevators are not dangerous but are, in fact, very useful in getting you where you would like to go faster. A study conducted by S.J. Rachman shows that cognitive therapy decreased fear and negative thoughts/connotations by an average of around 30% in claustrophobic patients tested, proving it to be a reasonably effective method.&lt;ref name=&quot;Phobias&quot; /&gt;
+
+===''In vivo'' exposure===
+This method forces patients to face their fears by complete exposure to whatever fear they are experiencing.&lt;ref name=&quot;Treatment&quot; /&gt; This is usually done in a progressive manner starting with lesser exposures and moving upward towards severe exposures.&lt;ref name=&quot;Treatment&quot; /&gt; For example, a claustrophobic patient would start by going into an elevator and work up to an [[MRI]]. Several studies have proven this to be an effective method in combating various [[phobias]], claustrophobia included.&lt;ref name=&quot;Treatment&quot; /&gt; S.J. Rachman has also tested the effectiveness of this method in treating claustrophobia and found it to decrease [[fear]] and negative thoughts/connotations by an average of nearly 75% in his patients.&lt;ref name=&quot;Phobias&quot; /&gt; Of the methods he tested in this particular study, this was by far the most significant reduction.&lt;ref name=&quot;Phobias&quot; /&gt;
+
+===Interoceptive exposure===
+This method attempts to recreate internal physical sensations within a patient in a controlled environment and is a less intense version of [[in vivo]] exposure.&lt;ref name=&quot;Treatment&quot; /&gt; This was the final method of treatment tested by S.J. Rachman in his 1992 study.&lt;ref name=&quot;Phobias&quot; /&gt; It lowered fear and negative thoughts/connotations by about 25%.&lt;ref name=&quot;Phobias&quot; /&gt; These numbers did not quite match those of in vivo exposure or cognitive therapy, but still resulted in significant reductions.&lt;ref name=&quot;Phobias&quot; /&gt;
+
+Other forms of treatment that have also been shown to be reasonably effective are psychoeducation, counter-conditioning, regressive hypnotherapy and breathing re-training. Medications often prescribed to help treat claustrophobia include anti-depressants and beta-blockers, which help to relieve the heart-pounding symptoms often associated with anxiety attacks.
+
+==Studies==
+
+===MRI procedure===
+Because they can produce a [[fear]] of both [[suffocation]] and restriction, [[MRI]] scans often prove difficult for claustrophobic patients.&lt;ref name=&quot;MRI&quot;&gt;McIsaac, Heather K., et al. &quot;Claustrophobia and the Magnetic Resonance Imaging Procedure.&quot; ''Journal of Behavioral Medicine'' 21.3 (1998): 255–68.&lt;/ref&gt; In fact, estimates say that anywhere from 4–20% of patients refuse to go through with the scan for precisely this reason.&lt;ref name=&quot;Evidence&quot;&gt;Harris, Lynne M., and John Robinson. &quot;Evidence for Fear of Restriction and Fear of Suffocation as Components of Claustrophobia.&quot; ''Behaviour Research &amp; Therapy'' 37.2 (1999): 155.&lt;/ref&gt; One study estimates that this percentage could be as high as 37% of all MRI recipients.&lt;ref name=&quot;MRI&quot; /&gt; The average [[MRI]] takes around 50 minutes; this is more than enough time to evoke extreme [[fear]] and [[anxiety]] in a severely claustrophobic patient.
+
+This study was conducted with three goals: 1. To discover the extent of [[anxiety]] during an [[MRI]]. 2. To find predictors for [[anxiety]] during an [[MRI]]. 3. To observe psychological factors of undergoing an [[MRI]]. Eighty patients were randomly chosen for this study and subjected to several diagnostic tests to rate their level of claustrophobic [[fear]]; none of these patients had previously been diagnosed with claustrophobia. They were also subjected to several of the same tests after their [[MRI]] to see if their [[anxiety]] levels had elevated. This experiment concludes that the primary component of [[anxiety]] experienced by patients was most closely connected to claustrophobia.
+
+This assertion stems from the high Claustrophobic Questionnaire results of those who reported [[anxiety]] during the scan. Almost 25% of the patients reported at least moderate feelings of [[anxiety]] during the scan and 3 were unable to complete the scan at all. When asked a month after their scan, 30% of patients (these numbers are taken of the 48 that responded a month later) reported that their claustrophobic feelings had elevated since the scan. The majority of these patients claimed to have never had claustrophobic sensations up to that point. This study concludes that the Claustrophobic Questionnaire (or an equivalent method of [[medical diagnosis|diagnosis]]) should be used before allowing someone to have an [[MRI]].&lt;ref name=&quot;MRI&quot; /&gt;
+
+===Use of virtual reality distraction to reduce claustrophobia===
+
+The present case series with two patients explored whether [[virtual reality]] (VR) distraction could reduce claustrophobia symptoms during a mock [[magnetic resonance imaging]] (MRI) brain scan. Two patients who met [[Diagnostic and Statistical Manual of Mental Disorders#DSM-IV (1994)|DSM-IV]] criteria for [[Specific phobia#Categories of specific phobias|specific phobia, situational type]] (i.e., claustrophobia) reported high levels of anxiety during a mock 10-min MRI procedure with no VR, and asked to terminate the scan early. The patients were randomly assigned to receive either VR or music distraction for their second scan attempt. When immersed in an illusory three-dimensional (3D) virtual world named SnowWorld, patient 1 was able to complete a 10-min mock scan with low anxiety and reported an increase in self-efficacy afterwards. Patient 2 received &quot;music only&quot; distraction during her second scan but was still not able to complete a 10-min scan and asked to terminate her second scan early. These results suggest that immersive VR may prove effective at temporarily reducing claustrophobia symptoms during MRI scans and music may prove less effective.&lt;ref&gt;Azucena Garcia-Palacios, Hunter G. Hoffman, Todd R. Richards, Eric J. Seibel, Sam R. Sharar. ''CyberPsychology &amp; Behavior''. June 2007, 10(3): 485-488. {{doi|10.1089/cpb.2006.9926}}.&lt;/ref&gt;
+
+===Separating the fear of restriction and fear of suffocation===
+Many experts who have studied claustrophobia claim that it consists of two separable components: fear of [[suffocation]] and fear of restriction. In an effort to fully prove this assertion, a study was conducted by three experts in order to clearly prove a difference. The study was conducted by issuing a questionnaire to 78 patients who received [[MRI]]s.
+
+The data was compiled into a &quot;fear scale&quot; of sorts with separate subscales for suffocation and confinement. Theoretically, these subscales would be different if the contributing factors are indeed separate. The study was successful in proving that the symptoms are separate. Therefore, according to this study, in order to effectively combat claustrophobia, it is necessary to attack both of these underlying causes.
+
+However, because this study only applied to people who were able to finish their MRI, those who were unable to complete the MRI were not included in the study. It is likely that many of these people dropped out because of a severe case of claustrophobia. Therefore, the absence of those who suffer the most from claustrophobia could have skewed these statistics.&lt;ref name=&quot;Evidence&quot; /&gt;
+
+A group of students attending the [[University of Texas at Austin]] were first given an initial diagnostic and then given a score between 1 and 5 based on their potential to have claustrophobia. Those who scored a 3 or higher were used in the study. The students were then asked how well they felt they could cope if forced to stay in a small chamber for an extended period of time. Concerns expressed in the questions asked were separated into suffocation concerns and entrapment concerns in order to distinguish between the two perceived causes of claustrophobia. The results of this study showed that the majority of students feared entrapment far more than suffocation. Because of this difference in type of fear, it can yet again be asserted that there is a clear difference in these two symptoms.&lt;ref&gt;Valentiner, David P., and Michael J. Telch. &quot;Cognitive Mechanisms in Claustrophobia: An Examination of Reiss and McNally's Expectancy Model and Bandura's Self-Efficacy Theory.&quot; ''Cognitive Therapy &amp; Research'' 20.6 (1996): 593–612.&lt;/ref&gt;
+
+===Probability ratings in claustrophobic patients and non-claustrophobics===
+This study was conducted on 98 people, 49 diagnosed claustrophobics and 49 &quot;community controls&quot; to find out if claustrophobics' minds are distorted by &quot;[[anxiety]]-arousing&quot; events (i.e. claustrophobic events) to the point that they believe those events are more likely to happen. Each person was given three events—a claustrophobic event, a generally negative event, and a generally positive event—and asked to rate how likely it was that this event would happen to them. As expected, the diagnosed claustrophobics gave the claustrophobic events a significantly higher likelihood of occurring than did the [[control group]]. There was no noticeable difference in either the positive or negative events. However, this study is also potentially flawed because the claustrophobic people had already been diagnosed.{{Citation needed|date=December 2009}} [[medical diagnosis|Diagnosis]] of the disorder could likely [[bias]] one's belief that claustrophobic events are more likely to occur to them.&lt;ref&gt;Ost, Lars-Goran, and Peter Csatlos. &quot;Probability Ratings in Claustrophobic Patients and Normal Controls.&quot; ''Behaviour Research &amp; Therapy'' 38.11 (2000): 1107.&lt;/ref&gt;
+
+== See also ==
+
+* [[Agoraphobia]]
+* [[Anxiety disorder]]
+* [[List of phobias]]
+* [[Panic attack]]
+* [[Premature burial]]
+
+==References==
+{{reflist|30em}}
+
+==Bibliography==
+*Carlson, Neil R., et al. ''Psychology: the Science of Behavior,'' 7th ed. Allyn &amp; Bacon, Pearson. 2010.
+*Cheng, Dominic T., et al. &quot;Human Amygdala Activity During the Expression of Fear Responses&quot;. ''Behavioral Neuroscience.'' Vol. 120. American Psychological Association. 14 Sept. 2006.
+*Fritscher, Lisa. &quot;[http://phobias.about.com/od/introductiontophobias/a/claustroprof.htm Claustrophobia: Fear of Enclosed Spaces]&quot;. ''About.com.'' New York Times Company. 21 Sept. 2009. Web. 9 Sept. 2010.
+*Gersley, Erin. &quot;[http://allpsych.com/journal/phobias.html Phobias: Causes and Treatments]&quot;. ''AllPsych Journal.'' AllPsych Online. 17 Nov. 2001. Web. 18 Sept. 2010.
+*Hayano, Fumi PhD., et al. &quot;[http://onlinelibrary.wiley.com/doi/10.1111/j.1440-1819.2009.01960.x/full Smaller Amygdala Is Associated With Anxiety in Patients With Panic Disorder]&quot;. ''Psychiatry and Clinical Neurosciences.'' Vol. 63, Issue 3. Japanese Society of Psychiatry and Neurology 14 May 2009.
+*Öst, Lars-Göran. &quot;The Claustrophobia Scale: A Psychometric Evaluation&quot;. ''Behaviour Research and Therapy'' 45.5 (2007): 1053–64.
+*Rachman, S.J. &quot;Claustrophobia&quot;, in ''Phobias: A Handbook of Theory, Research, and Treatment.'' John Wiley and Sons, Ltd. Baffins Lane, Chichester, West Sussex, England. 1997.
+*Rachman, S.J. &quot;[http://www.education.com/reference/article/phobias1/ Phobias]&quot;. ''Education.com.'' The Gale Group. 2009. Web. 19 Sept. 2010.{{dead link|date=December 2014}}
+*Speyrer, John A. &quot;[http://primal-page.com/claus.htm Claustrophobia and the Fear of Death and Dying]&quot;. ''The Primal Psychotherapy Page.'' N.p.&amp;nbsp;3 Oct. 1995. Web. 9 Sept. 2010.
+*Thorpe, Susan, Salkovis, Paul M., &amp; Dittner, Antonia. &quot;Claustrophobia in MRI: the Role of Cognitions&quot;. ''Magnetic Resonance Imaging.'' Vol. 26, Issue 8. 3 June 2008.
+*Walding, Aureau. &quot;[http://www.livestrong.com/article/145867-causes-of-claustrophobia/ Causes of Claustrophobia]&quot;. ''Livestrong.com.'' Livestrong Foundation. 11 June 2010. Web. 18 Sept. 2010.{{dead link|date=December 2014}}
+*&quot;[https://web.archive.org/web/20110727120217/http://www.neuroscienceblog.org/what-causes-claustrophobia/ What Causes Claustrophobia?]&quot; ''Neuroscience Blog.'' NorthShore University HealthSystem. 11 June 2009. Web. 9 Sept. 2010.
+
+[[Category:Phobias]]
+[[Category:Neurotic, stress-related and somatoform disorders]]</text>
+      <sha1>tswevljrxdlsg8zl3bs205kb6sec6jc</sha1>
+    </revision>
+  </page>

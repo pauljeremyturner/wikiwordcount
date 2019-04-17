@@ -14,7 +14,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 bootJar {
-    baseName = 'gs-accessing-data-mongodb'
+    baseName = 'wikiwordcount'
     version =  '0.1.0'
 }
 
@@ -32,6 +32,8 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26'
     compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
     compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '2.1.4.RELEASE'
+// https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

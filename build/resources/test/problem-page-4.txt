@@ -1,0 +1,393 @@
+  <page>
+    <title>Assembly (demoparty)</title>
+    <ns>0</ns>
+    <id>291109</id>
+    <revision>
+      <id>853711616</id>
+      <parentid>853570375</parentid>
+      <timestamp>2018-08-06T14:25:41Z</timestamp>
+      <contributor>
+        <username>Vossanova</username>
+        <id>187701</id>
+      </contributor>
+      <comment>/* Demo and intro competition winners */ add 2018</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text xml:space="preserve">{{Multiple issues|
+{{Refimprove|date=August 2014}}
+{{Original research|date=August 2014}}}}
+[[Image:Assembly2004-areena01.jpg|thumb|300px|Overview of the Assembly 2004 party hall.]]
+The '''Assembly demoparty''' is a [[demoscene]] and gaming [[demoparty|event]] in [[Finland]]. The main organizers of the event are Pekka Aakko (''Pehu'' of [[Accession (demo group)|Accession]]) and Jussi Laakkonen (''Abyss'' of [[Future Crew]]). The Summer event takes place every year between late July and early August, and lasts three to four days, and the Winter event is held in January or February. The most recent Assembly was held from 3 to 6 August 2018 at [[Helsinki Exhibition and Convention Centre|Messukeskus]] in [[Helsinki]].
+
+Assembly Winter was announced in early 2007. The winter party is a more gaming oriented [[LAN party]] type event where as the summer events continues the traditions of the original [[demoparty]] under the name Assembly Summer. Both parties are held once a year.
+
+== History ==
+The first Assembly was held from July 24 to July 26, 1992, in [[Kauniainen]]. It was organized by the [[Amiga]] [[demogroup|demo groups]] Complex and Rebels, and the [[IBM PC|PC]] demo group [[Future Crew]]. The staff grew into a large non-profit group of individuals known as Assembly Organizing. Through the 1990s, Assembly grew so large that even exposition halls no longer sufficed, and only the largest of sports arenas met the partygoers' needs. In 1999 they rented the largest sports arena in the country, [[Hartwall Areena]] in [[Helsinki]], with over 5000 visitors and 3500 computers on the [[ice rink]].
+
+The 2004 edition of the party also set up a record: in July 2004, [[QuakeCon]] announced it was holding the world's first [[Doom 3]] competitions on the event starting on August 12–14, roughly a week after the game's release on August 3.&lt;ref&gt;{{cite web|url=http://www.quakecon.org/forums/showthread.php?p=20891 |title=Archived copy |accessdate=2006-07-17 |deadurl=yes |archiveurl=https://web.archive.org/web/20060626072312/http://www.quakecon.org/forums/showthread.php?p=20891 |archivedate=2006-06-26 }}&lt;/ref&gt; Assembly, however, managed to snatch the first place after acquiring copies of the game via [[FedEx]] with the help of some contacts in the [[United States]] and holding the competition during August 5–8.&lt;ref&gt;{{cite web|url=http://media.assembly.org/press/assembly2004_doom3_eng.pdf |archiveurl=https://web.archive.org/web/20110719154204/http://media.assembly.org/press/assembly2004_doom3_eng.pdf |archivedate=2011-07-19 |title=ASSEMBLY 2004 |website=Web.archive.org |format=PDF |date= |accessdate=2016-11-02}}&lt;/ref&gt;
+
+As of 2017 the party has been held for 25 consecutive years.
+
+==Boozembly==
+[[Image:Boozembly_2005.JPG|thumb|300px|Boozembly 2005]]
+Since the year 1995 an event called Boozembly has been organized in a nearby forest. It is officially unrelated to Assembly but serves as a meeting point for Assembly attendees as well as for other computer hobbyists and their friends. In Boozembly it is possible to use intoxicants which is not allowed in Assembly. Later IT corporations started to sponsor free beer for Boozembly. Like Assembly, Boozembly itself has become an important part of Finnish demoscene culture.&lt;ref&gt;Assembly special number of Skrolli computer culture magazine&lt;/ref&gt;
+
+== Competitions ==
+[[Image:Assembly demo party 2002 panorama.jpg|thumb|300px|Panorama view over the Assembly 2002 event.]]
+The party includes multiple competitions, or [[compo (slang word)|compos]] including but not limited to:
+
+* [[Demo (computer programming)|Demo]]
+* Oldskool demo (older machines)
+* [[64k Intro|64k intro]] (discontinued after 2011&lt;ref&gt;{{cite web|url=http://www.assembly.org/summer12/demoscene/rules/what-s-new-in-2012 |archive-url=https://web.archive.org/web/20120604000906/http://www.assembly.org/summer12/demoscene/rules/what-s-new-in-2012 |dead-url=yes |archive-date=2012-06-04 |title=What's new in 2012 |work=Assembly Summer 2012 |accessdate=2016-11-02 }}&lt;/ref&gt;, reintroduced in 2017&lt;ref&gt;{{cite web|url=http://www.assembly.org/summer17/demoscene/|title=Demoscene - ASSEMBLY Summer 17|work=Assembly Summer 2017}}&lt;/ref&gt;)
+* 4k intro
+* 1k intro
+* [[Dance music]]
+* Listening music
+* Fast Music
+* Fast graphics
+* [[Short film]]
+* Real Wild demo
+* Photo
+* [[Video game]] developing compo
+
+For the first eight years of Assembly, the demo and intro competitions were split into separate [[IBM PC compatible|PC]] and [[Commodore Amiga|Amiga]] categories. Starting in 2000, the [[platform (computing)|platform]]s have been combined, with PC (Windows or [[Linux]]), Amiga, [[Macintosh|Mac]] and even high-end [[video game console|console]]s competing in the same demo and intro competitions. Similarly, [[Commodore 64]] competitions were replaced with &quot;oldskool&quot; competitions that also allow entries for some other old platforms, such as various [[8-bit]] systems and older Amigas.
+
+Entries are submitted by demogroups and individual artists and are rated by judges. All demos which are deemed to be of a high enough standard are then shown on a big screen. Entries which break the competition rules (e.g. use [[copyright]]ed material, or aren't suitable for the category to which they are entered) are disqualified. People who are present at the arena vote for the entries, and the results are published on the Assembly website. The entries are usually made available by the artists at [[scene.org]] or on the artists own website.
+
+Assembly's demo competitions generally hold a very high level, especially for a party that is not specific to the demoscene. Notable winners include ''Lifeforce'' by ASD, ''Panic Room'' by Fairlight and ''Frameranger'' by Fairlight, CNCD and Orange.
+
+=== Demo and intro competition winners ===
+{|class=&quot;wikitable&quot;
+|+ Assembly demo/intro compo winners, 1992–2017
+!Year !!Amiga demo !!PC demo !!C64 demo !!Amiga intro !!PC 64K intro
+|-
+|[ftp://ftp.scene.org/pub/parties/1992/assembly92/results.txt 1992]||''Sound Vision'' (Reflect)||''[[Unreal (demo)|Unreal]]'' ([[Future Crew]])||''Gunnar 2'' ([[Dual Crew - Shining|Dual Crew]])||''Repo'' (Vectra)
+|  style=&quot;text-align:center; background:#bbb;&quot;|N/A
+|-
+|[ftp://ftp.scene.org/pub/parties/1993/assembly93/results.txt 1993]||''Extension'' ([[Pygmy Projects]])||''[[Second Reality]]'' ([[Future Crew]])||''Four years'' (Origo Dreamline)||''Bananamen'' (Stellar)||''Eclipse'' (EMF)
+|-
+|[ftp://ftp.scene.org/pub/parties/1994/assembly94/results.txt 1994]||''Mindflow'' (Stellar)||''Verses'' (EMF)||''Attack of Stubidos 3'' (Beyond Force)||''G-Force'' (Pygmy Projects)||''Airframe'' (Prime)
+|-
+|[ftp://ftp.scene.org/pub/parties/1995/assembly95/results.txt 1995]||''ZIF'' (Parallax)||''Stars'' ([[NoooN]])||''Extremes'' ([[Byterapers]])||''Fad'' ([[Sonik Clique]])||''Drift'' (Wild Light)
+|-
+|[ftp://ftp.scene.org/pub/parties/1996/assembly96/results.txt 1996]||''Sumea'' (Virtual Dreams)||''Machines of Madness'' (Dubius)||''Follow the Sign 3'' (Byterapers)||''Pure'' (Sonik Clique)||''Blind'' (Eufrosyne)
+|-
+|[ftp://ftp.scene.org/pub/parties/1997/assembly97/result.txt 1997]||''Pulse'' ([[Nerve Axis]])||''Boost'' ([[Doomsday (demogroup)|Doomsday]])||''Speedway'' (Panic)||''911'' (Limbo)||''Mainstream'' (Moottori)
+|-
+|[ftp://ftp.scene.org/pub/parties/1998/assembly98/asm98results.txt 1998]||''Relic'' ([[Nerve Axis]])||''Gateways'' (Trauma)||''Speedway 2'' (Panic)||''Edit 0.5'' (Haujobb)||''Oxygen'' (Coral)
+|-
+|rowspan=2|[ftp://ftp.scene.org/pub/parties/1999/assembly99/results.txt 1999]||rowspan=2|''Beats'' (Loveboat)||Non-3D:''Gasoline'' (Recreation)||rowspan=2|''Speedway 3'' (Panic)||rowspan=2|''älä ota sitä vakavasti'' (Da Jormas)||rowspan=2|''Viagra'' (Mewlers)
+|-
+|3D:''Virhe'' (Maturefurk)
+|-
+!Year!!colspan=2|Combined demo!!Oldskool demo!!colspan=2|Combined 64K intro
+|-
+|[ftp://ftp.scene.org/pub/parties/2000/assembly00/results.txt 2000]||colspan=2|''Spot'' (Exceed)||''Oldskool Trippin'' (Haujobb)||colspan=2|''Dead Flowers'' (Haujobb)
+|-
+|[ftp://ftp.scene.org/pub/parties/2001/assembly01/results.txt 2001]||colspan=2|''Lapsuus'' (Maturefurk)||''Riyadh'' (Bandwagon)||colspan=2|''Sonnet'' ([[Threestate]])
+|-
+|[ftp://ftp.scene.org/pub/parties/2002/assembly02/results.txt 2002]||colspan=2|''Liquid... Wen?'' (Haujobb)||''Impossiblator 2'' ([[PWP]])||colspan=2|''Squish'' (AND)
+|-
+|[ftp://ftp.scene.org/pub/parties/2003/assembly03/results.txt 2003]||colspan=2|''Legomania'' (Doomsday)||''Robotic Liberation'' (PWP)||colspan=2|''Zoom 3'' (AND)
+|-
+|[ftp://ftp.scene.org/pub/parties/2004/assembly04/results.txt 2004]||colspan=2|''Obsoleet'' ([[Unreal Voodoo]])||''Halfway There'' (Dekadence)||colspan=2|''The Prophecy — Project Nemesis'' ([[Conspiracy (demogroup)|Conspiracy]])
+|-
+|[ftp://ftp.scene.org/pub/parties/2005/assembly05/results.txt 2005]||colspan=2|''Iconoclast'' ([[Andromeda Software Development|ASD]])||''Boogie Factor'' ([[Fairlight (group)|Fairlight]])||colspan=2|''Che Guevara'' ([[Fairlight (group)|Fairlight]])
+|-
+|[ftp://ftp.scene.org/pub/parties/2006/assembly06/results.txt 2006]||colspan=2|''Starstruck'' (The Black Lotus)||''Fruitcake'' (RNO)||colspan=2|''Dead Ringer'' ([[Fairlight (group)|Fairlight]])
+|-
+|[ftp://ftp.scene.org/pub/parties/2007/assembly07/results.txt 2007]||colspan=2|''Lifeforce'' ([[Andromeda Software Development|ASD]])||''High Hopes'' (Aspekt)||colspan=2|''Basic Facts About Design'' (Immersion)
+|-
+|[ftp://ftp.scene.org/pub/parties/2008/assembly08/results.txt 2008]||colspan=2|''Within Epsilon'' (Pyrotech)||''Renaissance'' (Byterapers)||colspan=2|''Panic Room'' ([[Fairlight (group)|Fairlight]])
+|-
+|[ftp://ftp.scene.org/pub/parties/2009/assembly09/results09.txt 2009]||colspan=2|''Frameranger'' (Fairlight, CNCD, &amp; Orange)||''3½ Inches Is Enough'' ([[Unreal Voodoo]])||colspan=2|''Transform'' (Ate Bit)
+|-
+|[ftp://ftp.scene.org/pub/parties/2010/assembly10/results.txt 2010]||colspan=2|''Happiness is around the bend'' ([[Andromeda Software Development|ASD]])||''Grind'' (Dekadence &amp; Accession)||colspan=2|''x marks the spot'', Function-X invitation (Portal Process)
+|-
+|[ftp://ftp.scene.org/pub/parties/2011/assembly11/results.txt 2011]||colspan=2|''Spin'' ([[Andromeda Software Development|ASD]])||''Chaotic'' (Dekadence)||colspan=2|Cancelled due to lack of entries&lt;ref&gt;{{cite web|url=http://www.assembly.org/summer11/news/64k-intro-compo-cancelled-replaced-by-demo-compo |archive-url=https://web.archive.org/web/20110929200506/http://www.assembly.org/summer11/news/64k-intro-compo-cancelled-replaced-by-demo-compo |dead-url=yes |archive-date=2011-09-29 |title=64k intro compo cancelled - replaced by Demo compo! |website=Assembly.org |accessdate=2016-11-02 }}&lt;/ref&gt;
+|-
+!Year!!colspan=2|Combined demo!!Oldskool demo!!Combined 4k Intro!!Combined 1k Intro
+|-
+|[ftp://ftp.scene.org/pub/parties/2012/assembly12/results.txt 2012]||colspan=2|''Spacecut'' (CNCD)||''Conservative Megademo'' (PWP)||''Fireflies'' (Blobtrox)||''Embers'' (TDA)
+|-
+|[ftp://ftp.scene.org/pub/parties/2013/assembly13/results.txt 2013]||colspan=2|''return'' (Pyrotech)||''Norwegian Pillow'' (Dekadence)||''Highway 4k'' (HBC)||''Tendrils'' (Traction + Fit)
+|-
+|[ftp://ftp.scene.org/pub/parties/2014/assembly14/results.txt 2014]||colspan=2|''Black And White Lies'' (One Studio Off)||''Sliced &amp; Diced'' (Dekadence)||''Splash'' (Unknown Artists)||''Superstructure'' (TDA)
+|-
+|[ftp://ftp.scene.org/pub/parties/2015/assembly15/results.txt 2015]||colspan=2|''Monolith'' ([[Andromeda Software Development|ASD]])||''Carbon Based'' (Dekadence)||''Hydrokinetics (Prismbeings)||''BLCK4777'' (p01 / ribbon)
+|-
+|[ftp://ftp.scene.org/pub/parties/2016/assembly16/results.txt 2016]||colspan=2|''Gestalt'' (Quite vs T-Rex)||''Malf*cktion'' ([[Byterapers]])||''Outcast'' (Unknown Artists)||''Escape through subspace 1K'' (Seven/Fulcrum)
+|-
+!Year!!Demo!!Oldskool demo!!64k Intro!!4k Intro!!1k Intro
+|-
+|[ftp://ftp.scene.org/pub/parties/2017/assembly17/results.txt 2017]||''Zoomin'' (Adapt)||''My Summer Demo'' (Byterapers)||''Down the Drain'' (Ivory Labs)||''Primordial Soup'' (Faemiyah)||''VOLTRA'' (Ribbon)
+|-
+|[ftp://ftp.scene.org/pub/parties/2018/assembly18/results.txt 2018]||''Number One/Another One'' (CNCD &amp; Fairlight)||''Shattered Minds'' (Byterapers)||''Out of the Box'' (Adapt)||''Core Critical'' (HBC)||''geelimanipulaatio'' (gib3, tix0)
+|}
+
+==AssemblyTV==
+In recent years, Assembly has broadcast content from its in-house media effort [[AssemblyTV]] to local and national TV networks, as well as producing web streams for people to watch live over the internet — spots for hundreds, if not thousands of viewers are catered for and these streams have been watched all over the world, not just in Finland. In addition to the opening and closing ceremonies, the competitions and party reports, the educational sessions that are being held during the party are broadcast via AssemblyTV as well.
+
+==ARTtech seminars==
+ARTtech seminars are free to attend educational seminar sessions that are being held during the party at the venue location. The sessions cover various subjects that are usually related to the main party theme and idea, including sessions about programming (coding), graphic design, music composition, game development, hardware hacks, scene history and more.
+
+==References==
+{{Reflist}}
+
+==External links==
+* [http://www.assembly.org Assembly.org — Official website]
+* [https://web.archive.org/web/20010717135451/http://www.assemblytv.net/ Assemblytv.net — Official media]
+* [https://web.archive.org/web/20060716000626/http://www.mbnet.fi/jutut/assembly2006/ Assembly 2006 — MBnet] The Official [[Ezine]] of Assembly 2006.
+* [http://www.pouet.net/party.php?which=7 Assembly] on [[Pouët]]
+* [https://web.archive.org/web/20070819070229/http://www.acid.org/radio/arts-ep06.mp3 The ARTS Radio] ([[MP3]]) contains an [[interview]] with the primary organizer of Assembly, Abyss of [[Future Crew]].
+
+[[Category:Demo parties]]
+[[Category:LAN parties]]
+[[Category:Festivals in Helsinki]]
+[[Category:Recurring events established in 1992]]</text>
+      <sha1>qpwu4j9dpy1fuu12lnyfb900ps94t84</sha1>
+    </revision>
+  </page>
+  <page>
+    <title>Caspase</title>
+    <ns>0</ns>
+    <id>291111</id>
+    <revision>
+      <id>874300157</id>
+      <parentid>873012749</parentid>
+      <timestamp>2018-12-18T11:04:05Z</timestamp>
+      <contributor>
+        <ip>132.230.195.182</ip>
+      </contributor>
+      <comment>/* Apoptosis */</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text xml:space="preserve">{{Infobox protein family
+| Symbol = Peptidase_C14
+| Name = Caspase domain
+| image = Caspase 1.png
+| width =
+| caption = Structure of caspase-1 (CASP1), originally called interleukin-1 beta-converting enzyme (ICE), the first human caspase to be identified.&lt;ref name=&quot;pmid8035875&quot;&gt;{{cite journal |vauthors=Wilson KP, Black JA, Thomson JA |title=Structure and mechanism of interleukin-1 beta converting enzyme |journal=Nature |volume=370 |issue=6487 |pages=270–5 |date=July 1994 |pmid=8035875 |doi=10.1038/370270a0 |url=|display-authors=etal}}&lt;/ref&gt;
+| Pfam = PF00656
+| Pfam_clan = CL0093
+| InterPro = IPR002398
+| SMART =
+| MEROPS = C14
+| PROSITE = PS50208
+| SCOP = 1ice
+| TCDB =
+| OPM family =
+| OPM protein =
+| PDB =
+}}
+
+'''Caspases''' ('''c'''ysteine-'''asp'''artic prote'''ases''', '''c'''ysteine '''asp'''art'''ases''' or '''c'''ysteine-dependent '''asp'''artate-directed prote'''ases''') are a family of protease enzymes playing essential roles in [[programmed cell death]] (including [[apoptosis]], [[pyroptosis]] and [[necroptosis]]) and [[inflammation]]. They are named caspases due to their specific [[cysteine protease]] activity – a cysteine in its active site [[Nucleophilic catalysis|nucleophilically]] attacks and cleaves a target protein only after an [[aspartic acid]] residue. As of 2009, there are 11 or 12 confirmed caspases in humans{{refn|group=note|name=Saleh2004|Functional CASP12 is only expressed in some individuals of African descent, while individuals of Asian or Caucasian descent express only a non-functional truncated form.&lt;ref name=Saleh2004&gt;{{cite journal|title=Differential modulation of endotoxin responsiveness by human caspase-12 polymorphisms|journal=Nature|volume=429|issue=6987|pages=75–9|doi=10.1038/nature02451|pmid=15129283|year=2004|last1=Saleh|first1=Maya|last2=Vaillancourt|first2=John P|last3=Graham|first3=Rona K|last4=Huyck|first4=Matthew|last5=Srinivasula|first5=Srinivasa M|last6=Alnemri|first6=Emad S|last7=Steinberg|first7=Martin H|last8=Nolan|first8=Vikki|last9=Baldwin|first9=Clinton T|last10=Hotchkiss|first10=Richard S|last11=Buchman|first11=Timothy G|last12=Zehnbauer|first12=Barbara A|last13=Hayden|first13=Michael R|last14=Farrer|first14=Lindsay A|last15=Roy|first15=Sophie|last16=Nicholson|first16=Donald W}}&lt;/ref&gt;}} and 10 in mice, carrying out a variety of cellular functions.
+
+The role of these enzymes in programmed cell death was first identified in 1993, with their functions in apoptosis well characterised. This is a form of programmed cell death, occurring widely during development, and throughout life to maintain cell [[homeostasis]]. Activation of Caspases ensures that the cellular components are degraded in a controlled manner, carrying out cell death with minimal effect on surrounding [[tissue (biology)|tissue]]s.&lt;ref&gt;{{Cite journal|last=Rathore|first=S.|last2=Datta|first2=G.|last3=Kaur|first3=I.|last4=Malhotra|first4=P.|last5=Mohmmed|first5=A.|date=2015-07-02|title=Disruption of cellular homeostasis induces organelle stress and triggers apoptosis like cell-death pathways in malaria parasite|url=http://www.nature.com/cddis/journal/v6/n7/full/cddis2015142a.html|journal=Cell Death &amp; Disease|language=en|volume=6|issue=7|pages=e1803|doi=10.1038/cddis.2015.142|pmc=4650714|pmid=26136076}}&lt;/ref&gt;
+
+Caspases have other identified roles in programmed cell death such as [[pyroptosis]] and [[necroptosis]]. These forms of cell death are important for protecting an organism from stress signals and pathogenic attack. Caspases also have a role in inflammation, whereby it directly processes pro-inflammatory [[cytokines]] such as pro-[[Interleukin 1 beta|IL1β]]. These are signalling molecules that allow recruitment of [[immune cells]] to an infected cell or tissue. There are other identified roles of caspases such as cell proliferation, [[tumour]] suppression, cell differentiation, [[Neural development|neural]] development and [[axon]] guidance and ageing.&lt;ref&gt;{{Cite journal|last=Shalini|first=S.|last2=Dorstyn|first2=L.|last3=Dawar|first3=S.|last4=Kumar|first4=S.|date=2015-04-01|title=Old, new and emerging functions of caspases|url=http://www.nature.com/cdd/journal/v22/n4/full/cdd2014216a.html|journal=Cell Death &amp; Differentiation|language=en|volume=22|issue=4|pages=526–539|doi=10.1038/cdd.2014.216|issn=1350-9047|pmc=4356345|pmid=25526085}}&lt;/ref&gt;
+
+''Caspase deficiency'' has been identified as a cause of tumour development. Tumour growth can occur by a combination of factors, including a mutation in a cell cycle gene which removes the restraints on cell growth, combined with mutations in apoptopic proteins such as Caspases that would respond by inducing cell death in abnormally growing cells.&lt;ref name=&quot;:0&quot;&gt;{{Cite journal|last=Goodsell|first=David S.|date=2000-10-01|title=The Molecular Perspective: Caspases|url=http://theoncologist.alphamedpress.org/content/5/5/435|journal=The Oncologist|language=en|volume=5|issue=5|pages=435–436|doi=10.1634/theoncologist.5-5-435|issn=1083-7159|pmid=11040280}}&lt;/ref&gt; Conversely, over-activation of some caspases such as [[Caspase 3|caspase]]-3 can lead to excessive programmed cell death. This is seen in several [[Neurodegeneration|neurodegenerative]] diseases where neural cells are lost, such as [[Alzheimer's disease|Alzheimer's]] disease.&lt;ref name=&quot;:0&quot; /&gt; Caspases involved with processing inflammatory signals are also implicated in disease. Insufficient activation of these caspases can increase an organism's susceptibility to infection, as an appropriate immune response may not be activated.&lt;ref name=&quot;:0&quot; /&gt; The integral role caspases play in cell death and disease has led to research on using caspases as a drug target. For example, inflammatory caspase-1 has been implicated in causing [[autoimmune diseases]]; drugs blocking the activation of Caspase-1 have been used to improve the health of patients. Additionally, scientists have used caspases as cancer therapy to kill unwanted cells in tumours.&lt;ref&gt;{{Cite journal|last=McIlwain|first=David R.|last2=Berger|first2=Thorsten|last3=Mak|first3=Tak W.|date=2013-04-01|title=Caspase Functions in Cell Death and Disease|url=http://cshperspectives.cshlp.org/content/5/4/a008656|journal=Cold Spring Harbor Perspectives in Biology|language=en|volume=5|issue=4|pages=a008656|doi=10.1101/cshperspect.a008656|issn=1943-0264|pmc=3683896|pmid=23545416}}&lt;/ref&gt;
+
+== Functional classification of caspases ==
+Most caspases play a role in programmed cell death. These are summarized in the table below. The enzymes are sub classified into three types: Initiator, Executioner and Inflammatory.&lt;ref name=&quot;:5&quot;&gt;{{cite journal |last1=Galluzzi |first=Lorenzo |last2=López-Soto |first2=Alejandro |last3=Kumar |first3=Sharad |last4=Kroemer |first4=Guido |date=2016-02-16 |title=Caspases Connect Cell-Death Signaling to Organismal Homeostasis |url=http://www.cell.com/article/S1074761316300073/abstract |journal=Immunity |language=en |volume=44 |issue=2 |pages=221–231 |doi=10.1016/j.immuni.2016.01.020 |issn=1074-7613 |pmid=26885855}}&lt;/ref&gt;
+
+{| class=&quot;wikitable&quot; style=&quot;margin: 1em auto 1em auto;&quot;
+! scope=&quot;col&quot; | Programmed Cell Death
+! scope=&quot;col&quot; | Type of Caspase
+! scope=&quot;col&quot; | Enzyme
+! scope=&quot;col&quot; | Organism
+|-
+! scope=&quot;row&quot; rowspan=&quot;7&quot; | Apoptosis
+| rowspan=&quot;4&quot; | Initiator
+| [[Caspase 2]]
+| human and mouse
+|-
+| [[Caspase 8]]
+| human and mouse
+|-
+| [[Caspase 9]]
+| human and mouse
+|-
+| [[Caspase 10]]
+| human only &lt;ref name=Jänicke2006&gt;{{cite journal
+| last1 = Jänicke
+| first1 = Reiner U.
+| last2 = Sohn
+| first2 = Dennis
+| last3 = Totzke
+| first3 = Gudrun
+| last4 = Schulze-Osthoff
+| first4 = Klaus
+| date = June 2006
+| title = Caspase-10 in Mouse or Not?
+| journal = [[Science (journal)|Science]]
+| volume = 312
+| issue = 5782
+| page = 1874
+| doi = 10.1126/science.312.5782.1874a
+| pmid = 16809511}}&lt;/ref&gt;
+|-
+| rowspan=&quot;3&quot; | Executioner
+| [[Caspase 3]]
+| human and mouse
+|-
+| [[Caspase 6]]
+| human and mouse
+|-
+| [[Caspase 7]]
+| human and mouse
+|-
+! scope=&quot;row&quot; rowspan=&quot;6&quot; | Pyroptosis
+| rowspan=&quot;6&quot; | Inflammatory
+| [[Caspase 1]]
+| human and mouse
+|-
+| [[Caspase 4]]
+| human {{refn|group=note|name=Stowe2015|CASP4 and CASP5 are considered to be the human orthologues of CASP11, which was found in mice and rats but not in humans.&lt;ref name=Stowe2015&gt;{{cite journal|title=Caspase-11: arming the guards against bacterial infection|journal=Immunological Reviews|volume=265|issue=1|pages=75–84|doi=10.1111/imr.12292|pmid=25879285|year=2015|last1=Stowe|first1=Irma|last2=Lee|first2=Bettina|last3=Kayagaki|first3=Nobuhiko}}&lt;/ref&gt;}}
+|-
+| [[Caspase 5]]
+| human {{refn|group=note|name=Stowe2015}}
+|-
+| [[Caspase 11]]
+| mouse {{refn|group=note|name=Stowe2015}}
+|-
+| [[Caspase 12]]
+| mouse and some humans {{refn|group=note|name=Saleh2004}}
+|-
+| [[Caspase 13]]
+| cattle only &lt;ref name=Koenig2001&gt;{{cite journal |title= Evidence That Caspase-13 Is Not a Human but a Bovine Gene |journal= Biochemical and Biophysical Research Communications|volume= 285|issue= 5|pages= 1150–4|doi= 10.1006/bbrc.2001.5315|pmid= 11478774|year= 2001|last1= Koenig|first1= Ulrich|last2= Eckhart|first2= Leopold|last3= Tschachler|first3= Erwin}}&lt;/ref&gt;
+|-
+! scope=&quot;row&quot; | Other roles
+| Other
+| [[Caspase 14]]
+| human and mouse
+|}
+
+Note that in addition to apoptosis, ''Caspase-8'' is also required for the inhibition of another form of programmed cell death called ''Necroptosis''. Caspase-14 plays a role in epithelial cell keratinocyte differentiation and can form an epidermal barrier that protects against dehydration and UVB radiation.&lt;ref name=&quot;:4&quot;&gt;{{cite journal |last1=Denecker |first1=Geertrui |last2=Ovaere |first2=Petra |last3=Vandenabeele |first3=Peter |last4=Declercq |first4=Wim |date=2008-02-11 |title=Caspase-14 reveals its secrets |url=http://jcb.rupress.org/content/180/3/451 |journal=The Journal of Cell Biology |language=en |volume=180 |issue=3 |pages=451–458 |doi=10.1083/jcb.200709098 |issn=0021-9525 |pmc=2234247 |pmid=18250198|hdl=1854/LU-394311 }}&lt;/ref&gt;
+
+== Activation of caspases ==
+Caspases are synthesised as inactive [[zymogen]]s (pro-caspases) that are only activated following an appropriate stimulus. This post-translational level of control allows rapid and tight regulation of the enzyme.
+
+Activation involves dimerization and often oligomerisation of pro-caspases, followed by cleavage into a small subunit and large subunit. The large and small subunit associate with each other to form an active heterodimer caspase. The active enzyme often exists as a heterotetramer in the biological environment, where a pro-caspase dimer is cleaved together to form a heterotetramer.&lt;ref name=&quot;:3&quot; /&gt;
+
+=== Dimerisation ===
+The activation of initiator caspases and inflammatory caspases is initiated by dimerisation, which is facilitated by binding to [[Signal transducing adaptor protein|adaptor protein]]s via [[protein–protein interaction]] motifs that are collectively referred to as [[death fold]]s. The death folds are located in a structural domain of the caspases known as the pro-domain, which is larger in those caspases that contain death folds than in those that do not. The pro-domain of the intrinsic initiator caspases and the inflammatory caspases contains a single death fold known as [[caspase recruitment domain]] (CARD), while the pro-domain of the extrinsic initiator caspases contains two death folds known as [[death effector domain]]s (DED).&lt;ref name=Lahm2003&gt;{{cite journal|title=Death fold domain interaction in apoptosis|journal=Cell Death and Differentiation|volume=10|issue=1|pages=10–2|doi=10.1038/sj.cdd.4401203|pmid=12655289|year=2003|last1=Lahm|first1=Armin|last2=Paradisi|first2=Andrea|last3=Green|first3=Douglas R|last4=Melino|first4=Gerry}}&lt;/ref&gt;&lt;ref name=Kumar2007&gt;{{cite journal|title=Caspase function in programmed cell death|journal=Cell Death and Differentiation|volume=14|issue=1|pages=32–43|doi=10.1038/sj.cdd.4402060|pmid=17082813|year=2006|last1=Kumar|first1=S}}&lt;/ref&gt;
+
+''Multiprotein complexes'' often form during caspase activation.&lt;ref name=&quot;:3&quot;&gt;{{cite journal |last=Shi |first=Yigong |date=2004-06-25 |title=Caspase Activation |url=http://www.cell.com/article/S0092867404005756/abstract |journal=Cell |language=en |volume=117 |issue=7 |pages=855–858 |doi=10.1016/j.cell.2004.06.007 |issn=0092-8674 |pmid=15210107}}&lt;/ref&gt; Some activating multiprotein complexes includes:
+*The ''[[death-inducing signaling complex]]'' (DISC) during extrinsic apoptosis
+*The ''[[apoptosome]]'' during intrinsic apoptosis
+*The ''[[inflammasome]]'' during pyroptosis
+
+=== Cleavage ===
+Once appropriately dimerised, the Caspases cleave at inter domain linker regions, forming a large and small subunit. This cleavage allows the active-site loops to take up a conformation favourable for enzymatic activity.&lt;ref&gt;{{Cite journal|last=Riedl|first=Stefan J.|last2=Shi|first2=Yigong|title=Molecular mechanisms of caspase regulation during apoptosis|journal=Nature Reviews Molecular Cell Biology|volume=5|issue=11|pages=897–907|doi=10.1038/nrm1496|pmid=15520809|date=Nov 2004}}&lt;/ref&gt;
+
+''Cleavage of Initiator and Executioner caspases'' occur by different methods outlined in the table below.
+* Initiator caspases auto-proteolytically cleave whereas Executioner caspases are cleaved by initiator caspases. This hierarchy allows an amplifying chain reaction or cascade for degrading cellular components, during controlled cell death.
+
+{| class=&quot;wikitable&quot;
+|-
+|Initiator Caspase
+Caspase-8
+||
+[[File:Caspase 8 final.png |thumb|300px|initiator|Inititator Pro-caspases have a prodomain that allows recruitment of other pro-caspases, which subsequently dimerise. Both pro-caspase moleuceules undergo cleavage by autocatalysis. This leads to removal of the prodomain and cleavage of the linker region between the large and small subunit. A heterotetramer is formed]]
+ | valign=top |
+[[File:Cas2 pdb.png |thumb|300px|PDB image of caspase 8 (3KJQ) in 'biological assembly'. Two shades of blue used to represent two small sunits, while two shades of purple represent two large subunits]]
+|-
+| Executioner
+Caspase Caspase-3
+
+||
+[[File:Caspase 3 final.png |thumb|300px| Executioner caspase constitutively exist as homodimers. The red cuts represent regions where initiator caspases cleave the executioner caspases. The resulting small and large subunit of each Caspase-3 will associate,resulting in a heterotetramer.]]&lt;ref&gt;{{Cite journal|last=Lavrik|first=I.|last2=Krueger|first2=A.|last3=Schmitz|first3=I.|last4=Baumann|first4=S.|last5=Weyd|first5=H.|last6=Krammer|first6=P. H.|last7=Kirchhoff|first7=S.|date=2003-01-01|title=The active caspase-8 heterotetramer is formed at the CD95 DISC|url=http://www.nature.com/cdd/journal/v10/n1/full/4401156a.html|journal=Cell Death &amp; Differentiation|language=en|volume=10|issue=1|pages=144–145|doi=10.1038/sj.cdd.4401156|pmid=12655304|issn=1350-9047}}&lt;/ref&gt;
+ ||
+[[File:Cas4 pdb.png |thumb|300px|PDB image of Caspase 3 (4QTX) in 'biological assembly'. Two shades of blue used to represent two small sunits, while two shades of purple represent two large subunits]]
+|}
+
+== Some roles of caspases ==
+
+=== Apoptosis ===
+[[File:Apop1.png|border|right|thumb|300px|Initiator caspases are activated by intrinsic and extrinsic apoptopic pathways. This leads to the activation of other caspases including executioner caspases that carry out apoptosis by cleaving cellular components.]]
+Apoptosis is a form of [[Programmed cell death|programmed]] cell death where the cell undergoes morphological changes, to minimize its effect on surrounding cells to avoid inducing an immune response. The cell shrinks and condenses - the [[cytoskeleton]] will collapse, the nuclear envelope disassembles and the DNA fragments up. This results in the cell forming self-enclosed bodies called 'blebs', to avoid release of cellular components into the [[Extracellular matrix|extracellular]] medium. Additionally, the cell membrane [[phospholipid]] content is altered, which makes the dying cell more susceptible to phagocytic attack and removal.&lt;ref&gt;{{Cite journal|last=Elmore|first=Susan|date=2007-06-01|title=Apoptosis: A Review of Programmed Cell Death|url=http://tpx.sagepub.com/content/35/4/495|journal=Toxicologic Pathology|language=en|volume=35|issue=4|pages=495–516|doi=10.1080/01926230701320337|issn=0192-6233|pmc=2117903|pmid=17562483}}&lt;/ref&gt;
+
+''Apoptopic caspases are subcategorised as:''
+# ''Initiator Caspases'' ([[Caspase 2]], [[Caspase 8]], [[Caspase-9]], [[Caspase 10]])
+# ''Executioner Caspases'' ([[Caspase 3]], [[Caspase 6]] and [[Caspase 7]])
+Once initiator caspases are activated, they produce a chain reaction, activating several other executioner caspases. Executioner caspases degrade over 600 cellular components&lt;ref name=&quot;:1&quot;&gt;{{Cite journal|last=Sollberger|first=Gabriel|last2=Strittmatter|first2=Gerhard E.|last3=Garstkiewicz|first3=Martha|last4=Sand|first4=Jennifer|last5=Beer|first5=Hans-Dietmar|date=2014-02-01|title=Caspase-1: The inflammasome and beyond|url=http://ini.sagepub.com/content/20/2/115|journal=Innate Immunity|language=en|volume=20|issue=2|pages=115–125|doi=10.1177/1753425913484374|issn=1753-4259|pmid=23676582}}&lt;/ref&gt; in order to induce the morphological changes for apoptosis.
+
+''Examples of caspase cascade during apoptosis:''
+# ''Intrinsic apoptopic pathway:'' During times of cellular stress, mitochondrial ''[[Cytochrome c|cytochrome]]'' c is released into the cytosol. This molecule binds an adaptor protein ([[APAF1|APAF]]-1), which recruits initiator Caspase-9 (via CARD-CARD interactions). This leads to the formation of a Caspase activating multiprotein complex called the ''[[Apoptosome]].'' Once activated, initiator caspases such as Caspase 9 will cleave and activate other executioner caspases. This leads to degradation of cellular components for apoptosis.
+# ''Extrinsic apoptopic pathway:''  The caspase cascade is also activated by extracellular ligands, via cell surface Death Receptors. This is done by the formation of a multiprotein Death Inducing Signalling Complex (DISC) that recruits and activates a pro-caspase. For example, the Fas Ligand binds the FasR receptor at the receptor's extracellular surface; this activates the death domains at the cytoplasmic tail of the receptor. The adaptor protein FADD will recruit (by a Death domain-Death domain interaction) pro-Caspase 8 via the DED domain. This FasR, FADD and pro-Caspase 8 form the Death Inducing Signalling Complex (DISC) where ''Caspase-8 is activated.'' This could lead to either downstream activation of the intrinsic pathway by inducing mitochondrial stress, or direct activation of Executioner Caspases (Caspase 3, Caspase 6 and Caspase 7) to degrade cellular components as shown in the adjacent diagram.&lt;ref&gt;{{cite journal |last=Creagh |first=Emma M. |date=December 2014 |title=Caspase crosstalk: integration of apoptotic and innate immune signalling pathways |journal=Trends in Immunology |volume=35 |issue=12 |pages=631–640 |doi=10.1016/j.it.2014.10.004 |pmid=25457353 |url=}}&lt;/ref&gt;
+
+=== Pyroptosis ===
+Pyroptosis is a form of programmed cell death that inherently induces an immune response. It is morphologically distinct from other types of cell death – cells swell up, rupture and release pro-inflammatory cellular contents. This is done in response to a range of stimuli including microbial infections as well as heart attacks (myocardial infarctions).&lt;ref&gt;{{Cite journal|last=Bergsbaken|first=Tessa|last2=Fink|first2=Susan L.|last3=Cookson|first3=Brad T.|title=Pyroptosis: host cell death and inflammation|journal=Nature Reviews Microbiology|volume=7|issue=2|pages=99–109|doi=10.1038/nrmicro2070|pmc=2910423|pmid=19148178|year=2009}}&lt;/ref&gt; Caspase-1, Caspase-4 and Caspase-5 in humans, and Caspase-1 and Caspase-11 in mice play important roles in inducing cell death by pyroptosis. This limits the life and proliferation time of intracellular and extracellular pathogens.
+
+==== Pyroptosis by caspase-1 ====
+
+Caspase-1 activation is mediated by a repertoire of proteins, allowing detection of a range of pathogenic ligands. Some mediators of Caspase-1 activation are: NOD-like Leucine Rich Repeats (NLRs), [[AIM2]]-Like Receptors (ALRs), Pyrin and [[IFI16]].&lt;ref name=&quot;:2&quot; /&gt;
+
+These proteins allow caspase-1 activation by forming a multiprotein activating complex called Inflammasomes. For example, a NOD Like Leucine Rich Repeat NLRP3 will sense an efflux of potassium ions from the cell. This cellular ion imbalance leads to oligomerisation of NLRP3 molecules to form a multiprotein complex called the NLRP3 Inflammasome. The pro-caspase-1 is brought into close proximity with other pro-caspase molecule in order to dimerise and undergo auto-proteolytic cleavage.&lt;ref name=&quot;:2&quot; /&gt;
+
+Some pathogenic signals that lead to Pyroptosis by Caspase-1 are listed below:
+* ''DNA in the host cytosol'' binds to AIM2-Like Receptors inducing Pyroptosis
+* ''Type III secretion system apparatus from bacteria'' bind NOD Like Leucine Rich Repeats receptors called NAIP’s (1 in humans and 4 in mice)
+''Pyroptosis by Caspase-4 and Caspase-5 in humans and Caspase-11 in mice''
+
+These caspases have the ability to induce direct pyroptosis when [[lipopolysaccharide]] (LPS) molecules (found in the cell wall of gram negative bacteria) are found in the cytoplasm of the host cell. For example, Caspase 4 acts as a receptor and is proteolytically activated, without the need of an inflammasome complex or Caspase-1 activation.&lt;ref name=&quot;:2&quot; /&gt;
+
+A crucial downstream substrate for pyroptopic caspases is [[Gasdermin D]] (GSDMD)&lt;ref&gt;{{Cite journal|last=He|first=Wan-ting|last2=Wan|first2=Haoqiang|last3=Hu|first3=Lichen|last4=Chen|first4=Pengda|last5=Wang|first5=Xin|last6=Huang|first6=Zhe|last7=Yang|first7=Zhang-Hua|last8=Zhong|first8=Chuan-Qi|last9=Han|first9=Jiahuai|date=2015-12-01|title=Gasdermin D is an executor of pyroptosis and required for interleukin-1β secretion|url=http://www.nature.com/cr/journal/v25/n12/full/cr2015139a.html|journal=Cell Research|language=en|volume=25|issue=12|pages=1285–1298|doi=10.1038/cr.2015.139|issn=1001-0602|pmc=4670995|pmid=26611636}}&lt;/ref&gt;
+
+=== Role in inflammation ===
+Inflammation is a protective attempt by an organism to restore a homeostatic state, following disruption from harmful stimulus, such as tissue damage or bacterial infection.&lt;ref name=&quot;:1&quot;/&gt;
+
+Caspase-1, Caspase-4, Caspase-5 and Caspase-11 are considered 'Inflammatory Caspases'.&lt;ref name=&quot;:5&quot; /&gt;
+* ''Caspase-1'' is key in activating pro-inflammatory [[cytokine]]s; these act as signals to immune cells and make the environment favourable for immune cell recruitment to the site of damage. Caspase-1 therefore plays a fundamental role in the [[innate immune system]]. The enzyme is responsible for processing cytokines such as pro-ILβ and pro-IL18, as well as secreting them.&lt;ref name=&quot;:2&quot;&gt;{{Cite journal|last=Eldridge|first=Matthew JG|last2=Shenoy|first2=Avinash R|title=Antimicrobial inflammasomes: unified signalling against diverse bacterial pathogens|url=http://linkinghub.elsevier.com/retrieve/pii/S1369527414001568|journal=Current Opinion in Microbiology|volume=23|pages=32–41|doi=10.1016/j.mib.2014.10.008|pmid=25461570|year=2015}}&lt;/ref&gt;
+* ''Caspase-4 and -5 in humans, and Caspase-11'' ''in mice'' have a unique role as a receptor, whereby it binds to LPS, a molecule abundant in gram negative bacteria. This can lead to the processing and secretion of IL-1β and IL-18 cytokines by activating Caspase-1; this downstream effect is the same as described above. It also leads to the secretion of another inflammatory cytokine that is not processed. This is called pro-IL1α.&lt;ref name=&quot;:2&quot;  /&gt; There is also evidence of an inflammatory caspase, caspase-11 aiding cytokine secretion; this is done by inactivating a membrane channel that blocks IL-1β secretion&lt;ref name=&quot;:2&quot; /&gt;
+* Caspases can also induce an inflammatory response on a transcriptional level. There is evidence where it promotes transcription of ''nuclear factor-κB ([[NF-κB]]''[[NF-κB|)]], a transcription factor that assists in transcribing inflammatory cytokines such as [[Interferon|IFN]]s, [[Tumor necrosis factors|TNF]], [[Interleukin 6|IL-6]] and [[Interleukin 8|IL-8]]. For example, Caspase-1 activates Caspase-7, which in turn cleaves the [[Poly ADP ribose polymerase|poly (ADP) ribose]] – this activates transcription of NF-κB controlled genes.&lt;ref name=&quot;:1&quot;  /&gt;
+
+== Discovery of caspases ==
+[[H. Robert Horvitz]] initially established the importance of caspases in apoptosis and found that the ''ced-3'' gene is required for the cell death that took place during the development of the [[nematode]] ''[[Caenorhabditis elegans|C. elegans]]''. Horvitz and his colleague [[Junying Yuan]] found in 1993 that the protein encoded by the ced-3 gene is cysteine protease with similar properties to the [[mammal]]ian interleukin-1-beta converting enzyme (ICE) (now known as caspase 1). At the time, ICE was the only known caspase.&lt;ref name=&quot;ced-3&quot;&gt;{{cite journal | author=Yuan, J| title=The C. elegans cell death gene ced-3 encodes a protein similar to mammalian interleukin-1 beta-converting enzyme| journal=Cell| year=1993| volume=75| pages=641–652 | doi=10.1016/0092-8674(93)90485-9 | pmid=8242740 | issue=4|display-authors=etal}}&lt;/ref&gt; Other mammalian caspases were subsequently identified, in addition to caspases in organisms such as fruit fly ''[[Drosophila melanogaster]]''.
+
+Researchers decided upon the nomenclature of the caspase in 1996. In many instances, a particular caspase had been identified simultaneously by more than one laboratory; each would then give the protein a different name. For example, caspase 3 was variously known as CPP32, apopain and Yama. Caspases, therefore, were numbered in the order in which they were identified.&lt;ref name=&quot;Alnemri ES&quot;&gt;{{cite journal|last=Alnemri ES|authorlink=Emad Alnemri|title=Human ICE/CED-3 Protease Nomenclature|journal=Cell|year=1996|volume=87|issue=2|pages=171|url=http://www.sciencedirect.com/science?_ob=ArticleURL&amp;_udi=B6WSN-41BD859-4&amp;_user=10&amp;_coverDate=10%2F18%2F1996&amp;_rdoc=1&amp;_fmt=high&amp;_orig=gateway&amp;_origin=gateway&amp;_sort=d&amp;_docanchor=&amp;view=c&amp;_acct=C000050221&amp;_version=1&amp;_urlVersion=0&amp;_userid=10&amp;md5=beeef156f574bed0997645c4d7ead055&amp;searchtype=a|accessdate=6 March 2011|doi=10.1016/S0092-8674(00)81334-3|pmid=8861900|first1=Emad S|display-authors=etal}}&lt;/ref&gt; ICE was, therefore, renamed as caspase 1. ICE was the first mammalian caspase to be characterised because of its similarity to the nematode death gene ced-3, but it appears that the principal role of this enzyme is to mediate inflammation rather than cell death.
+
+== Evolution ==
+In animals apoptosis is induced by caspases and in fungi and plants, apoptosis is induced by  by arginine and lysine-specific caspase like proteases called metacaspases.  Homology searches revealed a close homology between caspases and the caspase-like proteins of ''Reticulomyxa'' (a unicellular organism). The phylogenetic study indicates that divergence of caspase and metacaspase sequences occurred before the divergence of eukaryotes.&lt;ref&gt;{{Cite journal|last=Klim|first=Joanna|last2=Gładki|first2=Arkadiusz|last3=Kucharczyk|first3=Roza|last4=Zielenkiewicz|first4=Urszula|last5=Kaczanowski|first5=Szymon|date=2018-04-27|title=Ancestral State Reconstruction of the Apoptosis Machinery in the Common Ancestor of Eukaryotes|journal=G3: Genes, Genomes, Genetics|volume=8|issue=6|pages=2121–2134|doi=10.1534/g3.118.200295|issn=2160-1836|pmc=5982838|pmid=29703784}}&lt;/ref&gt;
+
+==See also==
+{{Portal box|Biology|Molecular and cellular biology}}
+{{colbegin}}
+*[[Apoptosis]]
+*[[Apoptosome]]
+*[[Bcl-2]]
+*[[Emricasan]]
+*[[Metacaspase]]
+*[[Paracaspase]]
+*[[Pyroptosis]]
+*[[The Proteolysis Map]]
+*[[Programmed cell death]]
+{{colend}}
+
+==Notes==
+{{reflist|group=note}}
+
+==References==
+{{Reflist|2}}
+
+==External links==
+*{{ELM|CLV_C14_Caspase3-7}}
+*[https://web.archive.org/web/20070630103651/http://stke.sciencemag.org/content/vol2007/issue380/images/data/tr1/DC1/Apoptosis_WEHI.mov Apoptosis Video]  Demonstrates a model of a caspase cascade as it occurs in vivo.
+*[http://users.rcn.com/jkimball.ma.ultranet/BiologyPages/A/Apoptosis.html#The_Mechanisms_of_Apoptosis The Mechanisms of Apoptosis] Kimball's Biology Pages. Simple explanation of the mechanisms of apoptosis triggered by internal signals (bcl-2), along the caspase-9, caspase-3 and caspase-7 pathway; and by external signals (FAS and TNF), along the caspase 8 pathway. Accessed 25 March 2007.
+*[https://www.youtube.com/watch?v=4YYboqiol_w Apoptosis &amp; Caspase 7], PMAP-animation
+*{{MeshName|Caspases}}
+* [https://web.archive.org/web/20110727235334/http://beaker.sanfordburnham.org/?p=1592 Tumors Beware] (from Beaker Blog)
+
+{{Cysteine proteases}}
+{{Fas apoptosis signaling pathway}}
+
+[[Category:EC 3.4.22]]
+[[Category:Programmed cell death]]
+[[Category:Apoptosis]]
+[[Category:Peptidase]]
+[[Category:Caspases]]</text>
+      <sha1>lpnnvlk0cci0cxzqy8n0ynm3bir1d1l</sha1>
+    </revision>
+  </page>
