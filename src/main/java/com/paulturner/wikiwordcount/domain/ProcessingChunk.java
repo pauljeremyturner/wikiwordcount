@@ -7,8 +7,10 @@ public class ProcessingChunk implements Comparable<ProcessingChunk> {
     private long end;
     private long timestamp;
     private boolean processed;
+
     public ProcessingChunk() {
     }
+
     public ProcessingChunk(long start, long end, long timestamp) {
         this.start = start;
         this.end = end;

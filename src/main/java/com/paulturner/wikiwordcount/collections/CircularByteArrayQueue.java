@@ -39,4 +39,8 @@ public class CircularByteArrayQueue {
         return Arrays.equals(bytes, byteArray);
     }
 
+    @Override
+    public String toString() {
+        return new String(byteArray);
+    }
 }

@@ -34,7 +34,7 @@ public class RuntimeOptions {
     }
 
     public int getSubchunkSize() {
-        return 1024 * 1024 * 1024;
+        return 1024 * 1024 * 128;
     }
 
     public long getFileSize() {
@@ -57,7 +57,7 @@ public class RuntimeOptions {
         private long bFileSize;
         private boolean bUseOffHelpBuffers;
 
-        public Builder withFile(File file ){
+        public Builder withFile(File file) {
             this.bFile = file;
             return this;
         }
@@ -80,7 +80,6 @@ public class RuntimeOptions {
         public RuntimeOptions build() {
             return new RuntimeOptions(this.bFile, this.bMongoClientUri, this.bChunkSize, this.bUseOffHelpBuffers);
         }
-
 
 
     }

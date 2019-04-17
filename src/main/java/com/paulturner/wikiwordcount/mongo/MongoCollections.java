@@ -8,6 +8,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.paulturner.wikiwordcount.cli.RuntimeOptions;
+import com.paulturner.wikiwordcount.domain.ChunkDigest;
 import com.paulturner.wikiwordcount.domain.ProcessingChunk;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -28,6 +29,7 @@ public class MongoCollections {
     MongoClient mongoClient;
     private RuntimeOptions runtimeOptions;
     private MongoCollection<ProcessingChunk> chunkPositionCollection;
+    private MongoCollection<ChunkDigest> chunkDigestCollection;
 
     @Autowired
     public MongoCollections(RuntimeOptions runtimeOptions) {
@@ -49,6 +51,7 @@ public class MongoCollections {
         com.mongodb.client.MongoClient mongoClient = MongoClients.create(settings);
         MongoDatabase database = mongoClient.getDatabase("wikiwordcount");
         chunkPositionCollection = database.getCollection("chunkPosition", ProcessingChunk.class);
+        chunkDigestCollection = database.getCollection("chunkDigest", ChunkDigest.class);
 
     }
 
@@ -79,4 +82,11 @@ public class MongoCollections {
     }
 
 
+    public void addChunkDigest(ChunkDigest chunkDigest) {
+        chunkDigestCollection.insertOne(chunkDigest);
+    }
+
+    public void completeChunk(ProcessingChunk processingChunk) {
+
+    }
 }

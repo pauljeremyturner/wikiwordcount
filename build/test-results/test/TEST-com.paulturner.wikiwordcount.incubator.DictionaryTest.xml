@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.paulturner.wikiwordcount.incubator.DictionaryTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-04-17T01:26:57" hostname="t3610" time="0.513">
+  <properties/>
+  <testcase name="shouldIndicateItContainsAllWordsInDictionaryFile" classname="com.paulturner.wikiwordcount.incubator.DictionaryTest" time="0.513"/>
+  <testcase name="shouldNotIndicateItContainsNonDictionaryWords" classname="com.paulturner.wikiwordcount.incubator.DictionaryTest" time="0.0"/>
+  <system-out><![CDATA[2019-04-17 03:26:58.122 [Test worker] INFO  c.p.wikiwordcount.text.Dictionary - Dictionary Loaded [wordcount=370091]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

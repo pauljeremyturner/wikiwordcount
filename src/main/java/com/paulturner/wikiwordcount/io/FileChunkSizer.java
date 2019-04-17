@@ -42,7 +42,7 @@ public class FileChunkSizer {
     Implementation note: no need to read the whole 2GB file chunk to determine where to chop to provide whole lines.
     Use a byte buffer here for start and end of the chunk and get the nearest chunk with whole lines.
      */
-    public ProcessingChunk trimToWholeLines(FileChunk fileChunk) {
+    public ProcessingChunk trimToWholePages(FileChunk fileChunk) {
 
         long startPosition, endPosition;
 
@@ -81,20 +81,24 @@ public class FileChunkSizer {
         int start;
         while (byteBuffer.hasRemaining()) {
             start = byteBuffer.position();
-            int subchunkActualSize;
+            int actualSubchunkSize;
             int approximateSubchunkSize = Math.min(subchunkSize, byteBuffer.remaining());
-            byteBuffer.position(byteBuffer.position() + approximateSubchunkSize);
             if (approximateSubchunkSize == subchunkSize) {
-                subchunkActualSize = subchunkSize + advanceToNewPage(byteBuffer);
+                byteBuffer.mark();
+                byteBuffer.position(byteBuffer.position() + approximateSubchunkSize);
+                actualSubchunkSize = approximateSubchunkSize + advanceToNewPage(byteBuffer);
+                byteBuffer.reset();
             } else {
-                subchunkActualSize = approximateSubchunkSize;
+                actualSubchunkSize = approximateSubchunkSize;
             }
 
             ByteBuffer slice = byteBuffer.slice();
-            slice.limit(subchunkActualSize);
+            slice.limit(actualSubchunkSize);
 
-            subchunks.add(new ProcessingChunkWithBuffer(start, byteBuffer.position(), byteBuffer));
+            slice.rewind();
 
+            subchunks.add(new ProcessingChunkWithBuffer(byteBuffer.position(), byteBuffer.position() + actualSubchunkSize, slice));
+            byteBuffer.position(byteBuffer.position() + Math.min(actualSubchunkSize + 1, byteBuffer.remaining()));
 
         }
 
@@ -105,6 +109,7 @@ public class FileChunkSizer {
 
 
     private int advanceToNewPage(ByteBuffer byteBuffer) {
+        int startPosition = byteBuffer.position();
         CircularByteArrayQueue queue = new CircularByteArrayQueue(BYTES_CLOSE_PAGE.length);
         while (byteBuffer.hasRemaining()) {
             queue.offer(byteBuffer.get());
@@ -112,7 +117,7 @@ public class FileChunkSizer {
                 break;
             }
         }
-        return byteBuffer.position();
+        return byteBuffer.position() - startPosition;
     }
 
 

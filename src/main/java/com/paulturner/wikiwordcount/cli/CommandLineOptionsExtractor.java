@@ -70,7 +70,7 @@ public class CommandLineOptionsExtractor {
         pw.flush();
         try {
             logger.info(baos.toString(StandardCharsets.UTF_8.name()));
-        } catch (final  UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -96,7 +96,7 @@ public class CommandLineOptionsExtractor {
         Option chunkSize = Option.builder()
                 .required(false)
                 .argName("size")
-                .desc("ChunkSize in bytes to process")
+                .desc("ChunkSize in bytes to run")
                 .longOpt(OPTION_CHUNK_SIZE)
                 .hasArg()
                 .build();
