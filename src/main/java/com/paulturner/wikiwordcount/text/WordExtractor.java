@@ -11,61 +11,46 @@ import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 @NotThreadSafe
-public class WordExtractor implements Callable<ChunkDigest> {
+public class WordExtractor {
 
     private static final Dictionary dictionary = new Dictionary();
     private static final Logger logger = LoggerFactory.getLogger(WordExtractor.class);
 
-    private static final char[] XML_TAG_TEXT_OPEN = "<text" .toCharArray();
-    private static final char[] XML_TAG_TEXT_CLOSE = "</text" .toCharArray();
-    private static final char[] XML_TAG_TITLE_OPEN = "<title" .toCharArray();
-    private static final char[] XML_TAG_TITLE_CLOSE = "</title" .toCharArray();
-    private static final char[] XML_TAG_COMMENT_OPEN = "<comment" .toCharArray();
-    private static final char[] XML_TAG_COMMENT_CLOSE = "</comment" .toCharArray();
+    private static final char[] XML_TAG_TEXT_OPEN = "<text".toCharArray();
+    private static final char[] XML_TAG_TEXT_CLOSE = "</text".toCharArray();
+    private static final char[] XML_TAG_TITLE_OPEN = "<title".toCharArray();
+    private static final char[] XML_TAG_TITLE_CLOSE = "</title".toCharArray();
+    private static final char[] XML_TAG_COMMENT_OPEN = "<comment".toCharArray();
+    private static final char[] XML_TAG_COMMENT_CLOSE = "</comment".toCharArray();
 
     private final ByteBuffer byteBuffer;
     private final Map<String, Integer> wordCountMap = new HashMap<>();
 
 
-    public WordExtractor(ByteBuffer byteBuffer) {
+    public WordExtractor(final ByteBuffer byteBuffer) {
         this.byteBuffer = byteBuffer;
     }
 
-    @Override
-    public ChunkDigest call() {
-        try {
-            CharBuffer charBuffer = StandardCharsets.UTF_8.decode(byteBuffer);
+    public ChunkDigest extract() {
+        CharBuffer charBuffer = StandardCharsets.UTF_8.decode(byteBuffer);
 
-            return extract(charBuffer);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
-            logger.info("Completed processing a subchunk, [size={}]", byteBuffer.limit());
-        }
-
+        return doExtract(charBuffer);
     }
 
     private void incrementCountForWord(String word) {
         if (dictionary.isDictionaryWord(word)) {
-            wordCountMap.computeIfAbsent(word, k -> 0);
             wordCountMap.computeIfPresent(word, (k, v) -> (v + 1));
-        }
-
-        if (logger.isTraceEnabled() && (wordCountMap.size() % 10000 == 0)) {
-            logger.trace("word count: [number of words={}]", wordCountMap.size());
-
+            wordCountMap.computeIfAbsent(word, k -> 1);
         }
     }
 
-    private ChunkDigest extract(CharBuffer charBuffer) {
+    private ChunkDigest doExtract(CharBuffer charBuffer) {
 
         boolean startOfLine = true;
 
-
+        //todo: no need for this circular q for the line, just for the tags - refactor to use the char buffer instead
         CircularCharArrayQueue lineQueue = new CircularCharArrayQueue(4096);
         CircularCharArrayQueue tagQueue = new CircularCharArrayQueue(20);
 
@@ -88,7 +73,6 @@ public class WordExtractor implements Callable<ChunkDigest> {
             }
 
             lineQueue.offer(c);
-
 
             if (isComment(lineQueue)) {
                 processComment(charBuffer, lineQueue, tagQueue);
@@ -156,16 +140,13 @@ public class WordExtractor implements Callable<ChunkDigest> {
         processUntil(charBuffer, lineQueue, tagQueue, XML_TAG_COMMENT_CLOSE);
     }
 
-
     private boolean isComment(CircularCharArrayQueue queue) {
         return queue.containsArray(XML_TAG_COMMENT_OPEN);
     }
 
-
     private boolean isIndentation(char c) {
         return c == ' ' || c == '\t';
     }
-
 
     private void ignoreToXmlCloseTag(final CharBuffer charBuffer) {
         while (charBuffer.hasRemaining() && ((charBuffer.get()) != '>')) ;
