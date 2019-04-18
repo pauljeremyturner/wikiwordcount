@@ -1,34 +1,90 @@
 package com.paulturner.wikiwordcount;
 
-import com.paulturner.wikiwordcount.cli.CommandLineOptionsExtractor;
-import com.paulturner.wikiwordcount.cli.RuntimeOptions;
+import com.mongodb.ServerAddress;
+import com.paulturner.wikiwordcount.cli.CalculateCommandLineParser;
+import com.paulturner.wikiwordcount.cli.CalculateOptions;
+import com.paulturner.wikiwordcount.cli.SelectCommandLineParser;
+import com.paulturner.wikiwordcount.cli.SelectOptions;
+import com.paulturner.wikiwordcount.command.CalculateProcessor;
+import com.paulturner.wikiwordcount.command.SelectProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
+import java.io.File;
+import java.util.Arrays;
+
+import static com.paulturner.wikiwordcount.Application.Mode.CALCULATE;
+import static com.paulturner.wikiwordcount.Application.Mode.SELECT;
+
+@SpringBootApplication
 public class Application implements CommandLineRunner, ApplicationContextAware {
 
-    private static RuntimeOptions runtimeOptions;
+    private static final String CALCULATE_OPTION = "calculate";
+    private static final String SELECT_OPTION = "select";
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
+    private static SelectOptions selectOptions;
+    private static CalculateOptions calculateOptions;
+    private static ServerAddress serverAddress;
+    private static Mode mode;
     private ApplicationContext applicationContext;
+
     @Autowired
-    private FileProcessor fileProcessor;
+    private CalculateProcessor calculateProcessor;
+
+    @Autowired
+    private SelectProcessor selectProcessor;
 
     public static void main(String[] args) {
-        runtimeOptions = CommandLineOptionsExtractor.parse(args).get();
+
+        if (args.length == 0) {
+            logger.error("Need to specify calculate or select mode");
+            System.exit(1);
+        }
+
+
+        final String modeString = args[0];
+
+        final String[] options = Arrays.copyOfRange(args, 1, args.length);
+        logger.info("Processing command line options for [mode={}]", mode);
+        if (CALCULATE_OPTION.equals(modeString)) {
+            calculateOptions = CalculateCommandLineParser.parse(options).orElseThrow(() -> new IllegalStateException());
+            mode = Mode.CALCULATE;
+            String[] hostTokens = calculateOptions.getMongoClientUri().split(":");
+            serverAddress = new ServerAddress(hostTokens[0], Integer.parseInt(hostTokens[1]));
+
+        } else if (SELECT_OPTION.equals(modeString)) {
+            mode = Mode.SELECT;
+            selectOptions = SelectCommandLineParser.parse(options).orElseThrow(() -> new IllegalStateException());
+            String[] hostTokens = selectOptions.getMongoClientUri().split(":");
+            serverAddress = new ServerAddress(hostTokens[0], Integer.parseInt(hostTokens[1]));
+            calculateOptions = new CalculateOptions.Builder().withMongoClientUri(selectOptions.getMongoClientUri()).withFile(new File(selectOptions.getFilePath())).build();
+        }
+
         SpringApplication.run(Application.class, args);
     }
 
     @Bean
-    public RuntimeOptions runtimeOptions() {
-        return runtimeOptions;
+    public CalculateOptions calculateOptions() {
+        return calculateOptions;
+    }
+
+    @Bean
+    public SelectOptions selectOptions() {
+        return selectOptions;
+    }
+
+    @Bean
+    public ServerAddress serverAddress() {
+        return serverAddress;
     }
 
     @Override
@@ -38,9 +94,15 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
     @Override
     public void run(String... args) {
-        fileProcessor.process();
 
+        if (SELECT == mode) {
+            selectProcessor.processChunks();
+        } else if (CALCULATE == mode) {
+            calculateProcessor.process();
+        }
 
     }
+
+    enum Mode {CALCULATE, SELECT}
 
 }

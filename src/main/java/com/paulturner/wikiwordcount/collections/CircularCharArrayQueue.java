@@ -39,7 +39,6 @@ public class CircularCharArrayQueue {
     }
 
     public void clear() {
-        Arrays.fill(charArray, (char) 0);
         position = 0;
     }
 

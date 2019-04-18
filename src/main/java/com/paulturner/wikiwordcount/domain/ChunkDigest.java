@@ -1,19 +1,15 @@
 package com.paulturner.wikiwordcount.domain;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.*;
 
 public class ChunkDigest {
 
-    private ConcurrentMap<String, Integer> wordCountMap;
+
+    private Map<String, Integer> wordCountMap;
 
     public ChunkDigest() {
-        wordCountMap = new ConcurrentHashMap<>();
+        wordCountMap = new HashMap<>();
     }
 
     public ChunkDigest(Map<String, Integer> wordCountMap) {
@@ -43,5 +39,9 @@ public class ChunkDigest {
                 entry -> wordCounts.add(new WordCount(entry.getKey(), entry.getValue()))
         );
         return wordCounts;
+    }
+
+    public Map<String, Integer> getWordCountMap() {
+        return wordCountMap;
     }
 }
