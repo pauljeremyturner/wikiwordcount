@@ -51,6 +51,32 @@ Here are the full options available
 
 `--word-length` Show statistics for words only with the specified length.  Default is not to filter by word length
 
+Here is an example of the Select mode in action:
+
+```
+SelectOptions:: [mongo uri=172.17.0.2:27017] [sort-direction=DESC] [word-count number=20] [word-length=7]
+word=article, count=27326
+word=archive, count=14624
+word=special, count=12355
+word=history, count=10578
+word=england, count=9374
+word=journal, count=9259
+word=country, count=7904
+word=october, count=7636
+word=project, count=7508
+word=january, count=7216
+word=central, count=6922
+word=english, count=6815
+word=section, count=6682
+word=british, count=6513
+word=caption, count=6141
+word=further, count=5695
+word=players, count=5687
+word=company, count=5281
+word=college, count=5000
+word=century, count=4995
+
+```
 
 ## How Does This Work?
 
