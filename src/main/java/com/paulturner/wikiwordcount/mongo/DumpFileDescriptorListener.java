@@ -19,9 +19,7 @@ public class DumpFileDescriptorListener extends AbstractMongoEventListener<DumpF
     public void onBeforeConvert(BeforeConvertEvent<DumpFileDescriptor> event) {
         DumpFileDescriptor dumpFileDescriptor = event.getSource();
 
-        if (dumpFileDescriptor.isNew()) {
-            dumpFileDescriptor.setId(calculateOptions.getUniqueDumpFileName());
-        }
+        dumpFileDescriptor.setId(calculateOptions.getUniqueDumpFileName());
 
     }
 }
