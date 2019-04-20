@@ -1,20 +1,19 @@
 package com.paulturner.wikiwordcount.command;
 
 import com.paulturner.wikiwordcount.cli.CalculateOptions;
-import com.paulturner.wikiwordcount.domain.FileChunk;
 import com.paulturner.wikiwordcount.domain.ProcessingChunk;
 import com.paulturner.wikiwordcount.io.DumpFileChunks;
-import com.paulturner.wikiwordcount.mongo.ChunkDigestRepository;
-import com.paulturner.wikiwordcount.mongo.ProcessingChunkRepository;
+import com.paulturner.wikiwordcount.mongo.DumpFileDescriptorRepository;
+import com.paulturner.wikiwordcount.mongoentity.DumpFileDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -23,103 +22,113 @@ public class CalculateProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(CalculateProcessor.class);
 
-    private CalculateOptions calculateOptions;
-    private DumpFileChunks dumpFileChunks;
-    private ProcessingChunkRepository processingChunkRepository;
-    private ChunkDigestRepository chunkDigestRepository;
-
-    private final ExecutorService executorService;
+    private final CalculateOptions calculateOptions;
+    private final FileChunkWorkerFactory fileChunkWorkerFactory;
+    private final DumpFileDescriptorRepository dumpFileDescriptorRepository;
+    private final DumpFileChunks dumpFileChunks;
 
     @Autowired
-    public CalculateProcessor(
-            CalculateOptions calculateOptions,
-            DumpFileChunks dumpFileChunks,
-            ProcessingChunkRepository processingChunkRepository,
-            ChunkDigestRepository chunkDigestRepository
-    ) {
-        this.dumpFileChunks = dumpFileChunks;
+    public CalculateProcessor(CalculateOptions calculateOptions, FileChunkWorkerFactory fileChunkWorkerFactory, DumpFileDescriptorRepository dumpFileDescriptorRepository, DumpFileChunks dumpFileChunks) {
         this.calculateOptions = calculateOptions;
-        this.processingChunkRepository = processingChunkRepository;
-        this.chunkDigestRepository = chunkDigestRepository;
-
-        this.executorService = Executors.newSingleThreadExecutor();
+        this.fileChunkWorkerFactory = fileChunkWorkerFactory;
+        this.dumpFileDescriptorRepository = dumpFileDescriptorRepository;
+        this.dumpFileChunks = dumpFileChunks;
     }
+
 
     public void process() {
 
-        Optional<ProcessingChunk> unreservedChunkOpt;
+        DumpFileDescriptor dumpFileDescriptor;
+        if (!dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).isPresent()) {
 
-        while ((unreservedChunkOpt = reserveUnreserved()).isPresent()) {
-            FileChunkWorker fileChunkWorker = new FileChunkWorker(dumpFileChunks, processingChunkRepository, chunkDigestRepository, unreservedChunkOpt.get());
-            fileChunkWorker.run();
-
+            dumpFileDescriptor = new DumpFileDescriptor(dumpFileChunks.divideToProcessingChunks());
+            try {
+                dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
+            } catch (final DuplicateKeyException dke) {
+                logger.info("Another process completed the divide to chunks before this one [descriptor={}]", calculateOptions.getUniqueDumpFileName());
+            }
+        } else {
+            dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
         }
 
-        while (!dumpFileChunks.fileComplete(processingChunkRepository.findByProcessed(true))) {
 
+        boolean saved = false;
+        List<ProcessingChunk> availableProcessingChunks;
+        while (!(availableProcessingChunks = availableProcessingChunks(dumpFileDescriptor)).isEmpty()) {
+            int randomProcessingChunkIndex = ThreadLocalRandom.current().nextInt(availableProcessingChunks.size());
+            ProcessingChunk availableProcessingChunk = availableProcessingChunks.get(randomProcessingChunkIndex);
+            logger.info("Processing a chunk of dump file [chunk #={}]", randomProcessingChunkIndex);
+            availableProcessingChunk.setProcessing(true);
 
-            final List<ProcessingChunk> stalereservedChunks = processingChunkRepository
-                    .findAll()
-                    .stream()
-                    .filter(pc -> (pc.getTimestamp() - System.currentTimeMillis()) > TimeUnit.SECONDS.toMillis(30))
-                    .collect(Collectors.toList());
-
-            Optional<ProcessingChunk> reservedChunk = processReserved();
-
-            if (reservedChunk.isPresent()) {
-                final FileChunkWorker fileChunkWorker = new FileChunkWorker(dumpFileChunks, processingChunkRepository, chunkDigestRepository, reservedChunk.get());
-                fileChunkWorker.run();
-            }
-
-            //In case file is not complete and another JVM has reserved a chunk but died before completing it
-            if (dumpFileChunks.fileComplete(processingChunkRepository.findByProcessed(true))) {
+            while (!saved) {
                 try {
-                    TimeUnit.SECONDS.sleep(30);
-                } catch (InterruptedException e) {
-                    logger.warn("Interruped while waiting for reserved chunks to become stale", e);
+                    dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
+                    saved = true;
+                } catch (OptimisticLockingFailureException olfe) {
+                    dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+                    availableProcessingChunks.get(randomProcessingChunkIndex).setProcessing(true);
                 }
             }
 
+            FileChunkWorker fileChunkWorker = fileChunkWorkerFactory.newInstance(availableProcessingChunk, dumpFileDescriptor);
+            fileChunkWorker.run();
+
+            saved = false;
+            while (!saved) {
+                try {
+                    dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
+                    saved = true;
+                } catch (OptimisticLockingFailureException olfe) {
+                    dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+                    availableProcessingChunks.get(randomProcessingChunkIndex).setProcessed(true);
+                }
+            }
+
+        }
+
+        waitForUnfinishedProcessingChunks();
+
+        dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+
+        while (!(availableProcessingChunks = unfinishedProcessingChunks(dumpFileDescriptor)).isEmpty()) {
+            int randomProcessingChunkIndex = ThreadLocalRandom.current().nextInt(availableProcessingChunks.size());
+            ProcessingChunk availableProcessingChunk = availableProcessingChunks.get(randomProcessingChunkIndex);
+
+            logger.info("Hijacking a chunk of dump file [chunk #={}]", randomProcessingChunkIndex);
+
+            FileChunkWorker fileChunkWorker = fileChunkWorkerFactory.newInstance(availableProcessingChunk, dumpFileDescriptor);
+            fileChunkWorker.run();
+
+
+            logger.info("Waiting before hijacking a chunk started by another process but unfinished.");
+            waitForUnfinishedProcessingChunks();
 
         }
 
 
     }
 
-
-    private Optional<ProcessingChunk> reserveUnreserved() {
-        List<ProcessingChunk> reservedChunks = processingChunkRepository.findByProcessed(true);
-
-        FileChunk availableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(reservedChunks);
-
-        if (null != availableFileChunk) {
-            ProcessingChunk trimmedChunk = dumpFileChunks.trimToWholePages(availableFileChunk);
-            processingChunkRepository.insert(trimmedChunk);
-            logger.info("Reserved a chunk to be processed [chunk={}]", trimmedChunk);
-
-            return Optional.of(trimmedChunk);
-        } else {
-            return Optional.empty();
-        }
+    private List<ProcessingChunk> availableProcessingChunks(DumpFileDescriptor dumpFileDescriptor) {
+        return dumpFileDescriptor.getProcessingChunks()
+                .stream()
+                .filter(pc -> (!pc.isProcessed()) && (!pc.isProcessing()))
+                .collect(Collectors.toList());
 
     }
 
+    private List<ProcessingChunk> unfinishedProcessingChunks(DumpFileDescriptor dumpFileDescriptor) {
+        return dumpFileDescriptor.getProcessingChunks()
+                .stream()
+                .filter(pc -> (!pc.isProcessed()) && (pc.isProcessing()))
+                .collect(Collectors.toList());
+    }
 
-    private Optional<ProcessingChunk> processReserved() {
-        List<ProcessingChunk> reservedChunks = processingChunkRepository.findAll().stream().filter(pc -> !pc.isProcessed()).collect(Collectors.toList());
 
-        FileChunk availableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(reservedChunks);
-
-        if (null != availableFileChunk) {
-            ProcessingChunk trimmedChunk = dumpFileChunks.trimToWholePages(availableFileChunk);
-
-            processingChunkRepository.insert(trimmedChunk);
-
-            logger.info("Hijacked a chunk to be processed [chunk={}]", trimmedChunk);
-
-            return Optional.of(trimmedChunk);
-        } else {
-            return Optional.empty();
+    private void waitForUnfinishedProcessingChunks() {
+        try {
+            TimeUnit.SECONDS.sleep(30);
+        } catch (InterruptedException ie) {
+            logger.warn("Interruped while waiting for chunk started but not finished", ie);
         }
     }
 

@@ -2,7 +2,7 @@ package com.paulturner.wikiwordcount.text;
 
 import com.mongodb.annotations.NotThreadSafe;
 import com.paulturner.wikiwordcount.collections.CircularCharArrayQueue;
-import com.paulturner.wikiwordcount.domain.ChunkDigest;
+import com.paulturner.wikiwordcount.mongoentity.ChunkDigest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,16 +27,20 @@ public class WordExtractor {
 
     private final ByteBuffer byteBuffer;
     private final Map<String, Integer> wordCountMap = new HashMap<>();
+    private int index;
+    private String fileName;
 
 
-    public WordExtractor(final ByteBuffer byteBuffer) {
+    public WordExtractor(final ByteBuffer byteBuffer, String fileName, int index) {
         this.byteBuffer = byteBuffer;
+        this.index = index;
+        this.fileName = fileName;
     }
 
     public ChunkDigest extract() {
-        CharBuffer charBuffer = StandardCharsets.UTF_8.decode(byteBuffer);
 
-        return doExtract(charBuffer);
+        CharBuffer charBuffer = StandardCharsets.UTF_8.decode(byteBuffer);
+        return doExtract(charBuffer, index);
     }
 
     private void incrementCountForWord(String word) {
@@ -46,7 +50,7 @@ public class WordExtractor {
         }
     }
 
-    private ChunkDigest doExtract(CharBuffer charBuffer) {
+    private ChunkDigest doExtract(CharBuffer charBuffer, int index) {
 
         boolean startOfLine = true;
 
@@ -86,7 +90,7 @@ public class WordExtractor {
             }
         }
 
-        ChunkDigest chunkDigest = new ChunkDigest(wordCountMap);
+        ChunkDigest chunkDigest = new ChunkDigest(fileName, index, wordCountMap);
 
         return chunkDigest;
 

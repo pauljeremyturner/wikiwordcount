@@ -1,33 +1,45 @@
 package com.paulturner.wikiwordcount.cli;
 
-public class SelectOptions {
+import java.io.File;
+
+public class SelectOptions extends AbstractCommandOptions {
 
     private static final String TO_STRING_MASK = "SelectOptions:: [mongo uri=%s] [sort-direction=%s] [word-count number=%d] [word-length=%s]";
+    private static final String NAME_MASK = "dump-file-%s-%d-%d";
 
 
     private Integer count;
     private String mongoClientUri;
     private Direction direction;
     private Integer wordLength;
-    private String filePath;
+    private File file;
+    private int chunkSize;
 
-    public SelectOptions(Integer count, String mongoClientUri, Direction direction, Integer wordLength, String filePath) {
+    private SelectOptions(
+            File file, String mongoClientUri, int chunkSize,
+            Integer count, Direction direction, Integer wordLength
+    ) {
+        super(file, mongoClientUri, chunkSize);
         this.count = count;
-        this.mongoClientUri = mongoClientUri;
         this.direction = direction;
         this.wordLength = wordLength;
-        this.filePath = filePath;
-    }
-
-    public enum Direction {ASC, DESC}
-
-    @Override
-    public String toString() {
-        return String.format(TO_STRING_MASK, mongoClientUri, direction, count, wordLength);
     }
 
     public static String getToStringMask() {
         return TO_STRING_MASK;
+    }
+
+    public static SelectOptions.Builder builder() {
+        return new SelectOptions.Builder();
+    }
+
+    public String getUniqueDumpFileName() {
+        return String.format(NAME_MASK, file.getName(), file.length(), chunkSize);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_MASK, mongoClientUri, direction, count, wordLength);
     }
 
     public Integer getCount() {
@@ -46,7 +58,54 @@ public class SelectOptions {
         return wordLength;
     }
 
-    public String getFilePath() {
-        return filePath;
+
+    public enum Direction {ASC, DESC}
+
+    public static class Builder {
+        private File bFile;
+        private String bMongoClientUri;
+        private int bChunkSize;
+        private Direction bDirection;
+        private int bWordLength;
+        private int bCount;
+        private Builder() {
+
+        }
+
+        public SelectOptions.Builder withFile(File file) {
+            this.bFile = file;
+            return this;
+        }
+
+        public SelectOptions.Builder withMongoClientUri(String mongoClientUri) {
+            this.bMongoClientUri = mongoClientUri;
+            return this;
+        }
+
+        public SelectOptions.Builder withChunkSize(int chunkSize) {
+            this.bChunkSize = chunkSize;
+            return this;
+        }
+
+        public SelectOptions.Builder withCount(int count) {
+            this.bCount = count;
+            return this;
+        }
+
+        public SelectOptions.Builder withDirection(Direction direction) {
+            this.bDirection = direction;
+            return this;
+        }
+
+
+        public SelectOptions.Builder withWordLength(int wordLength) {
+            this.bWordLength = wordLength;
+            return this;
+        }
+
+        public SelectOptions build() {
+            return new SelectOptions(this.bFile, this.bMongoClientUri, this.bChunkSize, this.bCount, this.bDirection, this.bWordLength);
+        }
     }
+
 }

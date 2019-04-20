@@ -1,30 +1,26 @@
 package com.paulturner.wikiwordcount.domain;
 
-import org.springframework.data.annotation.Id;
-
 public class ProcessingChunk implements Comparable<ProcessingChunk> {
 
-    private static final String TOSTRING_MASK = "ProcessingChunk:: [start=%d], [end=%d], [file=%s]";
+    private static final String TOSTRING_MASK = "ProcessingChunk:: [start=%d], [end=%d], [index=%d]";
     private static final String ID_MASK = "%d_%d";
 
-
-    @Id
-    private String id;
 
     private long start;
     private long end;
     private long timestamp;
     private boolean processed;
-    private String file;
+    private boolean processing;
+    private int index;
 
     public ProcessingChunk() {
     }
 
-    public ProcessingChunk(long start, long end, long timestamp, String file) {
+    public ProcessingChunk(long start, long end, long timestamp, int index) {
         this.start = start;
         this.end = end;
         this.timestamp = timestamp;
-        this.file = file;
+        this.index = index;
         processed = false;
 
     }
@@ -34,13 +30,6 @@ public class ProcessingChunk implements Comparable<ProcessingChunk> {
         return Long.compare(this.start, processingChunk.start);
     }
 
-    public String getId() {
-        return String.format(ID_MASK, start, end);
-    }
-
-    public long getLength() {
-        return end - start;
-    }
 
     public long getEnd() {
         return end;
@@ -74,16 +63,25 @@ public class ProcessingChunk implements Comparable<ProcessingChunk> {
         this.processed = processed;
     }
 
-    public String getFile() {
-        return file;
+
+    public boolean isProcessing() {
+        return processing;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setProcessing(boolean processing) {
+        this.processing = processing;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     @Override
     public String toString() {
-        return String.format(TOSTRING_MASK, start, end, file);
+        return String.format(TOSTRING_MASK, start, end, index);
     }
 }

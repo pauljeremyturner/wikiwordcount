@@ -1,9 +1,9 @@
 package com.paulturner.wikiwordcount.command;
 
 import com.paulturner.wikiwordcount.cli.SelectOptions;
-import com.paulturner.wikiwordcount.domain.ChunkDigest;
 import com.paulturner.wikiwordcount.domain.ChunkDigestAccumulator;
 import com.paulturner.wikiwordcount.mongo.ChunkDigestRepository;
+import com.paulturner.wikiwordcount.mongoentity.ChunkDigest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class SelectProcessor {
         final StringBuilder stringBuilder = new StringBuilder().append(System.lineSeparator()).append(selectOptions.toString()).append(System.lineSeparator());
 
 
-        LinkedHashMap<String, Integer> sortedAndFiltered = digestAccumulator.getAccumulated().getWordCountMap()
+        LinkedHashMap<String, Integer> sortedAndFiltered = digestAccumulator.getAccumulated(selectOptions.getUniqueDumpFileName()).getWordCountMap()
                 .entrySet()
                 .stream()
                 .filter(getWordLengthPredicate(selectOptions))

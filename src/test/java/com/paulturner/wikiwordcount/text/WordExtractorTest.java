@@ -1,17 +1,8 @@
 package com.paulturner.wikiwordcount.text;
 
-import com.paulturner.wikiwordcount.domain.ChunkDigest;
-import org.junit.Test;
-
-import java.io.File;
-import java.nio.ByteBuffer;
-import java.nio.file.Files;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class WordExtractorTest {
 
-
+/*
     @Test
     public void shouldExtractWordsFromSimplePage() throws Exception {
 
@@ -125,5 +116,5 @@ public class WordExtractorTest {
 
     }
 
-
+*/
 }

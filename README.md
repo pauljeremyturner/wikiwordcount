@@ -118,13 +118,13 @@ Logical Structure (<page> tags)
 |__|__|__|__|__|__|__|_||__|__|_||__|__|__|__|_|
 ```
 
-What Happens if 2 JVMs start working on the same area of the file at the same time?
+## What Happens if 2 JVMs start working on the same area of the file at the same time?
 If all JVMs working on the file have the same chunk size set, there will be a deterministic set of chunks produced by the algorithm to divide the file.
 Each chunk is reserved to ensure that 2 process to not work on the same part of the file, but if a race condition allowed this to happen (it's possible)
 then the only consequence would be that the same calcualtion of word count digest is written twice.
 
 
-MongoDB
+## MongoDB
 I used a dockerised version of mongo
 
 
