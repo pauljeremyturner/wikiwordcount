@@ -2,6 +2,7 @@ package com.paulturner.wikiwordcount.collections;
 
 import com.mongodb.annotations.NotThreadSafe;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
@@ -36,11 +37,11 @@ public class CircularByteArrayQueue {
     }
 
     public boolean containsArray(final byte[] bytes) {
-        return Arrays.equals(bytes, byteArray);
+        return Arrays.equals(byteArray, bytes);
     }
 
     @Override
     public String toString() {
-        return new String(byteArray);
+        return new String(byteArray, StandardCharsets.UTF_8);
     }
 }

@@ -2,7 +2,6 @@ package com.paulturner.wikiwordcount.io;
 
 import com.paulturner.wikiwordcount.cli.CalculateOptions;
 import com.paulturner.wikiwordcount.collections.CircularByteArrayQueue;
-import com.paulturner.wikiwordcount.domain.FileChunk;
 import com.paulturner.wikiwordcount.domain.ProcessingChunk;
 import com.paulturner.wikiwordcount.domain.Subchunk;
 import com.paulturner.wikiwordcount.domain.Subchunks;
@@ -41,135 +40,61 @@ public class DumpFileChunks {
         this.uniqueFilename = calculateOptions.getUniqueDumpFileName();
         this.fileSize = calculateOptions.getFileSize();
         this.path = calculateOptions.getFile().toPath();
-        byteBufferPool = new ByteBufferPool((int) calculateOptions.getChunkSize(), calculateOptions.isUseOffHelpBuffers());
+        byteBufferPool = new ByteBufferPool(calculateOptions.getChunkSize(), calculateOptions.isUseOffHelpBuffers());
+    }
+
+
+    public List<ProcessingChunk> divideToProcessingChunks() {
+
+        int index = 0;
+
+        long position = 0;
+        List<ProcessingChunk> processingChunks = new ArrayList<>();
+        while (position < calculateOptions.getFileSize() - 1) {
+            long start = position;
+            position = position + calculateOptions.getChunkSize();
+            ByteBuffer probeBuffer = readProbeChunk(position);
+            probeBuffer.flip();
+            int delta = advanceToNewPage(probeBuffer);
+            position = position + delta;
+            processingChunks.add(new ProcessingChunk(start, position, -1, index));
+
+            position++;
+            index++;
+
+        }
+        return processingChunks;
+
     }
 
     /*
-    Implementation note: no need to read the whole 2GB file chunk to determine where to chop to provide whole lines.
-    Use a byte buffer here for start and end of the chunk and get the nearest chunk with whole lines.
-     */
-    public ProcessingChunk trimToWholePages(final FileChunk fileChunk) {
 
-        long startPosition, endPosition;
+        public FileChunk getAnyAvailableFileChunk(final List<ProcessingChunk> reservedProcessingChunks) {
 
+            final List<ProcessingChunk> unreservedProcessingChunks = reservedToUnreserved(reservedProcessingChunks);
 
-        if (!fileChunk.isEndBound()) {
-            ByteBuffer byteBuffer = readProbeChunk(fileChunk.getEnd());
-            byteBuffer.flip();
-            endPosition = fileChunk.getEnd() + advanceToNewPage(byteBuffer);
-        } else {
-            endPosition = fileChunk.getEnd();
-        }
-
-        if (!fileChunk.isStartBound()) {
-
-            ByteBuffer byteBuffer = readProbeChunk(fileChunk.getStart());
-            byteBuffer.flip();
-            startPosition = fileChunk.getStart() + advanceToNewPage(byteBuffer);
-        } else {
-            startPosition = fileChunk.getStart();
-        }
-
-
-        final ProcessingChunk processingChunk = new ProcessingChunk(startPosition, endPosition, System.currentTimeMillis(), uniqueFilename);
-
-        logger.info("Trimmed file chunk to processing chunk [filechunk={}] [processingChunk={}]", fileChunk, processingChunk);
-        return processingChunk;
-
-    }
-
-    public Subchunks splitToSubChunks(ProcessingChunk processingChunk) {
-
-        List<Subchunk> subchunkList = new ArrayList<>();
-
-        ByteBuffer byteBuffer = readProcessingChunk(processingChunk.getStart());
-        byteBuffer.flip();
-        while (byteBuffer.hasRemaining()) {
-            int actualSubchunkSize;
-            int approximateSubchunkSize = Math.min(calculateOptions.getSubchunkSize(), byteBuffer.remaining());
-            if (approximateSubchunkSize == calculateOptions.getSubchunkSize()) {
-                byteBuffer.mark();
-                byteBuffer.position(byteBuffer.position() + approximateSubchunkSize);
-                actualSubchunkSize = approximateSubchunkSize + advanceToNewPage(byteBuffer);
-                byteBuffer.reset();
-            } else {
-                actualSubchunkSize = approximateSubchunkSize;
-            }
-
-            ByteBuffer slice = byteBuffer.slice();
-            slice.limit(actualSubchunkSize);
-
-            slice.rewind();
-
-            subchunkList.add(new Subchunk(byteBuffer.position(), byteBuffer.position() + actualSubchunkSize, slice));
-            byteBuffer.position(byteBuffer.position() + Math.min(actualSubchunkSize + 1, byteBuffer.remaining()));
-
-        }
-
-        return new Subchunks(byteBuffer, subchunkList);
-    }
-
-
-    public FileChunk getAnyAvailableFileChunk(final List<ProcessingChunk> reservedProcessingChunks) {
-
-        final List<ProcessingChunk> unreservedProcessingChunks = reservedToUnreserved(reservedProcessingChunks);
-
-        if (unreservedProcessingChunks.isEmpty()) {
-            return null;
-        }
-
-
-        ProcessingChunk processingChunk = unreservedProcessingChunks.get(0);
-        long start = processingChunk.getStart();
-        long end;
-        boolean endBound;
-        if ((processingChunk.getEnd() - processingChunk.getStart()) > calculateOptions.getChunkSize()) {
-            end = start + calculateOptions.getChunkSize();
-            endBound = false;
-
-        } else {
-            end = processingChunk.getEnd();
-            endBound = true;
-        }
-
-        return new FileChunk(start, end, true, endBound);
-
-/*
-        FileChunk availableFileChunk;
-
-
-        final ProcessingChunk availableSpace = unreservedProcessingChunks.get(random.nextInt(unreservedProcessingChunks.size()));
-        if (availableSpace.getLength() > calculateOptions.getChunkSize()) {
-            final int chunksAvailable = (int) ((availableSpace.getEnd() - availableSpace.getStart()) / calculateOptions.getChunkSize());
-            if (chunksAvailable == 1) {
-                availableFileChunk = new FileChunk(
-                        availableSpace.getStart(), availableSpace.getEnd(),
-                        true, true
-                );
-            } else {
-                final long randomChunkIndex = (long)random.nextInt(chunksAvailable + 1);
-                final long randomChunkStart = availableSpace.getStart() + (randomChunkIndex * calculateOptions.getChunkSize());
-                final long randomChunkEnd = Math.min(randomChunkStart + calculateOptions.getChunkSize(), availableSpace.getEnd());
-
-                System.out.println(availableSpace.getEnd() + "anyavailable");
-                System.out.println(randomChunkEnd + "randomChunkEnd");
-                availableFileChunk = new FileChunk(
-                        randomChunkStart, randomChunkEnd,
-                        randomChunkIndex == 0, randomChunkEnd == (availableSpace.getEnd())
-                );
+            if (unreservedProcessingChunks.isEmpty()) {
+                return null;
             }
 
 
-        } else {
-            availableFileChunk = new FileChunk(
-                    availableSpace.getStart(), availableSpace.getEnd(), true, true
-            );
+            ProcessingChunk processingChunk = unreservedProcessingChunks.get(0);
+            long start = processingChunk.getStart();
+            long end;
+            boolean endBound;
+            if ((processingChunk.getEnd() - processingChunk.getStart()) > calculateOptions.getChunkSize()) {
+                end = start + calculateOptions.getChunkSize();
+                endBound = false;
+
+            } else {
+                end = processingChunk.getEnd();
+                endBound = true;
+            }
+
+            return new FileChunk(start, end, true, endBound);
+
         }
-
-        return availableFileChunk;
-        */
-    }
-
+    */
     public boolean fileComplete(final List<ProcessingChunk> reservedProcessingChunks) {
 
 
@@ -203,7 +128,7 @@ public class DumpFileChunks {
 
     }
 
-
+/*
     private List<ProcessingChunk> reservedToUnreserved(List<ProcessingChunk> reserved) {
 
         List<ProcessingChunk> unreserved = new ArrayList<>();
@@ -244,8 +169,42 @@ public class DumpFileChunks {
         return unreserved;
 
     }
+*/
 
-    private int advanceToNewPage(ByteBuffer byteBuffer) {
+
+    public Subchunks splitToSubChunks(final ByteBuffer byteBuffer, final ProcessingChunk processingChunk) {
+
+        final List<Subchunk> subchunkList = new ArrayList<>();
+
+        readProcessingChunk(byteBuffer, processingChunk.getStart());
+        byteBuffer.flip();
+        while (byteBuffer.hasRemaining()) {
+            int actualSubchunkSize;
+            int approximateSubchunkSize = Math.min(calculateOptions.getSubchunkSize(), byteBuffer.remaining());
+            if (approximateSubchunkSize == calculateOptions.getSubchunkSize()) {
+                byteBuffer.mark();
+                byteBuffer.position(byteBuffer.position() + approximateSubchunkSize);
+                actualSubchunkSize = approximateSubchunkSize + advanceToNewPage(byteBuffer);
+                byteBuffer.reset();
+            } else {
+                actualSubchunkSize = approximateSubchunkSize;
+            }
+
+            ByteBuffer slice = byteBuffer.slice();
+            slice.limit(actualSubchunkSize);
+
+            slice.rewind();
+
+            subchunkList.add(new Subchunk(byteBuffer.position(), byteBuffer.position() + actualSubchunkSize, slice));
+            byteBuffer.position(byteBuffer.position() + Math.min(actualSubchunkSize + 1, byteBuffer.remaining()));
+
+        }
+
+        return new Subchunks(subchunkList);
+    }
+
+
+    public int advanceToNewPage(ByteBuffer byteBuffer) {
         int startPosition = byteBuffer.position();
         CircularByteArrayQueue queue = new CircularByteArrayQueue(BYTES_CLOSE_PAGE.length);
         while (byteBuffer.hasRemaining()) {
@@ -266,7 +225,7 @@ public class DumpFileChunks {
                     .newByteChannel(this.path, EnumSet.of(StandardOpenOption.READ))
                     .position(position);
 
-            ByteBuffer byteBuffer = ByteBuffer.allocate(1024 * 4);
+            ByteBuffer byteBuffer = ByteBuffer.allocate(1024 * 1024);
             seekableByteChannel.read(byteBuffer);
             return byteBuffer;
         } catch (final IOException ioe) {
@@ -283,15 +242,13 @@ public class DumpFileChunks {
     }
 
 
-    private ByteBuffer readProcessingChunk(long position) {
-        ByteBuffer byteBuffer = null;
+    public ByteBuffer readProcessingChunk(ByteBuffer byteBuffer, long position) {
         SeekableByteChannel seekableByteChannel = null;
         try {
             seekableByteChannel = Files
-                    .newByteChannel(this.path, EnumSet.of(StandardOpenOption.READ))
+                    .newByteChannel(calculateOptions.getFile().toPath(), EnumSet.of(StandardOpenOption.READ))
                     .position(position);
 
-            byteBuffer = byteBufferPool.acquire();
             seekableByteChannel.read(byteBuffer);
             return byteBuffer;
         } catch (final IOException ioe) {
@@ -305,6 +262,11 @@ public class DumpFileChunks {
                 //it's not autoclosable...
             }
         }
+    }
+
+
+    public ByteBuffer acquireByteBuffer() {
+        return byteBufferPool.acquire();
     }
 
     public void releaseByteBuffer(final ByteBuffer byteBuffer) {

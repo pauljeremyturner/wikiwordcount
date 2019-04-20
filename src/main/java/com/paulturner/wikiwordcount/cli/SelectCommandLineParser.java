@@ -1,10 +1,14 @@
 package com.paulturner.wikiwordcount.cli;
 
 import org.apache.commons.cli.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-public class SelectCommandLineParser {
+public class SelectCommandLineParser extends AbstractCommandLineParser {
+
+    private static final Logger logger = LoggerFactory.getLogger(SelectCommandLineParser.class);
 
     private static final String OPTION_SORT_DIRECTION = "sort-direction";
     private static final String OPTION_HELP = "help";
@@ -12,26 +16,24 @@ public class SelectCommandLineParser {
     private static final String OPTION_COUNT = "count";
     private static final String OPTION_WORD_LENGTH = "word-length";
     private static final String OPTION_FILE_PATH = "source";
+    private static final String OPTION_CHUNK_SIZE = "chunk-size";
 
+    public static SelectCommandLineParser getInstance() {
+        return new SelectCommandLineParser();
+    }
 
-    public static Optional<SelectOptions> parse(String[] args) {
+    public Optional<SelectOptions> parse(String[] args) {
         final Options options = getOptions();
         final CommandLineParser defaultParser = new DefaultParser();
         try {
             final CommandLine commandLine = defaultParser.parse(options, args);
-
 
             if (commandLine.hasOption(OPTION_HELP)) {
                 CommandLineParsers.printHelp(options);
                 return Optional.empty();
             }
 
-            String mongo;
-            if (commandLine.hasOption(OPTION_MONGO_SERVER)) {
-                mongo = commandLine.getOptionValue(OPTION_MONGO_SERVER);
-            } else {
-                mongo = "127.0.0.1:27017";
-            }
+
             SelectOptions.Direction direction;
             if (commandLine.hasOption(OPTION_SORT_DIRECTION)) {
                 direction = SelectOptions.Direction.valueOf(commandLine.getOptionValue(OPTION_SORT_DIRECTION));
@@ -53,7 +55,21 @@ public class SelectCommandLineParser {
                 wordLength = -1;
             }
 
-            return Optional.of(new SelectOptions(count, mongo, direction, wordLength, commandLine.getOptionValue(OPTION_FILE_PATH)));
+
+            final Optional<String> mongoOptional = Optional.ofNullable(commandLine.getOptionValue(OPTION_MONGO_SERVER));
+            final Optional<String> chunkOptional = Optional.ofNullable(commandLine.getOptionValue(OPTION_CHUNK_SIZE));
+            final String fileName = commandLine.getOptionValue(OPTION_FILE_PATH);
+
+            return Optional.of(
+                    SelectOptions.builder()
+                            .withFile(getDumpFilePath(fileName))
+                            .withChunkSize(getChunkSizeBytes(chunkOptional))
+                            .withMongoClientUri(getMongoClientURI(mongoOptional))
+                            .withWordLength(wordLength)
+                            .withCount(count)
+                            .withDirection(direction)
+                            .build()
+            );
 
         } catch (final ParseException exp) {
             CommandLineParsers.printUsage(options);
@@ -61,7 +77,17 @@ public class SelectCommandLineParser {
         }
     }
 
-    private static Options getOptions() {
+
+    private Options getOptions() {
+
+        Option chunkSize = Option.builder()
+                .required(false)
+                .argName("size")
+                .desc("ChunkSize in bytes to run")
+                .longOpt(OPTION_CHUNK_SIZE)
+                .hasArg()
+                .build();
+
         Option sortDirection = Option.builder()
                 .required(false)
                 .hasArg(true)
@@ -107,6 +133,7 @@ public class SelectCommandLineParser {
         options.addOption(filePath);
         options.addOption(count);
         options.addOption(sortDirection);
+        options.addOption(chunkSize);
         options.addOption(wordLength);
 
         return options;

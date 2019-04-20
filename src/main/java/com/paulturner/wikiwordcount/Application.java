@@ -18,7 +18,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 
-import java.io.File;
 import java.util.Arrays;
 
 import static com.paulturner.wikiwordcount.Application.Mode.CALCULATE;
@@ -50,25 +49,29 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
             System.exit(1);
         }
 
+        logger.info("Command line: [args={}]", Arrays.asList(args));
+
 
         final String modeString = args[0];
 
         final String[] options = Arrays.copyOfRange(args, 1, args.length);
-        logger.info("Processing command line options for [mode={}]", mode);
+
         if (CALCULATE_OPTION.equals(modeString)) {
-            calculateOptions = CalculateCommandLineParser.parse(options).orElseThrow(() -> new IllegalStateException());
+            calculateOptions = CalculateCommandLineParser.getInstance().parse(options).orElseThrow(() -> new IllegalStateException("Could not parse command line options"));
             mode = Mode.CALCULATE;
             String[] hostTokens = calculateOptions.getMongoClientUri().split(":");
             serverAddress = new ServerAddress(hostTokens[0], Integer.parseInt(hostTokens[1]));
-
+            selectOptions = SelectOptions.builder().withChunkSize(calculateOptions.getChunkSize()).withMongoClientUri(calculateOptions.getMongoClientUri()).build();
         } else if (SELECT_OPTION.equals(modeString)) {
             mode = Mode.SELECT;
-            selectOptions = SelectCommandLineParser.parse(options).orElseThrow(() -> new IllegalStateException());
+            selectOptions = SelectCommandLineParser.getInstance().parse(options).orElseThrow(() -> new IllegalStateException("Could not parse command line options"));
             String[] hostTokens = selectOptions.getMongoClientUri().split(":");
             serverAddress = new ServerAddress(hostTokens[0], Integer.parseInt(hostTokens[1]));
-            calculateOptions = new CalculateOptions.Builder().withMongoClientUri(selectOptions.getMongoClientUri()).withFile(new File(selectOptions.getFilePath())).build();
+            calculateOptions = CalculateOptions.builder().withMongoClientUri(selectOptions.getMongoClientUri()).withFile(selectOptions.getFile()).build();
         }
 
+
+        logger.info("Processing command line options for [mode={}]", mode);
         SpringApplication.run(Application.class, args);
     }
 

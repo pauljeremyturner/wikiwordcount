@@ -1,15 +1,20 @@
 package com.paulturner.wikiwordcount.command;
 
+import com.paulturner.wikiwordcount.cli.CalculateOptions;
 import com.paulturner.wikiwordcount.domain.ChunkDigestAccumulator;
 import com.paulturner.wikiwordcount.domain.ProcessingChunk;
 import com.paulturner.wikiwordcount.domain.Subchunks;
 import com.paulturner.wikiwordcount.io.DumpFileChunks;
 import com.paulturner.wikiwordcount.mongo.ChunkDigestRepository;
-import com.paulturner.wikiwordcount.mongo.ProcessingChunkRepository;
+import com.paulturner.wikiwordcount.mongo.DumpFileDescriptorRepository;
+import com.paulturner.wikiwordcount.mongoentity.ChunkDigest;
+import com.paulturner.wikiwordcount.mongoentity.DumpFileDescriptor;
 import com.paulturner.wikiwordcount.text.WordExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.OptimisticLockingFailureException;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -18,34 +23,41 @@ public class FileChunkWorker implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(FileChunkWorker.class);
 
-    private final DumpFileChunks dumpFileChunks;
-    private final ProcessingChunkRepository processingChunkRepository;
     private final ChunkDigestRepository chunkDigestRepository;
+    private final DumpFileDescriptorRepository dumpFileDescriptorRepository;
     private final ProcessingChunk reservedChunk;
+    private final DumpFileDescriptor dumpFileDescriptor;
+    private final DumpFileChunks dumpFileChunks;
+    private final CalculateOptions calculateOptions;
 
     public FileChunkWorker(
-            final DumpFileChunks dumpFileChunks, final ProcessingChunkRepository processingChunkRepository,
-            final ChunkDigestRepository chunkDigestRepository, final ProcessingChunk reservedChunk) {
-        this.dumpFileChunks = dumpFileChunks;
-        this.processingChunkRepository = processingChunkRepository;
+            final CalculateOptions calculateOptions, final DumpFileChunks dumpFileChunks, final ChunkDigestRepository chunkDigestRepository, final ProcessingChunk reservedChunk,
+            final DumpFileDescriptorRepository dumpFileDescriptorRepository, final DumpFileDescriptor dumpFileDescriptor
+    ) {
         this.chunkDigestRepository = chunkDigestRepository;
         this.reservedChunk = reservedChunk;
+        this.dumpFileDescriptor = dumpFileDescriptor;
+        this.dumpFileDescriptorRepository = dumpFileDescriptorRepository;
+        this.dumpFileChunks = dumpFileChunks;
+        this.calculateOptions = calculateOptions;
     }
 
     @Override
     public void run() {
 
-        final Subchunks subchunks = dumpFileChunks.splitToSubChunks(reservedChunk);
+
+        ByteBuffer byteBuffer = dumpFileChunks.acquireByteBuffer();
+        final Subchunks subchunks = dumpFileChunks.splitToSubChunks(byteBuffer, reservedChunk);
 
         logger.info("Split a chunk in to subchunks and started extracting words [chunk={}] [subchunk count={}]", reservedChunk, subchunks.getSubchunkList());
 
 
-        final ChunkDigestAccumulator chunkDigestAccumulator = new ChunkDigestAccumulator();
+        final ChunkDigestAccumulator chunkDigestAccumulator = new ChunkDigestAccumulator(reservedChunk.getIndex());
 
         final List<CompletableFuture<ChunkDigestAccumulator>> completableFutures = subchunks.getSubchunkList()
                 .stream()
                 .map(subchunk -> {
-                    WordExtractor wordExtractor = new WordExtractor(subchunk.getByteBuffer());
+                    WordExtractor wordExtractor = new WordExtractor(subchunk.getByteBuffer(), calculateOptions.getUniqueDumpFileName(), reservedChunk.getIndex());
                     return CompletableFuture
                             .supplyAsync(() -> wordExtractor.extract())
                             .thenApply(cd -> chunkDigestAccumulator.addChunkDigest(cd));
@@ -55,18 +67,31 @@ public class FileChunkWorker implements Runnable {
         CompletableFuture
                 .allOf(completableFutures.toArray(new CompletableFuture[completableFutures.size()]))
                 .thenAccept(cf -> {
-                    chunkDigestRepository.insert(chunkDigestAccumulator.getAccumulated());
-                    completeChunk(reservedChunk);
+                    reservedChunk.setProcessed(true);
+                    completeChunk(chunkDigestAccumulator, dumpFileDescriptor, reservedChunk.getIndex());
                 }).join();
 
-        dumpFileChunks.releaseByteBuffer(subchunks.getByteBuffer());
+        dumpFileChunks.releaseByteBuffer(byteBuffer);
 
         logger.info("Completed word count of all subchunks [chunk={}]", reservedChunk);
     }
 
+    private void completeChunk(ChunkDigestAccumulator chunkDigestAccumulator, DumpFileDescriptor dumpFileDescriptor, int index) {
+        ChunkDigest accumulated = chunkDigestAccumulator.getAccumulated(calculateOptions.getUniqueDumpFileName());
+        chunkDigestRepository.insert(accumulated);
+        boolean saved = false;
 
-    private void completeChunk(final ProcessingChunk processingChunk) {
-        processingChunk.setProcessed(true);
-        processingChunkRepository.save(processingChunk);
+        dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+        while (!saved) {
+            try {
+                dumpFileDescriptor.getProcessingChunks().get(index).setProcessed(true);
+                dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
+                saved = true;
+            } catch (OptimisticLockingFailureException olfe) {
+                dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+            }
+        }
     }
+
+
 }

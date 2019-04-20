@@ -2,47 +2,25 @@ package com.paulturner.wikiwordcount.cli;
 
 import java.io.File;
 
-public class CalculateOptions {
+public class CalculateOptions extends AbstractCommandOptions {
 
     private static final String TO_STRING_MASK = "CalculateOptions:: [file=%s] [mongo uri=%s] [chunk size=%d]";
-    private static final String NAME_MASK = "dump-file-%s-%d";
-    private File file;
-    private String mongoClientUri;
-    private long chunkSize;
-    private long fileSize;
+    private static final String NAME_MASK = "dump-file-%s-%d-%d";
     private boolean useOffHelpBuffers;
-
-    private CalculateOptions() {
-    }
 
     private CalculateOptions(
             File file, String mongoClientUri, int chunkSize, boolean useOffHelpBuffers
     ) {
-        this.file = file;
-        this.mongoClientUri = mongoClientUri;
-        this.chunkSize = chunkSize;
-        this.fileSize = file.length();
+        super(file, mongoClientUri, chunkSize);
         this.useOffHelpBuffers = useOffHelpBuffers;
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public String getMongoClientUri() {
-        return mongoClientUri;
-    }
-
-    public long getChunkSize() {
-        return chunkSize;
+    public static Builder builder() {
+        return new Builder();
     }
 
     public int getSubchunkSize() {
         return 1024 * 1024 * 128;
-    }
-
-    public long getFileSize() {
-        return fileSize;
     }
 
     public boolean isUseOffHelpBuffers() {
@@ -50,20 +28,22 @@ public class CalculateOptions {
     }
 
     public String getUniqueDumpFileName() {
-        return String.format(NAME_MASK, file.getName(), file.length());
+        return String.format(NAME_MASK, getFile().getName(), getFileSize(), getChunkSize());
     }
 
     @Override
     public String toString() {
-        return String.format(TO_STRING_MASK, file.getAbsolutePath(), mongoClientUri.toString(), chunkSize);
+        return String.format(TO_STRING_MASK, getFile().getAbsolutePath(), getMongoClientUri(), getChunkSize());
     }
 
     public static class Builder {
         private File bFile;
         private String bMongoClientUri;
         private int bChunkSize;
-        private long bFileSize;
         private boolean bUseOffHelpBuffers;
+        private Builder() {
+
+        }
 
         public Builder withFile(File file) {
             this.bFile = file;
@@ -88,7 +68,6 @@ public class CalculateOptions {
         public CalculateOptions build() {
             return new CalculateOptions(this.bFile, this.bMongoClientUri, this.bChunkSize, this.bUseOffHelpBuffers);
         }
-
-
     }
+
 }
