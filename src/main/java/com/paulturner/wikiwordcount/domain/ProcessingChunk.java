@@ -16,10 +16,10 @@ public class ProcessingChunk implements Comparable<ProcessingChunk> {
     public ProcessingChunk() {
     }
 
-    public ProcessingChunk(long start, long end, long timestamp, int index) {
+    public ProcessingChunk(long start, long end, int index) {
         this.start = start;
         this.end = end;
-        this.timestamp = timestamp;
+        this.timestamp = System.currentTimeMillis();
         this.index = index;
         processed = false;
 

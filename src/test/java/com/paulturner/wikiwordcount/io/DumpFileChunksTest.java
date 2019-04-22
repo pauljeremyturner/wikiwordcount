@@ -1,22 +1,33 @@
 package com.paulturner.wikiwordcount.io;
 
 import com.paulturner.wikiwordcount.cli.CalculateOptions;
+import com.paulturner.wikiwordcount.domain.ProcessingChunk;
+import com.paulturner.wikiwordcount.test.TestFile;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
+import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DumpFileChunksTest {
 
     private static final int KILO = 1 << 10;
     private static final int CHUNK_SIZE = 512 * KILO;
-    CalculateOptions calculateOptions;
+
+    private CalculateOptions calculateOptions;
     private DumpFileChunks dumpFileChunks;
 
     @Before
     public void before() throws Exception {
 
-        File projectRootDir = new File(".");
-        String testFilePath = projectRootDir.getAbsolutePath() + "<SEP>src<SEP>test<SEP>resources<SEP>quite-a-few-pages.xml".replace("<SEP>", File.separator);
+        String testFilePath = TestFile.testDumpFilePath();
         calculateOptions = CalculateOptions.builder()
                 .withChunkSize(CHUNK_SIZE)
                 .withFile(new File(testFilePath))
@@ -25,160 +36,74 @@ public class DumpFileChunksTest {
 
     }
 
-/*
     @Test
-    public void shouldFindUnreservedChunkAtStart() throws Exception {
+    public void shouldSeparateIntoChunks() throws Exception {
+        assertThat(dumpFileChunks.divideToProcessingChunks().size());
+    }
 
-        int start = 1024 * KILO;
-        int end = (int) calculateOptions.getFileSize() - 1;
+    @Test
+    public void allProcessingChunksShouldStartAndEndWithNewPage() throws Exception {
+        List<ProcessingChunk> processingChunks = dumpFileChunks.divideToProcessingChunks();
+        RandomAccessFile randomAccessFile = new RandomAccessFile(calculateOptions.getFile(), "r");
+        boolean first = true;
+        for (ProcessingChunk pc : processingChunks) {
+            try {
+                randomAccessFile.seek(pc.getStart());
+                int charsRead = 0;
+                byte[] bytes = new byte[6];
+                if (first) {
+                    first = false;
+                    continue;
+                }
+                while (charsRead < 6) {
 
-        ProcessingChunk processingChunk = new ProcessingChunk(start, end, System.currentTimeMillis(), calculateOptions.getUniqueDumpFileName());
+                    byte b = randomAccessFile.readByte();
+                    if (Character.isWhitespace((char) b)) {
+                        continue;
+                    }
+                    bytes[charsRead] = b;
+                    charsRead++;
 
-        FileChunk anyAvailableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(Arrays.asList(processingChunk));
-        boolean testedRandomChunkInMiddleOfFreeSpace = false;
-        boolean testedRandomChunkAtEndOfFreeSpace = false;
-
-        while (!testedRandomChunkAtEndOfFreeSpace && !testedRandomChunkInMiddleOfFreeSpace) {
-            // we got a random chunk bounded by the start of the already reserved chunk
-            if (anyAvailableFileChunk.getEnd() == start - 1) {
-                assertThat(anyAvailableFileChunk.getStart()).isGreaterThan(0);
-                assertThat(anyAvailableFileChunk.getStart()).isLessThan(start - 1);
-                assertThat(anyAvailableFileChunk.getStart()).isLessThan(anyAvailableFileChunk.getEnd());
-                assertThat(anyAvailableFileChunk.getEnd() - anyAvailableFileChunk.getStart()).isLessThanOrEqualTo(CHUNK_SIZE);
-                assertThat(anyAvailableFileChunk.isEndBound()).isTrue();
-                assertThat(anyAvailableFileChunk.isStartBound()).isFalse();
-                testedRandomChunkAtEndOfFreeSpace = true;
-
-            } else {
-                assertThat(anyAvailableFileChunk.getEnd() - anyAvailableFileChunk.getStart()).isEqualTo(CHUNK_SIZE);
-                assertThat(anyAvailableFileChunk.getStart()).isLessThan(anyAvailableFileChunk.getEnd());
-                testedRandomChunkInMiddleOfFreeSpace = true;
-
+                }
+                assertThat(Arrays.equals(bytes, "<page>".getBytes(StandardCharsets.US_ASCII))).isTrue();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
 
     }
 
-
     @Test
-    public void shouldFindUnreservedChunkAtEnd() throws Exception {
+    public void processingChunksShouldBeContiguousBytesOfFile() throws Exception {
 
-        int start = 0;
-        int end = 2048 * KILO;
+        List<ProcessingChunk> processingChunks = dumpFileChunks.divideToProcessingChunks();
 
-        ProcessingChunk processingChunk = new ProcessingChunk(start, end, System.currentTimeMillis(), calculateOptions.getUniqueDumpFileName());
 
-        FileChunk anyAvailableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(Arrays.asList(processingChunk));
-        boolean testedRandomChunkInMiddleOfFreeSpace = false;
-        boolean testedRandomChunkAtEndOfFreeSpace = false;
+        Iterator<ProcessingChunk> iterator = processingChunks.iterator();
 
-        while (!testedRandomChunkAtEndOfFreeSpace && !testedRandomChunkInMiddleOfFreeSpace) {
-            // we got a random chunk bounded by the end of the file
-            if (anyAvailableFileChunk.getEnd() == calculateOptions.getFileSize() - 1) {
-                assertThat(anyAvailableFileChunk.getStart()).isLessThan(calculateOptions.getFileSize() - 1);
-                assertThat(anyAvailableFileChunk.getStart()).isGreaterThan(calculateOptions.getFileSize() - 1 - CHUNK_SIZE);
-                assertThat(anyAvailableFileChunk.getEnd() - anyAvailableFileChunk.getStart()).isLessThanOrEqualTo(CHUNK_SIZE);
-                assertThat(anyAvailableFileChunk.isEndBound()).isTrue();
-                assertThat(anyAvailableFileChunk.isStartBound()).isFalse();
-                testedRandomChunkAtEndOfFreeSpace = true;
-
-            } else {
-                assertThat(anyAvailableFileChunk.getEnd() - anyAvailableFileChunk.getStart()).isEqualTo(CHUNK_SIZE);
-                assertThat(anyAvailableFileChunk.getStart()).isLessThan(anyAvailableFileChunk.getEnd());
-                testedRandomChunkInMiddleOfFreeSpace = true;
-
+        ProcessingChunk cp1;
+        ProcessingChunk cp2 = iterator.next();
+        while (iterator.hasNext()) {
+            cp1 = cp2;
+            cp2 = iterator.next();
+            cp2.getStart();
+            boolean contiguous = (cp1.getEnd() + 1) == cp2.getStart();
+            if (!contiguous) {
+                Assert.fail();
             }
+        }
+
+        ProcessingChunk first = processingChunks.get(0);
+        if (first.getStart() > 0) {
+            Assert.fail();
+        }
+
+        ProcessingChunk last = processingChunks.get(processingChunks.size() - 1);
+        if (last.getEnd() < calculateOptions.getFileSize() - 1) {
+            Assert.fail();
         }
 
     }
 
-
-    @Test
-    public void shouldFindUnreservedChunkWhenMiddleReserved() throws Exception {
-
-        int start = 2048 * KILO;
-        int end = 3072 * KILO;
-
-        ProcessingChunk reserved1 = new ProcessingChunk(start, end - 1024, System.currentTimeMillis(), calculateOptions.getUniqueDumpFileName());
-        ProcessingChunk reserved2 = new ProcessingChunk(end - 1023, end, System.currentTimeMillis(), calculateOptions.getUniqueDumpFileName());
-
-        FileChunk anyAvailableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(Arrays.asList(reserved1, reserved2));
-        boolean testedRandomChunkAtEndOfFreeSpace = false;
-        boolean testedRandomChunkAtStartOfFreeSpace = false;
-
-        while (!testedRandomChunkAtEndOfFreeSpace && testedRandomChunkAtStartOfFreeSpace) {
-
-            if (anyAvailableFileChunk.getEnd() == calculateOptions.getFileSize() - 1) {
-                assertThat(anyAvailableFileChunk.getStart()).isLessThan(calculateOptions.getFileSize() - 1);
-                assertThat(anyAvailableFileChunk.getStart()).isGreaterThan(calculateOptions.getFileSize() - 1 - CHUNK_SIZE);
-                assertThat(anyAvailableFileChunk.getEnd() - anyAvailableFileChunk.getStart()).isLessThanOrEqualTo(CHUNK_SIZE);
-                assertThat(anyAvailableFileChunk.getStart()).isGreaterThan(reserved2.getEnd());
-                testedRandomChunkAtEndOfFreeSpace = true;
-
-            }
-            if (anyAvailableFileChunk.getStart() == 0) {
-                assertThat(anyAvailableFileChunk.getEnd()).isLessThan(CHUNK_SIZE + 1);
-                assertThat(anyAvailableFileChunk.getStart()).isLessThan(anyAvailableFileChunk.getEnd());
-                assertThat(anyAvailableFileChunk.getEnd() - anyAvailableFileChunk.getStart()).isLessThanOrEqualTo(CHUNK_SIZE);
-                testedRandomChunkAtStartOfFreeSpace = true;
-
-            }
-
-        }
-    }
-
-    @Test
-    public void noMoreChunksWhenAllDoneSimple() {
-        ProcessingChunk pc1 = new ProcessingChunk(0, 3330000, System.currentTimeMillis(), "");
-        ProcessingChunk pc2 = new ProcessingChunk(3330001, 7916025, System.currentTimeMillis(), "");
-
-        List<ProcessingChunk> processingChunks = Arrays.asList(pc1, pc2);
-
-        FileChunk anyAvailableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(processingChunks);
-
-    }
-
-    @Test
-    public void chunkWhenOnlySpaceAtStart() {
-        ProcessingChunk pc1 = new ProcessingChunk(1000, 3330000, System.currentTimeMillis(), "");
-        ProcessingChunk pc2 = new ProcessingChunk(3330001, 7916025, System.currentTimeMillis(), "");
-
-
-        List<ProcessingChunk> processingChunks = Arrays.asList(pc1, pc2);
-
-        FileChunk anyAvailableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(processingChunks);
-
-        assertThat(anyAvailableFileChunk.isStartBound()).isTrue();
-        assertThat(anyAvailableFileChunk.isEndBound()).isTrue();
-        assertThat(anyAvailableFileChunk.getStart()).isEqualTo(0);
-        assertThat(anyAvailableFileChunk.getEnd()).isEqualTo(999);
-
-    }
-
-
-    @Test
-    public void chunkWhenOnlySpaceAtEnd() {
-        ProcessingChunk pc1 = new ProcessingChunk(0, 3330000, System.currentTimeMillis(), "");
-        ProcessingChunk pc2 = new ProcessingChunk(3330001, 7910000, System.currentTimeMillis(), "");
-
-        List<ProcessingChunk> processingChunks = new ArrayList(Arrays.asList(pc1, pc2));
-
-        FileChunk anyAvailableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(processingChunks);
-
-        assertThat(anyAvailableFileChunk.isStartBound()).isTrue();
-        assertThat(anyAvailableFileChunk.isEndBound()).isTrue();
-        assertThat(anyAvailableFileChunk.getStart()).isEqualTo(7910001);
-        assertThat(anyAvailableFileChunk.getEnd()).isEqualTo(7916025);
-
-        ProcessingChunk processingChunk = dumpFileChunks.trimToWholePages(anyAvailableFileChunk);
-
-        processingChunks.add(processingChunk);
-
-        anyAvailableFileChunk = dumpFileChunks.getAnyAvailableFileChunk(processingChunks);
-
-        assertThat(anyAvailableFileChunk).isNull();
-    }
-
-*/
 
 }

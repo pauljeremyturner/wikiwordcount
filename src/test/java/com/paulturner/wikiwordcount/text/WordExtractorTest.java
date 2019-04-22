@@ -1,20 +1,29 @@
 package com.paulturner.wikiwordcount.text;
 
+import com.paulturner.wikiwordcount.mongoentity.ChunkDigest;
+import org.junit.Test;
+
+import java.io.File;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class WordExtractorTest {
 
-/*
+
     @Test
     public void shouldExtractWordsFromSimplePage() throws Exception {
 
         ByteBuffer byteBuffer = classpathFileToByteBuffer("/synthetic-page.txt");
 
-        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer, "", 0);
 
         ChunkDigest chunkDigest = wordExtractor.extract();
 
-        assertThat(chunkDigest.wordCount("and")).isEqualTo(8);
-        assertThat(chunkDigest.wordCount("you")).isEqualTo(3);
-        assertThat(chunkDigest.wordCount("pestilent")).isEqualTo(1);
+        assertThat(chunkDigest.getWordCountMap().get("and")).isEqualTo(8);
+        assertThat(chunkDigest.getWordCountMap().get("you")).isEqualTo(3);
+        assertThat(chunkDigest.getWordCountMap().get("pestilent")).isEqualTo(1);
 
     }
 
@@ -24,13 +33,13 @@ public class WordExtractorTest {
 
         ByteBuffer byteBuffer = classpathFileToByteBuffer("/title-only.txt");
 
-        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer, "", 0);
 
         ChunkDigest chunkDigest = wordExtractor.extract();
 
-        assertThat(chunkDigest.wordCount("negative")).isEqualTo(2);
-        assertThat(chunkDigest.wordCount("surface")).isEqualTo(1);
-        assertThat(chunkDigest.wordCount("the")).isEqualTo(1);
+        assertThat(chunkDigest.getWordCountMap().get("negative")).isEqualTo(2);
+        assertThat(chunkDigest.getWordCountMap().get("surface")).isEqualTo(1);
+        assertThat(chunkDigest.getWordCountMap().get("the")).isEqualTo(1);
 
     }
 
@@ -39,13 +48,13 @@ public class WordExtractorTest {
 
         ByteBuffer byteBuffer = classpathFileToByteBuffer("/comment-only.txt");
 
-        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer, "", 0);
 
         ChunkDigest chunkDigest = wordExtractor.extract();
 
-        assertThat(chunkDigest.wordCount("twelve")).isEqualTo(1);
-        assertThat(chunkDigest.wordCount("imperial")).isEqualTo(1);
-        assertThat(chunkDigest.wordCount("the")).isEqualTo(4);
+        assertThat(chunkDigest.getWordCountMap().get("twelve")).isEqualTo(1);
+        assertThat(chunkDigest.getWordCountMap().get("imperial")).isEqualTo(1);
+        assertThat(chunkDigest.getWordCountMap().get("the")).isEqualTo(4);
 
     }
 
@@ -57,10 +66,10 @@ public class WordExtractorTest {
 
         ByteBuffer byteBuffer = classpathFileToByteBuffer("/whole-page.txt");
 
-        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer, "", 0);
 
         ChunkDigest chunkDigest = wordExtractor.extract();
-        assertThat(chunkDigest.getWordCounts().size()).isGreaterThan(0);
+        assertThat(chunkDigest.getWordCountMap().size()).isGreaterThan(0);
     }
 
 
@@ -69,10 +78,10 @@ public class WordExtractorTest {
 
         ByteBuffer byteBuffer = classpathFileToByteBuffer("/problem-page-2.txt");
 
-        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer, "", 0);
 
         ChunkDigest chunkDigest = wordExtractor.extract();
-        assertThat(chunkDigest.getWordCounts().size()).isGreaterThan(0);
+        assertThat(chunkDigest.getWordCountMap().size()).isGreaterThan(0);
     }
 
 
@@ -81,10 +90,10 @@ public class WordExtractorTest {
 
         ByteBuffer byteBuffer = classpathFileToByteBuffer("/problem-page-1.txt");
 
-        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer, "", 0);
 
         ChunkDigest chunkDigest = wordExtractor.extract();
-        assertThat(chunkDigest.getWordCounts().size()).isGreaterThan(0);
+        assertThat(chunkDigest.getWordCountMap().size()).isGreaterThan(0);
     }
 
     @Test
@@ -92,10 +101,10 @@ public class WordExtractorTest {
 
         ByteBuffer byteBuffer = classpathFileToByteBuffer("/problem-page-3.txt");
 
-        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer, "", 0);
 
         ChunkDigest chunkDigest = wordExtractor.extract();
-        assertThat(chunkDigest.getWordCounts().size()).isGreaterThan(0);
+        assertThat(chunkDigest.getWordCountMap().size()).isGreaterThan(0);
     }
 
     @Test
@@ -103,10 +112,10 @@ public class WordExtractorTest {
 
         ByteBuffer byteBuffer = classpathFileToByteBuffer("/problem-page-4.txt");
 
-        WordExtractor wordExtractor = new WordExtractor(byteBuffer);
+        WordExtractor wordExtractor = new WordExtractor(byteBuffer, "", 0);
 
         ChunkDigest chunkDigest = wordExtractor.extract();
-        assertThat(chunkDigest.getWordCounts().size()).isGreaterThan(0);
+        assertThat(chunkDigest.getWordCountMap().size()).isGreaterThan(0);
     }
 
 
@@ -116,5 +125,4 @@ public class WordExtractorTest {
 
     }
 
-*/
 }

@@ -30,15 +30,11 @@ public class DumpFileChunks {
 
     private final CalculateOptions calculateOptions;
     private final ByteBufferPool byteBufferPool;
-    private final long fileSize;
-    private final String uniqueFilename;
     private final Path path;
 
     @Autowired
     public DumpFileChunks(CalculateOptions calculateOptions) {
         this.calculateOptions = calculateOptions;
-        this.uniqueFilename = calculateOptions.getUniqueDumpFileName();
-        this.fileSize = calculateOptions.getFileSize();
         this.path = calculateOptions.getFile().toPath();
         byteBufferPool = new ByteBufferPool(calculateOptions.getChunkSize(), calculateOptions.isUseOffHelpBuffers());
     }
@@ -57,7 +53,11 @@ public class DumpFileChunks {
             probeBuffer.flip();
             int delta = advanceToNewPage(probeBuffer);
             position = position + delta;
-            processingChunks.add(new ProcessingChunk(start, position, -1, index));
+            final ProcessingChunk processingChunk = new ProcessingChunk(start, position, index);
+
+            logger.info("Divided file into chunk [ProcessingChunk={}]", processingChunk);
+
+            processingChunks.add(processingChunk);
 
             position++;
             index++;
@@ -66,110 +66,6 @@ public class DumpFileChunks {
         return processingChunks;
 
     }
-
-    /*
-
-        public FileChunk getAnyAvailableFileChunk(final List<ProcessingChunk> reservedProcessingChunks) {
-
-            final List<ProcessingChunk> unreservedProcessingChunks = reservedToUnreserved(reservedProcessingChunks);
-
-            if (unreservedProcessingChunks.isEmpty()) {
-                return null;
-            }
-
-
-            ProcessingChunk processingChunk = unreservedProcessingChunks.get(0);
-            long start = processingChunk.getStart();
-            long end;
-            boolean endBound;
-            if ((processingChunk.getEnd() - processingChunk.getStart()) > calculateOptions.getChunkSize()) {
-                end = start + calculateOptions.getChunkSize();
-                endBound = false;
-
-            } else {
-                end = processingChunk.getEnd();
-                endBound = true;
-            }
-
-            return new FileChunk(start, end, true, endBound);
-
-        }
-    */
-    public boolean fileComplete(final List<ProcessingChunk> reservedProcessingChunks) {
-
-
-        Collections.sort(reservedProcessingChunks);
-        List<ProcessingChunk> reservedChunks = reservedProcessingChunks;
-
-        if (reservedChunks.isEmpty()) {
-            return false;
-        }
-
-        if (reservedChunks.size() == 1) {
-            ProcessingChunk singleChunk = reservedProcessingChunks.get(0);
-            return (singleChunk.getStart() == 0) && (singleChunk.getEnd() == calculateOptions.getFileSize() - 1);
-        }
-
-        Iterator<ProcessingChunk> chunkIterator = reservedProcessingChunks.iterator();
-        ProcessingChunk previous = chunkIterator.next();
-        if (previous.getStart() != 0) {
-            return false;
-        } else {
-            while (chunkIterator.hasNext()) {
-                ProcessingChunk next = chunkIterator.next();
-                if ((previous.getEnd() + 1) != next.getStart()) {
-                    return false;
-                }
-                previous = next;
-            }
-            return (previous.getStart() == 0) && (previous.getEnd() == calculateOptions.getFileSize() - 1);
-        }
-
-
-    }
-
-/*
-    private List<ProcessingChunk> reservedToUnreserved(List<ProcessingChunk> reserved) {
-
-        List<ProcessingChunk> unreserved = new ArrayList<>();
-
-        Collections.sort(reserved);
-
-        Iterator<ProcessingChunk> iterator = reserved.iterator();
-
-        if (reserved.isEmpty()) {
-            return Arrays.asList(new ProcessingChunk(0, fileSize - 1, System.currentTimeMillis(), uniqueFilename));
-        }
-
-
-        ProcessingChunk cp1;
-        ProcessingChunk cp2 = iterator.next();
-        while (iterator.hasNext()) {
-            cp1 = cp2;
-            cp2 = iterator.next();
-            cp2.getStart();
-            boolean contiguous = (cp1.getEnd() + 1) == cp2.getStart();
-            if (!contiguous) {
-                ProcessingChunk freeSpace = new ProcessingChunk((cp1.getEnd() + 1), (cp2.getStart() - 1), System.currentTimeMillis(), uniqueFilename);
-                unreserved.add(freeSpace);
-            }
-        }
-
-        ProcessingChunk first = reserved.get(0);
-        if (first.getStart() > 0) {
-            unreserved.add(new ProcessingChunk(0, first.getStart() - 1, System.currentTimeMillis(), calculateOptions.getUniqueDumpFileName()));
-        }
-
-        ProcessingChunk last = reserved.get(reserved.size() - 1);
-        if (last.getEnd() < fileSize - 1) {
-            unreserved.add(new ProcessingChunk(last.getEnd() + 1, fileSize - 1, System.currentTimeMillis(), calculateOptions.getUniqueDumpFileName()));
-        }
-
-
-        return unreserved;
-
-    }
-*/
 
 
     public Subchunks splitToSubChunks(final ByteBuffer byteBuffer, final ProcessingChunk processingChunk) {
@@ -204,7 +100,7 @@ public class DumpFileChunks {
     }
 
 
-    public int advanceToNewPage(ByteBuffer byteBuffer) {
+    public int advanceToNewPage(final ByteBuffer byteBuffer) {
         int startPosition = byteBuffer.position();
         CircularByteArrayQueue queue = new CircularByteArrayQueue(BYTES_CLOSE_PAGE.length);
         while (byteBuffer.hasRemaining()) {
@@ -242,7 +138,7 @@ public class DumpFileChunks {
     }
 
 
-    public ByteBuffer readProcessingChunk(ByteBuffer byteBuffer, long position) {
+    public ByteBuffer readProcessingChunk(final ByteBuffer byteBuffer, long position) {
         SeekableByteChannel seekableByteChannel = null;
         try {
             seekableByteChannel = Files
@@ -265,11 +161,11 @@ public class DumpFileChunks {
     }
 
 
-    public ByteBuffer acquireByteBuffer() {
+    public ByteBuffer acquireProcessingByteBuffer() {
         return byteBufferPool.acquire();
     }
 
-    public void releaseByteBuffer(final ByteBuffer byteBuffer) {
+    public void releaseProcessingByteBuffer(final ByteBuffer byteBuffer) {
         byteBufferPool.release(byteBuffer);
     }
 }

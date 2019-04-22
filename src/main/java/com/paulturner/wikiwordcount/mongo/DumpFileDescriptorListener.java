@@ -11,12 +11,12 @@ public class DumpFileDescriptorListener extends AbstractMongoEventListener<DumpF
 
     private CalculateOptions calculateOptions;
 
-    public DumpFileDescriptorListener(CalculateOptions calculateOptions) {
+    public DumpFileDescriptorListener(final CalculateOptions calculateOptions) {
         this.calculateOptions = calculateOptions;
     }
 
     @Override
-    public void onBeforeConvert(BeforeConvertEvent<DumpFileDescriptor> event) {
+    public void onBeforeConvert(final BeforeConvertEvent<DumpFileDescriptor> event) {
         DumpFileDescriptor dumpFileDescriptor = event.getSource();
 
         dumpFileDescriptor.setId(calculateOptions.getUniqueDumpFileName());

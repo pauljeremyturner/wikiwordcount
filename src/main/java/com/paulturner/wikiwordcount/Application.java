@@ -5,8 +5,8 @@ import com.paulturner.wikiwordcount.cli.CalculateCommandLineParser;
 import com.paulturner.wikiwordcount.cli.CalculateOptions;
 import com.paulturner.wikiwordcount.cli.SelectCommandLineParser;
 import com.paulturner.wikiwordcount.cli.SelectOptions;
-import com.paulturner.wikiwordcount.command.CalculateProcessor;
-import com.paulturner.wikiwordcount.command.SelectProcessor;
+import com.paulturner.wikiwordcount.command.CalculateCommand;
+import com.paulturner.wikiwordcount.command.SelectCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -37,12 +37,12 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Autowired
-    private CalculateProcessor calculateProcessor;
+    private CalculateCommand calculateCommand;
 
     @Autowired
-    private SelectProcessor selectProcessor;
+    private SelectCommand selectCommand;
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         if (args.length == 0) {
             logger.error("Need to specify calculate or select mode");
@@ -91,17 +91,17 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
     @Override
-    public void run(String... args) {
+    public void run(final String... args) {
 
         if (SELECT == mode) {
-            selectProcessor.processChunks();
+            selectCommand.processChunks();
         } else if (CALCULATE == mode) {
-            calculateProcessor.process();
+            calculateCommand.process();
         }
 
     }

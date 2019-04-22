@@ -1,6 +1,7 @@
 package com.paulturner.wikiwordcount.mongo;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,11 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MongoConfiguration extends AbstractMongoConfiguration {
 
     @Autowired
-    private ServerAddress serverAddress;
+    public MongoConfiguration(final ServerAddress serverAddress) {
+        this.serverAddress = serverAddress;
+    }
+
+    private final ServerAddress serverAddress;
 
     @Override
     protected String getDatabaseName() {
@@ -32,9 +37,8 @@ public class MongoConfiguration extends AbstractMongoConfiguration {
     @Bean
     public MongoClient mongoClient() {
 
-        MongoClient client = new MongoClient(serverAddress);
-        client.setWriteConcern(WriteConcern.ACKNOWLEDGED);
+        MongoClientOptions mongoClientOptions = new MongoClientOptions.Builder().writeConcern(WriteConcern.ACKNOWLEDGED).build();
+        return new MongoClient(serverAddress, mongoClientOptions);
 
-        return client;
     }
 }

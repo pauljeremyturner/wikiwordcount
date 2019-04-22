@@ -1,6 +1,5 @@
 package com.paulturner.wikiwordcount.mongoentity;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Persistable;
 
@@ -10,11 +9,16 @@ import java.util.Objects;
 
 public class ChunkDigest implements Persistable<String> {
 
+    private static final String ID_MASK = "%d-%s";
+
+    public static String generatePrimaryKey(int chunkIndex, String fileDescriptor) {
+        return String.format(ID_MASK, chunkIndex, fileDescriptor);
+    }
 
     @Id
     private String id = null;
 
-    private Map<String, Integer> wordCountMap;
+    private final Map<String, Integer> wordCountMap;
     private int index;
     private String fileName;
 
@@ -22,7 +26,7 @@ public class ChunkDigest implements Persistable<String> {
         wordCountMap = new HashMap<>();
     }
 
-    public ChunkDigest(String fileName, int index, Map<String, Integer> wordCountMap) {
+    public ChunkDigest(final String fileName, final int index, final Map<String, Integer> wordCountMap) {
         this();
         this.wordCountMap.putAll(wordCountMap);
         this.index = index;
