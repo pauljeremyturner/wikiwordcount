@@ -16,17 +16,11 @@ public class AbstractCommandLineParser {
     private static final int MEGA = 1 << 20;
     private static final int KILO = 1 << 10;
 
-
-    private static final String OPTION_FILE_PATH = "source";
-    private static final String OPTION_MONGO_SERVER = "mongo";
-    private static final String OPTION_CHUNK_SIZE = "chunk-size";
-
-
     static int getChunkSizeBytes(Optional<String> chunkSizeOpt) {
-        return chunkSizeOpt.map(cs -> cliArgToBytes(cs)).orElse(512 * MEGA);
+        return chunkSizeOpt.map(cs -> cliArgToBytes(cs)).orElse(GIGA);
     }
 
-    static int cliArgToBytes(String chunkSize) {
+    private static int cliArgToBytes(String chunkSize) {
         String pattern = "(\\d+)([B,K,M,G])";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(chunkSize);

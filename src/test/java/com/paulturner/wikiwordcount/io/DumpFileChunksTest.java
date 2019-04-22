@@ -86,7 +86,6 @@ public class DumpFileChunksTest {
         while (iterator.hasNext()) {
             cp1 = cp2;
             cp2 = iterator.next();
-            cp2.getStart();
             boolean contiguous = (cp1.getEnd() + 1) == cp2.getStart();
             if (!contiguous) {
                 Assert.fail();

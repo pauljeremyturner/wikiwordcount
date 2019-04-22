@@ -60,7 +60,7 @@ public class CalculateCommand {
             ProcessingChunk availableProcessingChunk = availableProcessingChunks.get(randomProcessingChunkIndex);
             logger.info("Processing a chunk of dump file [chunk #={}]", randomProcessingChunkIndex);
             availableProcessingChunk.setProcessing(true);
-
+            saved = false;
             while (!saved) {
                 try {
                     dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
@@ -73,9 +73,8 @@ public class CalculateCommand {
                 }
             }
 
-            FileChunkWorker fileChunkWorker = fileChunkWorkerFactory.newInstance(availableProcessingChunk, dumpFileDescriptor);
-            fileChunkWorker.run();
-
+            fileChunkWorkerFactory.newInstance(availableProcessingChunk, dumpFileDescriptor).run();
+            dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
         }
 
         logger.info("Finished processing new chunks");
@@ -89,8 +88,7 @@ public class CalculateCommand {
 
             logger.info("Hijacking a chunk of dump file [chunk #={}]", randomProcessingChunkIndex);
 
-            FileChunkWorker fileChunkWorker = fileChunkWorkerFactory.newInstance(availableProcessingChunk, dumpFileDescriptor);
-            fileChunkWorker.run();
+            fileChunkWorkerFactory.newInstance(availableProcessingChunk, dumpFileDescriptor).run();
 
 
             logger.info("Waiting before hijacking a chunk started by another process but unfinished.");
@@ -98,6 +96,21 @@ public class CalculateCommand {
 
             dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
 
+        }
+
+        dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+        saved = false;
+        while (!saved) {
+            try {
+                dumpFileDescriptor.setComplete(true);
+                dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
+                logger.info("Marked dumpFileDescriptor as complete");
+                saved = true;
+            } catch (final OptimisticLockingFailureException olfe) {
+                logger.info("Tried to mark dumpFileDescriptor as complete but is stale, retrying");
+                dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+                dumpFileDescriptor.setComplete(true);
+            }
         }
 
         logger.info("Completed calculation stage");

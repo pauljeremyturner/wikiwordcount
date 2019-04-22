@@ -2,32 +2,33 @@ package com.paulturner.wikiwordcount.collections;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.stream.IntStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CircularByteArrayQueueTest {
     private CircularByteArrayQueue queue;
 
     @Before
     public void before() throws Exception {
-        queue = new CircularByteArrayQueue(10);
+        queue = new CircularByteArrayQueue(80);
     }
 
     @Test
     public void shouldIndicateDoesNotContainWhenEmpty() throws Exception {
 
-        assertThat(queue.containsArray("hello, is it me you're looking for?".getBytes(StandardCharsets.US_ASCII))).isFalse();
+        assertThat(queue.contains("hello, is it me you're looking for?".getBytes(StandardCharsets.US_ASCII))).isFalse();
     }
 
     @Test
     public void shouldIndicateContainsWhenContains() throws Exception {
         IntStream.rangeClosed(48, 57).forEach(
-                i -> queue.offer((byte)i)
+                i -> queue.offer((byte) i)
         );
 
-        assertThat(queue.containsArray("0123456789".getBytes(StandardCharsets.US_ASCII))).isTrue();
+        assertThat(queue.contains("0123456789".getBytes(StandardCharsets.US_ASCII))).isTrue();
     }
 
     @Test
@@ -36,7 +37,7 @@ public class CircularByteArrayQueueTest {
             queue.offer(b);
         }
 
-        assertThat(queue.containsArray("</page".getBytes(StandardCharsets.US_ASCII))).isTrue();
+        assertThat(queue.contains("</page".getBytes(StandardCharsets.US_ASCII))).isTrue();
     }
 
 }

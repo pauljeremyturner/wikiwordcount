@@ -1,40 +1,53 @@
 package com.paulturner.wikiwordcount.collections;
 
-import com.mongodb.annotations.NotThreadSafe;
-
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.stream.IntStream;
 
-@NotThreadSafe
 public class CircularByteArrayQueue {
+    private final int capacity;
+    int writeIndex;
+    private final int endIndex;
+    private final byte[] buffer;
 
-    private final int size;
-    private final byte[] byteArray;
-    private int pos;
-
-    public CircularByteArrayQueue(final int size) {
-        this.size = size;
-        byteArray = new byte[size];
-        pos = 0;
-
+    public CircularByteArrayQueue(int capacity) {
+        this.capacity = capacity;
+        this.buffer = new byte[capacity];
+        endIndex = capacity - 1;
+        writeIndex = 0;
     }
 
-    public void offer(final byte b) {
-        if (pos < byteArray.length) {
-            byteArray[pos++] = b;
-        } else {
-            IntStream.range(0, byteArray.length - 1).forEach(i -> byteArray[i] = byteArray[i + 1]);
-            byteArray[byteArray.length - 1] = b;
+    public void offer(byte b) {
+        buffer[writeIndex] = b;
+        setNextWritePosition();
+    }
+
+    public boolean contains(byte[] bytes) {
+
+        int length = bytes.length;
+        if (length > capacity) {
+            return false;
         }
+
+        int readIndex = writeIndex - length;
+        readIndex = readIndex < 0 ? capacity + readIndex : readIndex;
+        for (int i = 0; i < length; i++) {
+            if (bytes[i] != buffer[readIndex]) {
+                return false;
+            }
+            readIndex++;
+            if (readIndex > endIndex) {
+                readIndex = 0;
+            }
+        }
+        return true;
     }
 
-    public boolean containsArray(final byte[] bytes) {
-        return Arrays.equals(Arrays.copyOfRange(byteArray, Math.max(0, byteArray.length - bytes.length), byteArray.length), bytes);
+
+    private void setNextWritePosition() {
+        writeIndex = (writeIndex == endIndex) ? 0 : writeIndex + 1;
     }
 
     @Override
     public String toString() {
-        return new String(byteArray, StandardCharsets.UTF_8);
+        return new String(buffer, StandardCharsets.US_ASCII);
     }
 }

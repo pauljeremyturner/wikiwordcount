@@ -11,6 +11,7 @@ import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 @NotThreadSafe
 public class WordExtractor {
@@ -30,6 +31,15 @@ public class WordExtractor {
     private int index;
     private String fileName;
 
+    private static final ThreadLocal<char[][]> recycleCharArrayTlocal = ThreadLocal.withInitial(
+            () -> {
+                char[][] charArrayRecycle = new char[32][];
+                IntStream.rangeClosed(1, 32).forEach(
+                        i -> charArrayRecycle[i - 1] = new char[i]
+                );
+                return charArrayRecycle;
+            }
+    );
 
     public WordExtractor(final ByteBuffer byteBuffer, String fileName, int index) {
         this.byteBuffer = byteBuffer;
@@ -54,9 +64,7 @@ public class WordExtractor {
 
         boolean startOfLine = true;
 
-        //todo: no need for this circular q for the line, just for the tags - refactor to use the char buffer instead
-        CircularCharArrayQueue lineQueue = new CircularCharArrayQueue(4096);
-        CircularCharArrayQueue tagQueue = new CircularCharArrayQueue(20);
+        final CircularCharArrayQueue tagQueue = new CircularCharArrayQueue(64);
 
         while (charBuffer.hasRemaining()) {
             char c = charBuffer.get();
@@ -72,20 +80,20 @@ public class WordExtractor {
                     continue;
                 } else {
                     startOfLine = false;
-                    lineQueue.clear();
                 }
             }
 
-            lineQueue.offer(c);
+            tagQueue.offer(c);
 
-            if (isComment(lineQueue)) {
-                processComment(charBuffer, lineQueue, tagQueue);
+
+            if (isComment(tagQueue)) {
+                processComment(charBuffer, tagQueue);
                 startOfLine = true;
-            } else if (isTitle(lineQueue)) {
-                processTitle(charBuffer, lineQueue, tagQueue);
+            } else if (isTitle(tagQueue)) {
+                processTitle(charBuffer, tagQueue);
                 startOfLine = true;
-            } else if (isText(lineQueue)) {
-                processText(charBuffer, lineQueue, tagQueue);
+            } else if (isText(tagQueue)) {
+                processText(charBuffer, tagQueue);
                 startOfLine = true;
             }
         }
@@ -96,56 +104,61 @@ public class WordExtractor {
 
     }
 
-    private void processUntil(CharBuffer charBuffer, CircularCharArrayQueue lineQueue, CircularCharArrayQueue tagQueue, char[] until) {
+    private void processUntil(final CharBuffer charBuffer, final CircularCharArrayQueue tagQueue, final char[] until) {
         ignoreToXmlCloseTag(charBuffer);
 
+        if (!charBuffer.hasRemaining()) {
+            return;
+        }
         char c;
-        lineQueue.clear();
-        tagQueue.clear();
+        boolean isCollectingWord = false;
+        int wordLength = 0;
         do {
             c = charBuffer.get();
-            if ('<' == c) {
-                tagQueue.clear();
-            }
-            tagQueue.offer(c);
+            tagQueue.offer(Character.toLowerCase(c));
             if (Character.isLetter(c)) {
-                lineQueue.offer(Character.toLowerCase(c));
-            } else if (!lineQueue.isEmpty()) {
 
-                if (logger.isTraceEnabled()) {
-                    logger.trace("word [{}]", String.valueOf(lineQueue.subArrayToPosition()));
+                if (!isCollectingWord) {
+                    wordLength = 1;
+                    isCollectingWord = true;
+                } else {
+                    wordLength++;
                 }
-                incrementCountForWord(String.valueOf(lineQueue.subArrayToPosition()));
-                lineQueue.clear();
-            }
-        } while (charBuffer.hasRemaining() && (!tagQueue.containsArray(until)));
-        ignoreToXmlCloseTag(charBuffer);
 
+            } else if (isCollectingWord) {
+                isCollectingWord = false;
+                if (wordLength <= dictionary.longestWordLength()) {
+                    incrementCountForWord(String.valueOf(tagQueue.subarray(wordLength, recycleCharArrayTlocal.get()[wordLength - 1])));
+                }
+                wordLength = 0;
+            }
+        } while (charBuffer.hasRemaining() && (!tagQueue.contains(until)));
+        ignoreToXmlCloseTag(charBuffer);
     }
 
-    private void processText(CharBuffer charBuffer, CircularCharArrayQueue lineQueue, CircularCharArrayQueue tagQueue) {
-        processUntil(charBuffer, lineQueue, tagQueue, XML_TAG_TEXT_CLOSE);
+    private void processText(CharBuffer charBuffer, CircularCharArrayQueue tagQueue) {
+        processUntil(charBuffer, tagQueue, XML_TAG_TEXT_CLOSE);
 
     }
 
     private boolean isText(CircularCharArrayQueue queue) {
-        return queue.containsArray(XML_TAG_TEXT_OPEN);
+        return queue.contains(XML_TAG_TEXT_OPEN);
     }
 
-    private void processTitle(CharBuffer charBuffer, CircularCharArrayQueue lineQueue, CircularCharArrayQueue tagQueue) {
-        processUntil(charBuffer, lineQueue, tagQueue, XML_TAG_TITLE_CLOSE);
+    private void processTitle(CharBuffer charBuffer, CircularCharArrayQueue tagQueue) {
+        processUntil(charBuffer, tagQueue, XML_TAG_TITLE_CLOSE);
     }
 
     private boolean isTitle(CircularCharArrayQueue queue) {
-        return queue.containsArray(XML_TAG_TITLE_OPEN);
+        return queue.contains(XML_TAG_TITLE_OPEN);
     }
 
-    private void processComment(CharBuffer charBuffer, CircularCharArrayQueue lineQueue, CircularCharArrayQueue tagQueue) {
-        processUntil(charBuffer, lineQueue, tagQueue, XML_TAG_COMMENT_CLOSE);
+    private void processComment(CharBuffer charBuffer, CircularCharArrayQueue tagQueue) {
+        processUntil(charBuffer, tagQueue, XML_TAG_COMMENT_CLOSE);
     }
 
     private boolean isComment(CircularCharArrayQueue queue) {
-        return queue.containsArray(XML_TAG_COMMENT_OPEN);
+        return queue.contains(XML_TAG_COMMENT_OPEN);
     }
 
     private boolean isIndentation(char c) {
