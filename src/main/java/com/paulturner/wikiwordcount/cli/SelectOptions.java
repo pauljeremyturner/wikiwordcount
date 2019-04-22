@@ -9,11 +9,8 @@ public class SelectOptions extends AbstractCommandOptions {
 
 
     private Integer count;
-    private String mongoClientUri;
     private Direction direction;
     private Integer wordLength;
-    private File file;
-    private int chunkSize;
 
     private SelectOptions(
             File file, String mongoClientUri, int chunkSize,
@@ -25,29 +22,21 @@ public class SelectOptions extends AbstractCommandOptions {
         this.wordLength = wordLength;
     }
 
-    public static String getToStringMask() {
-        return TO_STRING_MASK;
-    }
-
     public static SelectOptions.Builder builder() {
         return new SelectOptions.Builder();
     }
 
     public String getUniqueDumpFileName() {
-        return String.format(NAME_MASK, file.getName(), file.length(), chunkSize);
+        return String.format(NAME_MASK, getFile().getName(), getFile().length(), getChunkSize());
     }
 
     @Override
     public String toString() {
-        return String.format(TO_STRING_MASK, mongoClientUri, direction, count, wordLength);
+        return String.format(TO_STRING_MASK, getMongoClientUri(), direction, count, wordLength);
     }
 
     public Integer getCount() {
         return count;
-    }
-
-    public String getMongoClientUri() {
-        return mongoClientUri;
     }
 
     public Direction getDirection() {

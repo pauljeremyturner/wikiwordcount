@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class Dictionary {
 
-    static final Set<String> dictionaryWords;
+    private static final Set<String> dictionaryWords;
     private static final Logger logger = LoggerFactory.getLogger(Dictionary.class);
 
     static {
@@ -33,8 +33,6 @@ public class Dictionary {
         } catch (final IOException ioe) {
             throw new IllegalStateException(ioe);
         }
-
-
     }
 
     public boolean isDictionaryWord(final String word) {
@@ -44,6 +42,5 @@ public class Dictionary {
     public int wordCount() {
         return dictionaryWords.size();
     }
-
 
 }

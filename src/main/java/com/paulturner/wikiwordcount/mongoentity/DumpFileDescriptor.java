@@ -20,7 +20,7 @@ public class DumpFileDescriptor implements Persistable<String> {
 
     private boolean complete = false;
 
-    public DumpFileDescriptor(List<ProcessingChunk> processingChunks) {
+    public DumpFileDescriptor(final List<ProcessingChunk> processingChunks) {
         this.processingChunks = processingChunks;
     }
 

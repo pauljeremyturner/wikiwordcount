@@ -45,16 +45,14 @@ public class FileChunkWorker implements Runnable {
     @Override
     public void run() {
 
-
-        ByteBuffer byteBuffer = dumpFileChunks.acquireByteBuffer();
+        final ByteBuffer byteBuffer = dumpFileChunks.acquireProcessingByteBuffer();
         final Subchunks subchunks = dumpFileChunks.splitToSubChunks(byteBuffer, reservedChunk);
 
         logger.info("Split a chunk in to subchunks and started extracting words [chunk={}] [subchunk count={}]", reservedChunk, subchunks.getSubchunkList());
 
-
         final ChunkDigestAccumulator chunkDigestAccumulator = new ChunkDigestAccumulator(reservedChunk.getIndex());
 
-        final List<CompletableFuture<ChunkDigestAccumulator>> completableFutures = subchunks.getSubchunkList()
+        final List<CompletableFuture<ChunkDigestAccumulator>> chunkDigestFutures = subchunks.getSubchunkList()
                 .stream()
                 .map(subchunk -> {
                     WordExtractor wordExtractor = new WordExtractor(subchunk.getByteBuffer(), calculateOptions.getUniqueDumpFileName(), reservedChunk.getIndex());
@@ -65,13 +63,13 @@ public class FileChunkWorker implements Runnable {
                 .collect(Collectors.toList());
 
         CompletableFuture
-                .allOf(completableFutures.toArray(new CompletableFuture[completableFutures.size()]))
+                .allOf(chunkDigestFutures.toArray(new CompletableFuture[chunkDigestFutures.size()]))
                 .thenAccept(cf -> {
                     reservedChunk.setProcessed(true);
                     completeChunk(chunkDigestAccumulator, dumpFileDescriptor, reservedChunk.getIndex());
                 }).join();
 
-        dumpFileChunks.releaseByteBuffer(byteBuffer);
+        dumpFileChunks.releaseProcessingByteBuffer(byteBuffer);
 
         logger.info("Completed word count of all subchunks [chunk={}]", reservedChunk);
     }

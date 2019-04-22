@@ -9,20 +9,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChunkDigestListener extends AbstractMongoEventListener<ChunkDigest> {
 
-    private static final String ID_MASK = "%d-%s";
 
     private CalculateOptions calculateOptions;
 
-    public ChunkDigestListener(CalculateOptions calculateOptions) {
+    public ChunkDigestListener(final CalculateOptions calculateOptions) {
         this.calculateOptions = calculateOptions;
     }
 
     @Override
-    public void onBeforeConvert(BeforeConvertEvent<ChunkDigest> event) {
+    public void onBeforeConvert(final BeforeConvertEvent<ChunkDigest> event) {
         ChunkDigest chunkDigest = event.getSource();
 
         if (chunkDigest.isNew()) {
-            chunkDigest.setId(String.format(ID_MASK, chunkDigest.getIndex(), calculateOptions.getUniqueDumpFileName()));
+            chunkDigest.setId(ChunkDigest.generatePrimaryKey(chunkDigest.getIndex(), calculateOptions.getUniqueDumpFileName()));
         }
 
     }
