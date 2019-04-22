@@ -62,7 +62,7 @@ Here are the full options available
 
 `--chunk-size` How many  bytes to reserve for a chunk to be processed in parallel - default 1G (can use B, K, M, G suffixes to denote bytes, kilobytes, megabytes and gigabytes respectively)
 
-`--mongo-server` host and port for mongodb connections - default localhost:27017
+`--mongo` host and port for mongodb connections - default localhost:27017
 
 Here is an example:
 
@@ -101,6 +101,10 @@ java -Xmx8192M -jar ./wikiwordcount-0.1.0.jar select --source /home/paul/git-rep
 `--sort-direction` Whether to show to most (DESC) or least popular (ASC) words.  Default is DESC
 
 `--word-length` Show statistics for words only with the specified length.  Default is not to filter by word length
+
+`--chunk-size`   This is only necessary if non-default values used in calculate stage.  This isbecause the chunk size is used in mongo ids in order to differentiate chunks with different sizes in case 2 processes for the same file but with different chunk size were running at the same time.
+
+`--mongo` host and port for mongodb connections - default localhost:27017
 
 Here is an example of the Select mode in action:
 
