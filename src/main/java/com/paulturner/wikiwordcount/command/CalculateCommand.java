@@ -48,6 +48,7 @@ public class CalculateCommand {
                 logger.info("Another process completed the divide to chunks before this one [descriptor={}]", calculateOptions.getUniqueDumpFileName());
             }
         } else {
+            logger.info("Another process completed the divide to chunks before this one [descriptor={}]", calculateOptions.getUniqueDumpFileName());
             dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
         }
 
@@ -63,8 +64,10 @@ public class CalculateCommand {
             while (!saved) {
                 try {
                     dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
+                    logger.info("Marked a chunk of dump file as processing [chunk #={}]", randomProcessingChunkIndex);
                     saved = true;
-                } catch (OptimisticLockingFailureException olfe) {
+                } catch (final OptimisticLockingFailureException olfe) {
+                    logger.info("Tried to mark a chunk of dump file as processing but DumpFileDescriptor is stale, retrying [chunk #={}]", randomProcessingChunkIndex);
                     dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
                     availableProcessingChunks.get(randomProcessingChunkIndex).setProcessing(true);
                 }
@@ -73,20 +76,9 @@ public class CalculateCommand {
             FileChunkWorker fileChunkWorker = fileChunkWorkerFactory.newInstance(availableProcessingChunk, dumpFileDescriptor);
             fileChunkWorker.run();
 
-            saved = false;
-            while (!saved) {
-                try {
-                    dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
-                    saved = true;
-                } catch (OptimisticLockingFailureException olfe) {
-                    dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
-                    availableProcessingChunks.get(randomProcessingChunkIndex).setProcessed(true);
-                }
-            }
-
         }
 
-        waitForUnfinishedProcessingChunks();
+        logger.info("Finished processing new chunks");
 
         //we've already seen this so OK to assume it's there
         dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
@@ -104,8 +96,11 @@ public class CalculateCommand {
             logger.info("Waiting before hijacking a chunk started by another process but unfinished.");
             waitForUnfinishedProcessingChunks();
 
+            dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+
         }
 
+        logger.info("Completed calculation stage");
 
     }
 

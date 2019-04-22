@@ -18,7 +18,7 @@ public class ChunkDigest implements Persistable<String> {
     @Id
     private String id = null;
 
-    private final Map<String, Integer> wordCountMap;
+    private Map<String, Integer> wordCountMap;
     private int index;
     private String fileName;
 
@@ -35,6 +35,10 @@ public class ChunkDigest implements Persistable<String> {
 
     public Map<String, Integer> getWordCountMap() {
         return wordCountMap;
+    }
+
+    public void setWordCountMap(Map<String, Integer> wordCountMap) {
+        this.wordCountMap = wordCountMap;
     }
 
     @Override

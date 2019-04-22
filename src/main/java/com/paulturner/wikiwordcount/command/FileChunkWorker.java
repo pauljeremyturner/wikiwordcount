@@ -77,6 +77,7 @@ public class FileChunkWorker implements Runnable {
     private void completeChunk(ChunkDigestAccumulator chunkDigestAccumulator, int index) {
         ChunkDigest accumulated = chunkDigestAccumulator.getAccumulated(calculateOptions.getUniqueDumpFileName());
         try {
+            logger.info("Save ChunkDigest [index={}]", index);
             chunkDigestRepository.insert(accumulated);
         } catch (final DuplicateKeyException dke) {
             logger.info("Another process inserted a chunk digest before this process could, nevermind.  [processing chunk index={}]", index);
