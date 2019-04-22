@@ -2,6 +2,7 @@ package com.paulturner.wikiwordcount.command;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.paulturner.wikiwordcount.cli.SelectOptions;
 import com.paulturner.wikiwordcount.domain.ChunkDigestAccumulator;
 import com.paulturner.wikiwordcount.domain.ProcessingChunk;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -31,6 +33,7 @@ public class SelectCommand {
     private DumpFileDescriptorRepository dumpFileDescriptorRepository;
     private ChunkDigestRepository chunkDigestRepository;
     private SelectOptions selectOptions;
+    private final ObjectMapper objectMapper;
 
     @Autowired
     public SelectCommand(
@@ -40,6 +43,8 @@ public class SelectCommand {
         this.dumpFileDescriptorRepository = dumpFileDescriptorRepository;
         this.chunkDigestRepository = chunkDigestRepository;
         this.selectOptions = selectOptions;
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     public void processChunks() {
@@ -57,7 +62,7 @@ public class SelectCommand {
 
         Map<String, Integer> resultsMap = sortAndFilterTrimToSize(digestAccumulator);
         try {
-            String wordCountJson = wordCountJson = new ObjectMapper().writeValueAsString(resultsMap);
+            final String wordCountJson = objectMapper.writeValueAsString(resultsMap);
             logger.info(wordCountJson);
         } catch (final JsonProcessingException e) {
             logger.error("Couldn't convert results to json", e);
@@ -71,7 +76,10 @@ public class SelectCommand {
 
         final List<ProcessingChunk> processingChunks = dumpFileDescriptor.getProcessingChunks();
         List<CompletableFuture> futures = new ArrayList<>(dumpFileDescriptor.getProcessingChunks().size());
-        Set<Integer> missingChunkDigests = IntStream.range(0, processingChunks.size()).mapToObj(Integer::valueOf).collect(Collectors.toSet());
+
+        Set<Integer> missingChunkDigests = ConcurrentHashMap.newKeySet();
+        missingChunkDigests.addAll(IntStream.range(0, processingChunks.size()).mapToObj(Integer::valueOf).collect(Collectors.toSet()));
+
         for (ProcessingChunk processingChunk : processingChunks) {
             int index = processingChunk.getIndex();
             String chunkKey = ChunkDigest.generatePrimaryKey(index, selectOptions.getUniqueDumpFileName());
@@ -79,12 +87,14 @@ public class SelectCommand {
             futures.add(CompletableFuture.runAsync(() -> {
                 Optional<ChunkDigest> chunkDigestOptional =  chunkDigestRepository.findById(chunkKey);
                 chunkDigestOptional.ifPresent(cd -> {
+                    logger.info("Merging ChunkDigest [index={}]", cd.getIndex());
                     missingChunkDigests.remove(index);
                     digestAccumulator.addChunkDigest(chunkDigestOptional.get());
                 });
             }));
-
         }
+
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).join();
 
         if (!missingChunkDigests.isEmpty()) {
             logger.warn(
@@ -93,8 +103,6 @@ public class SelectCommand {
                     missingChunkDigests
             );
         }
-
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).join();
     }
 
     private Map<String, Integer> sortAndFilterTrimToSize(ChunkDigestAccumulator chunkDigestAccumulator) {
