@@ -115,6 +115,8 @@ public class DumpFileChunks {
 
     private ByteBuffer readProbeChunk(long position) {
 
+        logger.info("Find next processing chunk via probe chunk [start position={}]", position);
+
         SeekableByteChannel seekableByteChannel = null;
         try {
             seekableByteChannel = Files
