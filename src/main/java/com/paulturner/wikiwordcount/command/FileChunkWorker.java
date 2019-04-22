@@ -65,9 +65,9 @@ public class FileChunkWorker implements Runnable {
 
         CompletableFuture
                 .allOf(chunkDigestFutures.toArray(new CompletableFuture[chunkDigestFutures.size()]))
-                .thenAccept(cf -> {
-                    completeChunk(chunkDigestAccumulator, reservedChunk.getIndex());
-                }).join();
+                .thenAccept(cf ->
+                    completeChunk(chunkDigestAccumulator, reservedChunk.getIndex())
+                ).join();
 
         dumpFileChunks.releaseProcessingByteBuffer(byteBuffer);
 

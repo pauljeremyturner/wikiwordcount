@@ -57,6 +57,7 @@ public class SelectOptions extends AbstractCommandOptions {
         private Direction bDirection;
         private int bWordLength;
         private int bCount;
+
         private Builder() {
 
         }

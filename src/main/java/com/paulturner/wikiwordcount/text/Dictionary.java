@@ -16,6 +16,7 @@ public class Dictionary {
 
     private static final Set<String> dictionaryWords;
     private static final Logger logger = LoggerFactory.getLogger(Dictionary.class);
+    private static int longestWordLength = 0;
 
     static {
         final Set<String> tmpWords = new HashSet<>();
@@ -27,6 +28,7 @@ public class Dictionary {
             String word;
             while (Objects.nonNull(word = bufferedReader.readLine())) {
                 tmpWords.add(word.trim().toLowerCase());
+                longestWordLength = Math.max(longestWordLength, word.length());
             }
             dictionaryWords = Collections.unmodifiableSet(tmpWords);
             logger.info("Dictionary Loaded [wordcount={}]", dictionaryWords.size());
@@ -37,6 +39,10 @@ public class Dictionary {
 
     public boolean isDictionaryWord(final String word) {
         return dictionaryWords.contains(word);
+    }
+
+    public int longestWordLength() {
+        return longestWordLength;
     }
 
     public int wordCount() {

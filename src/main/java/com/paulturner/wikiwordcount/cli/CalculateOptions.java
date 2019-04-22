@@ -41,6 +41,7 @@ public class CalculateOptions extends AbstractCommandOptions {
         private String bMongoClientUri;
         private int bChunkSize;
         private boolean bUseOffHelpBuffers;
+
         private Builder() {
 
         }

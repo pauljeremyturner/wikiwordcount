@@ -10,7 +10,6 @@ import com.paulturner.wikiwordcount.mongo.ChunkDigestRepository;
 import com.paulturner.wikiwordcount.mongo.DumpFileDescriptorRepository;
 import com.paulturner.wikiwordcount.mongoentity.ChunkDigest;
 import com.paulturner.wikiwordcount.mongoentity.DumpFileDescriptor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +36,8 @@ public class SelectCommand {
 
     @Autowired
     public SelectCommand(
-        DumpFileDescriptorRepository dumpFileDescriptorRepository,
-        ChunkDigestRepository chunkDigestRepository, SelectOptions selectOptions
+            DumpFileDescriptorRepository dumpFileDescriptorRepository,
+            ChunkDigestRepository chunkDigestRepository, SelectOptions selectOptions
     ) {
         this.dumpFileDescriptorRepository = dumpFileDescriptorRepository;
         this.chunkDigestRepository = chunkDigestRepository;
@@ -72,7 +71,7 @@ public class SelectCommand {
 
     }
 
-    private void selectAndMerge(DumpFileDescriptor dumpFileDescriptor, ChunkDigestAccumulator digestAccumulator ) {
+    private void selectAndMerge(DumpFileDescriptor dumpFileDescriptor, ChunkDigestAccumulator digestAccumulator) {
 
         final List<ProcessingChunk> processingChunks = dumpFileDescriptor.getProcessingChunks();
         List<CompletableFuture> futures = new ArrayList<>(dumpFileDescriptor.getProcessingChunks().size());
@@ -85,7 +84,7 @@ public class SelectCommand {
             String chunkKey = ChunkDigest.generatePrimaryKey(index, selectOptions.getUniqueDumpFileName());
 
             futures.add(CompletableFuture.runAsync(() -> {
-                Optional<ChunkDigest> chunkDigestOptional =  chunkDigestRepository.findById(chunkKey);
+                Optional<ChunkDigest> chunkDigestOptional = chunkDigestRepository.findById(chunkKey);
                 chunkDigestOptional.ifPresent(cd -> {
                     logger.info("Merging ChunkDigest [index={}]", cd.getIndex());
                     missingChunkDigests.remove(index);
@@ -108,11 +107,11 @@ public class SelectCommand {
     private Map<String, Integer> sortAndFilterTrimToSize(ChunkDigestAccumulator chunkDigestAccumulator) {
 
         final LinkedHashMap<String, Integer> sortedAndFiltered = chunkDigestAccumulator.getAccumulated(selectOptions.getUniqueDumpFileName()).getWordCountMap()
-            .entrySet()
-            .stream()
-            .filter(getWordLengthPredicate(selectOptions))
-            .sorted(getComparator(selectOptions))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+                .entrySet()
+                .stream()
+                .filter(getWordLengthPredicate(selectOptions))
+                .sorted(getComparator(selectOptions))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
 
         return sortedAndFiltered
                 .entrySet()

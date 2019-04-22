@@ -17,7 +17,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
@@ -105,7 +108,7 @@ public class DumpFileChunks {
         CircularByteArrayQueue queue = new CircularByteArrayQueue(BYTES_CLOSE_PAGE.length);
         while (byteBuffer.hasRemaining()) {
             queue.offer(byteBuffer.get());
-            if (queue.containsArray(BYTES_CLOSE_PAGE)) {
+            if (queue.contains(BYTES_CLOSE_PAGE)) {
                 break;
             }
         }

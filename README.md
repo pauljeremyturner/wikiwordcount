@@ -1,32 +1,67 @@
 # Instructions
 
-There is a jar file created by gradle already added in this repository.
+These instructions enable the reader to repeat the same tests I have carried out to demonstrate this fully working solution.
+
+## Test Environment
+
+* Linux
+
+```
+Fedora (4.18.16-300.fc29.x86_64)
+Xeon 16 Core, 64GB RAM
+```
+
+* Dump File
+
+```
+enwiki-20190101-pages-articles-multistream.xml.bz2 (16693557478 Bytes)
+
+https://itorrents.org/torrent/B4531B9C5337B0B078CE8D8EEC3F8E83B2AEA583.torrent
+https://meta.wikimedia.org/wiki/Data_dump_torrents
+```
+
+* Oracle Java 8
+
+```
+java version "1.8.0_181"
+Java(TM) SE Runtime Environment (build 1.8.0_181-b13)
+Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
+```
+
+* MongoDb
+
+```
+mongo:latest` docker image
+CONTROL  [initandlisten] db version v4.0.9
+```
 
 ## Running the Executable Jar File
 The application jar file can be found at `<project root>/build/libs/wikiwordcount-0.1.0.jar`.
 
-There are 2 'modes' to operate the solution.  These are `calculate` and `select`.  Calculate mode stores the word counts in a mongo database and select mode retrieves them
+There are 2 'modes' to operate the solution.  These are `calculate` and `select`.  Calculate mode stores the word counts in a mongo database and select mode retrieves them.
+
+In order to view word counts, you need to run calculate then select.  You can run select before calculate has finished, it will tell you the results are incomplete.
 
 ### Calculate Mode
 
 There is only 1 mandatory file parameter - the absolute path to the wiki dump file;
 
-here is an example
-
 ```
-java -jar ./wikiwordcount.jar calculate --source /home/paul/git-repositories/github.com/pauljeremyturner/wikiwordcount/src/main/resources/enwiki-20190101-pages-articles-multistream.xml
+java *[JVM options]* -jar  ./wikiwordcount.jar calculate --source *[dump file]*
 ```
 
-Default used here include: localhost mongodb server on default port 27017
+Here is an example
+
+```
+java -Xmx8192M -jar ./wikiwordcount.jar calculate --source /home/paul/git-repositories/github.com/pauljeremyturner/wikiwordcount/src/main/resources/enwiki-20190101-pages-articles-multistream.xml
+```
+
+Defaults used here include: localhost mongodb server on port 27017
 The file is read and processed in 2GB chunks by default.
 
 Here are the full options available
 
-`--word-digest-threads` How many threads in the pool for extracting word counts from file chunks - default 8
-
-`--off-heap` true Whether to use off heap memory for byte buffers or not - default true
-
-`--chunk-size` How many  bytes to reserve for a chunk to be processed in parallel - default 2G (can use B, K, M, G suffixes to denote bytes, kilobytes, megabytes and gigabytes respectively)
+`--chunk-size` How many  bytes to reserve for a chunk to be processed in parallel - default 1G (can use B, K, M, G suffixes to denote bytes, kilobytes, megabytes and gigabytes respectively)
 
 `--mongo-server` host and port for mongodb connections - default localhost:27017
 
@@ -34,7 +69,9 @@ Here is an example:
 
 
 ```
---file-path /home/paul/git-repositories/github.com/pauljeremyturner/wikiwordcount/src/main/resources/enwiki-20190101-pages-articles-multistream.xml --word-digest-threads 8 --off-heap true --chunk-size 2G --mongo-server 172.17.0.2:27017
+cd <project-root>
+cd build/libs
+java -Xmx8192M -jar ./wikiwordcount-0.1.0.jar calculate --source /home/paul/git-repositories/github.com/pauljeremyturner/wikiwordcount/src/main/resources/enwiki-20190101-pages-articles-multistream.xml --chunk-size 2G --mongo-server 172.17.0.2:27017
 ```
 
 Recommended heap size is 8GB.  The live data objects size during a run was observed to be about 4GB.
@@ -44,32 +81,34 @@ GC should be tuned for throughput as latency is not important here.  I haven't d
 
 There is only 1 mandatory file parameter - the absolute path to the wiki dump file;
 
+
+```
+java *[JVM options]* -jar  ./wikiwordcount.jar select --source *[dump file]*
+```
+
 here is an example
 
 ```
-java -jar ./wikiwordcount.jar select --count 50 --word-length --source /home/paul/git-repositories/github.com/pauljeremyturner/wikiwordcount/src/main/resources/enwiki-20190101-pages-articles-multistream.xml
+cd <project-root>
+cd build/libs
+java -Xmx8192M -jar ./wikiwordcount-0.1.0.jar select --source /home/paul/git-repositories/github.com/pauljeremyturner/wikiwordcount/src/main/resources/enwiki-20190101-pages-articles-multistream.xml
 ```
 
  ### Available Options
- The
+ These options attempt to address te 'statistically interesting words' part of the exercise.
 
 `--count` How many results to show.  Default is 20
 
-`--direction` Whether to show to most (DESC) or least popular (ASC) words.  Default is DESC
+`--sort-direction` Whether to show to most (DESC) or least popular (ASC) words.  Default is DESC
 
 `--word-length` Show statistics for words only with the specified length.  Default is not to filter by word length
 
 Here is an example of the Select mode in action:
 
 ```
-SelectOptions:: [mongo uri=172.17.0.2:27017] [sort-direction=DESC] [word-count number=20] [word-length=7]
+java -Xmx8192M -jar ./wikiwordcount-0.1.0.jar select --count 50 --word-length 8 --source /home/paul/git-repositories/github.com/pauljeremyturner/wikiwordcount/src/main/resources/enwiki-20190101-pages-articles-multistream.xml
 
 ```
-
-### Why So Many Options
-I needed to run this on a Xeon Desktop and an i5 Laptop during the easter break and I wanted to be able to test the extent to which the solution is capable of using the available resources.
-I need to tune some components to ork on smaller datasets for unit tests
-I thought the available options were useful
 
 ## How Does This Work?
 
@@ -77,45 +116,57 @@ The solution only generates string objects for genuine words checked against a d
 lines of the file or any intermediate chunks of the file.
 File I/O is done via nio SeekableChannels and RandomAccessFiles.
 
-### Parrelisation
+### Parrelisation (?)
 
 The solution attempts to run as many operations in parallel as possible.
 
-Done sequentially:
+**Done sequentially:**
 
 * Split file into arbitrary chunks and store start/end indexes in mongodb
 
 * Mark a processing chunk as reserved for procesing in mongodb.
 
-Done in parallel
+**Done in parallel**
 
 * Read a processing chunk into a buffer and split into subchunks
 
-Perform a word count for each subchunk
+* Perform a word count for each subchunk
 
 * Store word counts in mongodb
 
-On my 16 core Xeon System, virtually all cores were maxed out during the file processing.  Using 1Gb file chunks there was a slight drop in processor activity
+On my system, virtually all cores were maxed out during the file processing.  Using 1Gb file chunks there was a slight drop in processor activity
 following completing of the previous chunk and reading of the next one.
 
 ### Conflicts Among Multiple Participating JVMs
+
 Each JVM participating in the word count
 
 1: Create a file 'hash' string to ensure working on same file as peers
+
 2: Read an arbitrary chunk of the file into memory (either on or off heap memory)
+
 3: trim that chunk, discarding the end part that is not a whole <page>
+
 4: report the actual chunk start/end bytes as reserved with a timestamp in case the jvm died
+
 5: split the chunk and perform a parallel word count of chunk and store word count digest in mongo
 
 This produces word counts in mongo that can be aggregated using a map-reduce function
 
-if 2 JVMs start working on the same area of the file at the same time, the file chunks being processed and the resultant word counts are stored in mongo according to the dump file, its filesize in bytes and the chunk size in bytes.
+If 2 JVMs start working on the same area of the file at the same time, the file chunks being processed and the resultant word counts are stored in mongo according to the dump file, its filesize in bytes and the chunk size in bytes.
 This means that only word counts for the same file being processed in the same way will be stored together.
-If all JVMs working on the file have the same chunk size set, there will be a deterministic set of chunks produced by the algorithm to divide the file.
+
+If all JVMs working on the file need to have the same chunk size set, there will be a deterministic set of chunks produced by the algorithm to divide the file.
+
 Each chunk is reserved to ensure that 2 process to not work on the same part of the file, but if a race condition allowed this to happen (it's possible)
 then an exception will be thrown when the chunk is attempted to be written for a second time.
 
 ### Failure in a Participating JVM
+
+This is tolerated.
+
+When a processing chunk is marked as reserved 'processing' no other process will attempt to process it.  When all unreserved processing chunk have been completed, chunks
+that have been reserved by a process that has failed will become eligible for processing.
 
 
 # Glossary of Terms
@@ -134,19 +185,62 @@ or because the JVM has died after reserving the chunk but before completing the 
 
 `Chunk Digest` - This represents word count data from a processing chunk.
 
-## MongoDB
-I used a dockerised version of mongo
+### Logging
 
+* Calculate Command
+
+Here is an extract from the calculate command showing chunks being processed in fork join pool.
+
+```
+2019-04-22 20:50:26.219 [main] INFO  c.p.w.command.CalculateCommand - Processing a chunk of dump file [chunk #=51]
+2019-04-22 20:50:26.219 [main] DEBUG c.p.wikiwordcount.io.ByteBufferPool - Acquired ByteBuffer from pool [byteBuffer identityHashCode=496729294]
+2019-04-22 20:50:31.019 [main] INFO  c.p.w.command.FileChunkWorker - Split a chunk in to subchunks and started extracting words [chunk=ProcessingChunk:: [start=55836020880], [end=56909772260], [index=52]] [subchunk count=8]
+2019-04-22 20:50:53.840 [ForkJoinPool.commonPool-worker-1] INFO  c.p.w.command.FileChunkWorker - Save ChunkDigest [index=52]
+2019-04-22 20:50:54.310 [main] DEBUG c.p.wikiwordcount.io.ByteBufferPool - Returned ByteBuffer to pool [byteBuffer identityHashCode=496729294]
+2019-04-22 20:50:54.310 [main] INFO  c.p.w.command.FileChunkWorker - Completed word count of all subchunks [chunk=ProcessingChunk:: [start=55836020880], [end=56909772260], [index=52]]
+2019-04-22 20:50:54.310 [main] INFO  c.p.w.command.CalculateCommand - Processing a chunk of dump file [chunk #=13]
+2019-04-22 20:50:54.310 [main] DEBUG c.p.wikiwordcount.io.ByteBufferPool - Acquired ByteBuffer from pool [byteBuffer identityHashCode=496729294]
+2019-04-22 20:50:58.145 [main] INFO  c.p.w.command.FileChunkWorker - Split a chunk in to subchunks and started extracting words [chunk=ProcessingChunk:: [start=13958892791], [end=15032641180], [index=13]] [subchunk count=8]
+2019-04-22 20:51:26.460 [ForkJoinPool.commonPool-worker-0] INFO  c.p.w.command.FileChunkWorker - Save ChunkDigest [index=13]
+2019-04-22 20:51:26.728 [main] DEBUG c.p.wikiwordcount.io.ByteBufferPool - Returned ByteBuffer to pool [byteBuffer identityHashCode=496729294]
+2019-04-22 20:51:26.728 [main] INFO  c.p.w.command.FileChunkWorker - Completed word count of all subchunks [chunk=ProcessingChunk:: [start=13958892791], [end=15032641180], [index=13]]
+```
+
+* Select Command
+
+Here is an extract from the select command log showing the top 20 occurring words,  ignoring word length.
+
+```
+2019-04-22 23:43:16.268 [main] INFO  c.p.w.command.SelectCommand - {
+  "the" : 307190762,
+  "of" : 183657786,
+  "and" : 125966196,
+  "to" : 108059767,
+  "a" : 106500729,
+  "ref" : 102045461,
+  "for" : 49844180,
+  "category" : 49377253,
+  "name" : 46717208,
+  "com" : 45675723,
+  "title" : 45462619,
+  "on" : 43936421,
+  "was" : 40345056,
+  "as" : 38352953,
+  "by" : 36732859,
+  "talk" : 36495017,
+  "date" : 35983033,
+  "with" : 32005415,
+  "from" : 29828115,
+  "that" : 29739130
+}
+
+```
 
 ## Improvements
 If I had more time to do the exercise, I would:
 1: Use MongoDB sharding and map/reduce function instead of selecting and merging on the java side.
 2: I only had time for tests that were essential for rudimentary tdd.  Of course integration tests should be added and a better coverage of unit tests.
 3: File subchunks are processed in parallel, however another processing chunk is only started after all subchunks of the previous processing chunk have been processed.
-There is an opportunity to read and process processing chunks in a threadpool.  My worry was that if this were the case, the first JVM to start would reserve all the
-processing chunks and not let another JVM process anything.
-
-I found the torrent an easier way to get the dump than the direct download:
-https://itorrents.org/torrent/B4531B9C5337B0B078CE8D8EEC3F8E83B2AEA583.torrent
+There is an opportunity to read and process processing chunks in parallel.
 
 

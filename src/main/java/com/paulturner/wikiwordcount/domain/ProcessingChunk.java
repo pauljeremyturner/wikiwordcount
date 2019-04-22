@@ -13,9 +13,6 @@ public class ProcessingChunk implements Comparable<ProcessingChunk> {
     private boolean processing;
     private int index;
 
-    public ProcessingChunk() {
-    }
-
     public ProcessingChunk(long start, long end, int index) {
         this.start = start;
         this.end = end;
@@ -35,24 +32,12 @@ public class ProcessingChunk implements Comparable<ProcessingChunk> {
         return end;
     }
 
-    public void setEnd(long end) {
-        this.end = end;
-    }
-
     public long getStart() {
         return start;
     }
 
-    public void setStart(long start) {
-        this.start = start;
-    }
-
     public long getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 
     public boolean isProcessed() {
@@ -74,10 +59,6 @@ public class ProcessingChunk implements Comparable<ProcessingChunk> {
 
     public int getIndex() {
         return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     @Override

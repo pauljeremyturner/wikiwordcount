@@ -42,7 +42,7 @@ public class SelectCommandLineParser extends AbstractCommandLineParser {
             }
 
             int count;
-            if (commandLine.hasOption(OPTION_SORT_DIRECTION)) {
+            if (commandLine.hasOption(OPTION_COUNT)) {
                 count = Integer.parseInt(commandLine.getOptionValue(OPTION_COUNT));
             } else {
                 count = 20;

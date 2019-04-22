@@ -1,10 +1,11 @@
 package com.paulturner.wikiwordcount.cli;
 
 import com.paulturner.wikiwordcount.test.TestFile;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CalculateCommandLineParserTest {
 
@@ -13,15 +14,15 @@ public class CalculateCommandLineParserTest {
         String[] args = new String[]{"calculate", "--source", TestFile.testDumpFilePath(), "--mongo", "127.0.0.1:27017"};
 
         Optional<CalculateOptions> calculateOptions = new CalculateCommandLineParser().parse(args);
-        assertThat(calculateOptions.get().getChunkSize()).isEqualTo(536870912);
+        assertThat(calculateOptions.get().getChunkSize()).isEqualTo(1073741824);
     }
 
     @Test
     public void shouldExtractChunkSize() throws Exception {
-        String[] args = new String[]{"calculate", "--source", TestFile.testDumpFilePath(), "--mongo", "127.0.0.1:27017", "--chunk-size", "1G"};
+        String[] args = new String[]{"calculate", "--source", TestFile.testDumpFilePath(), "--mongo", "127.0.0.1:27017", "--chunk-size", "512M"};
 
         Optional<CalculateOptions> calculateOptions = new CalculateCommandLineParser().parse(args);
-        assertThat(calculateOptions.get().getChunkSize()).isEqualTo(1073741824);
+        assertThat(calculateOptions.get().getChunkSize()).isEqualTo(536870912);
     }
 
     @Test
