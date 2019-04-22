@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 public class Subchunk {
 
-    private static final String TO_STRING_MASK = "Subchunk:: [start={}], [end={}]";
+    private static final String TO_STRING_MASK = "Subchunk:: [start=%s], [end=%s]";
 
     private long start;
     private long end;

@@ -1,5 +1,7 @@
 # Instructions
 
+There is a jar file created by gradle already added in this repository.
+
 ## Running the Executable Jar File
 The application jar file can be found at `<project root>/build/libs/wikiwordcount-0.1.0.jar`.
 
@@ -34,6 +36,9 @@ Here is an example:
 ```
 --file-path /home/paul/git-repositories/github.com/pauljeremyturner/wikiwordcount/src/main/resources/enwiki-20190101-pages-articles-multistream.xml --word-digest-threads 8 --off-heap true --chunk-size 2G --mongo-server 172.17.0.2:27017
 ```
+
+Recommended heap size is 8GB.  The live data objects size during a run was observed to be about 4GB.
+GC should be tuned for throughput as latency is not important here.  I haven't done this.
 
 ### Select Mode
 
@@ -77,13 +82,18 @@ File I/O is done via nio SeekableChannels and RandomAccessFiles.
 The solution attempts to run as many operations in parallel as possible.
 
 Done sequentially:
-Split file into arbitrary chunks and store start/end indexes in mongodb
-Mark a processing chunk as reserved for procesing in mongodb.
+
+* Split file into arbitrary chunks and store start/end indexes in mongodb
+
+* Mark a processing chunk as reserved for procesing in mongodb.
 
 Done in parallel
-Read a processing chunk into a buffer and split into subchunks
+
+* Read a processing chunk into a buffer and split into subchunks
+
 Perform a word count for each subchunk
-Store word counts in mongodb
+
+* Store word counts in mongodb
 
 On my 16 core Xeon System, virtually all cores were maxed out during the file processing.  Using 1Gb file chunks there was a slight drop in processor activity
 following completing of the previous chunk and reading of the next one.

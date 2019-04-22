@@ -12,6 +12,7 @@ import com.paulturner.wikiwordcount.mongoentity.DumpFileDescriptor;
 import com.paulturner.wikiwordcount.text.WordExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import java.nio.ByteBuffer;
@@ -48,7 +49,7 @@ public class FileChunkWorker implements Runnable {
         final ByteBuffer byteBuffer = dumpFileChunks.acquireProcessingByteBuffer();
         final Subchunks subchunks = dumpFileChunks.splitToSubChunks(byteBuffer, reservedChunk);
 
-        logger.info("Split a chunk in to subchunks and started extracting words [chunk={}] [subchunk count={}]", reservedChunk, subchunks.getSubchunkList());
+        logger.info("Split a chunk in to subchunks and started extracting words [chunk={}] [subchunk count={}]", reservedChunk, subchunks.getSubchunkList().size());
 
         final ChunkDigestAccumulator chunkDigestAccumulator = new ChunkDigestAccumulator(reservedChunk.getIndex());
 
@@ -65,8 +66,7 @@ public class FileChunkWorker implements Runnable {
         CompletableFuture
                 .allOf(chunkDigestFutures.toArray(new CompletableFuture[chunkDigestFutures.size()]))
                 .thenAccept(cf -> {
-                    reservedChunk.setProcessed(true);
-                    completeChunk(chunkDigestAccumulator, dumpFileDescriptor, reservedChunk.getIndex());
+                    completeChunk(chunkDigestAccumulator, reservedChunk.getIndex());
                 }).join();
 
         dumpFileChunks.releaseProcessingByteBuffer(byteBuffer);
@@ -74,18 +74,26 @@ public class FileChunkWorker implements Runnable {
         logger.info("Completed word count of all subchunks [chunk={}]", reservedChunk);
     }
 
-    private void completeChunk(ChunkDigestAccumulator chunkDigestAccumulator, DumpFileDescriptor dumpFileDescriptor, int index) {
+    private void completeChunk(ChunkDigestAccumulator chunkDigestAccumulator, int index) {
         ChunkDigest accumulated = chunkDigestAccumulator.getAccumulated(calculateOptions.getUniqueDumpFileName());
-        chunkDigestRepository.insert(accumulated);
+        try {
+            chunkDigestRepository.insert(accumulated);
+        } catch (final DuplicateKeyException dke) {
+            logger.info("Another process inserted a chunk digest before this process could, nevermind.  [processing chunk index={}]", index);
+        }
+
         boolean saved = false;
 
-        dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
+        DumpFileDescriptor dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
         while (!saved) {
             try {
-                dumpFileDescriptor.getProcessingChunks().get(index).setProcessed(true);
+                ProcessingChunk processingChunk = dumpFileDescriptor.getProcessingChunks().get(index);
+                processingChunk.setProcessed(true);
+                processingChunk.setProcessing(true);
                 dumpFileDescriptor = dumpFileDescriptorRepository.save(dumpFileDescriptor);
                 saved = true;
-            } catch (OptimisticLockingFailureException olfe) {
+            } catch (final OptimisticLockingFailureException olfe) {
+                logger.info("Optimistic lock fail when trying to mark processing chunk as processed, retrying... [processingchunk={}]");
                 dumpFileDescriptor = dumpFileDescriptorRepository.findById(calculateOptions.getUniqueDumpFileName()).get();
             }
         }
