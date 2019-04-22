@@ -8,7 +8,6 @@ These instructions enable the reader to repeat the same tests I have carried out
 
 ```
 Fedora (4.18.16-300.fc29.x86_64)
-Xeon 16 Core, 64GB RAM
 ```
 
 * Dump File
@@ -47,7 +46,7 @@ In order to view word counts, you need to run calculate then select.  You can ru
 There is only 1 mandatory file parameter - the absolute path to the wiki dump file;
 
 ```
-java *[JVM options]* -jar  ./wikiwordcount.jar calculate --source *[dump file]*
+java [JVM options] -jar  ./wikiwordcount.jar calculate --source [dump file]
 ```
 
 Here is an example
@@ -83,7 +82,7 @@ There is only 1 mandatory file parameter - the absolute path to the wiki dump fi
 
 
 ```
-java *[JVM options]* -jar  ./wikiwordcount.jar select --source *[dump file]*
+java [JVM options] -jar  ./wikiwordcount.jar select --source [dump file]
 ```
 
 here is an example
@@ -237,9 +236,13 @@ Here is an extract from the select command log showing the top 20 occurring word
 ```
 
 ## Improvements
+
 If I had more time to do the exercise, I would:
+
 1: Use MongoDB sharding and map/reduce function instead of selecting and merging on the java side.
+
 2: I only had time for tests that were essential for rudimentary tdd.  Of course integration tests should be added and a better coverage of unit tests.
+
 3: File subchunks are processed in parallel, however another processing chunk is only started after all subchunks of the previous processing chunk have been processed.
 There is an opportunity to read and process processing chunks in parallel.
 
