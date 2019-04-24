@@ -102,7 +102,7 @@ java -Xmx8192M -jar ./wikiwordcount-0.1.0.jar select --source /home/paul/git-rep
 
 `--word-length` Show statistics for words only with the specified length.  Default is not to filter by word length
 
-`--chunk-size`   This is only necessary if non-default values used in calculate stage.  This isbecause the chunk size is used in mongo ids in order to differentiate chunks with different sizes in case 2 processes for the same file but with different chunk size were running at the same time.
+`--chunk-size`   This is only necessary if non-default values used in calculate stage.  This is because the chunk size is used in mongo ids in order to differentiate chunks with different sizes in case 2 processes for the same file but with different chunk size were running at the same time.
 
 `--mongo` host and port for mongodb connections - default localhost:27017
 
@@ -146,7 +146,7 @@ Each JVM participating in the word count
 
 1: Create a file 'hash' string to ensure working on same file as peers
 
-2: Read an arbitrary chunk of the file into memory (either on or off heap memory)
+2: Read an arbitrary chunk of the file into memory
 
 3: trim that chunk, discarding the end part that is not a whole <page>
 
@@ -154,21 +154,19 @@ Each JVM participating in the word count
 
 5: split the chunk and perform a parallel word count of chunk and store word count digest in mongo
 
-This produces word counts in mongo that can be aggregated using a map-reduce function
+This produces word counts in mongo that can be aggregated using a map-reduce function - either by mongo db map-reduce or by anoth erJava process
 
 If 2 JVMs start working on the same area of the file at the same time, the file chunks being processed and the resultant word counts are stored in mongo according to the dump file, its filesize in bytes and the chunk size in bytes.
 This means that only word counts for the same file being processed in the same way will be stored together.
 
 If all JVMs working on the file need to have the same chunk size set, there will be a deterministic set of chunks produced by the algorithm to divide the file.
 
-Each chunk is reserved to ensure that 2 process to not work on the same part of the file, but if a race condition allowed this to happen (it's possible)
-then an exception will be thrown when the chunk is attempted to be written for a second time.
 
 ### Failure in a Participating JVM
 
 This is tolerated.
 
-When a processing chunk is marked as reserved 'processing' no other process will attempt to process it.  When all unreserved processing chunk have been completed, chunks
+When a processing chunk is marked as reserved 'processing' no other process will attempt to process it until no more not 'processing' chunks remain.  When all unreserved processing chunk have been completed, chunks
 that have been reserved by a process that has failed will become eligible for processing.
 
 
@@ -179,11 +177,11 @@ I have tried to use the same terminology throughout the code and in this readme.
 
 `Probe Chunk` - This represents a small chunk of the dump file that is read only to determine where a <page> starts and ends.  There is no attempt to process the dump file as xml,
 however because the file is read in bytes, it is important not to split a multibyte UTF-8 character as this will upset the process that converts from bytes to characters.
-This is based on the idea that it is not necessary to read the whole file (even if it fit in memory) to determine where the prcessing chunks should start and end.
+This is based on the idea that it is not necessary to read the whole file (even if it fits in memory) to determine where the prcessing chunks should start and end.
 
 `Subcunk` - This represents a chunk of the file that is prccessed as characters and is subject to word count via a `CompletableFuture`
 
-`Hijack` - This involves a JVM starting to perform a word count on a processing chunk that has already been reserved by another JV because it has taken too long to process it
+`Hijack` - This involves a JVM starting to perform a word count on a processing chunk that has already been reserved by another JVM because it has taken too long to process it
 or because the JVM has died after reserving the chunk but before completing the word count and storing it in mongodb.
 
 `Chunk Digest` - This represents word count data from a processing chunk.
