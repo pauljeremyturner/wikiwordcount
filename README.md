@@ -56,7 +56,7 @@ java -Xmx8192M -jar ./wikiwordcount.jar calculate --source /home/paul/git-reposi
 ```
 
 Defaults used here include: localhost mongodb server on port 27017
-The file is read and processed in 2GB chunks by default.
+The file is read and processed in 1GB chunks by default.
 
 Here are the full options available
 
